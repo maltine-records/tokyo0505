@@ -8,6 +8,7 @@
 
 #import "MapViewController.h"
 #import "TokyoOverlayRenderer.h"
+#import "TimetableAnnotaion.h"
 
 @interface MapViewController ()
 
@@ -39,15 +40,17 @@
 
 - (void)setupMapView
 {
-    CLLocationCoordinate2D tocho;
-    tocho.latitude = 35.68664111;
-    tocho.longitude = 139.6948839;
     CLLocationCoordinate2D koukyo;
     koukyo.latitude = 35.683833;
     koukyo.longitude = 139.753972;
-    
+    CLLocationCoordinate2D tokyoeki;
+    tokyoeki.latitude = 35.681382;
+    tokyoeki.longitude = 139.766084;
+    CLLocationCoordinate2D tocho;
+    tocho.latitude = 35.68664111;
+    tocho.longitude = 139.6948839;
+
     self.mapView.mapType = MKMapTypeHybrid;
-    
     // move center
     [self.mapView setCenterCoordinate:koukyo];
     MKCoordinateRegion region = self.mapView.region;
@@ -59,12 +62,25 @@
     int radius = 10000;
     MKCircle *c = [MKCircle circleWithCenterCoordinate:koukyo radius:radius];
     [self.mapView addOverlay:c];
+    
+    // add annotation
+    TimetableAnnotaion *maintt = [[TimetableAnnotaion alloc] init];
+    maintt.coordinate = tokyoeki;
+    maintt.title = @"東東京";
+    [self.mapView addAnnotation:maintt];
+    
+
+    
+    TimetableAnnotaion *subtt = [[TimetableAnnotaion alloc] init];
+    subtt.coordinate = tocho;
+    subtt.title = @"西東京";
+    [self.mapView addAnnotation:subtt];
+    
 }
 
 
 - (MKOverlayRenderer *)mapView:(MKMapView *)mapView rendererForOverlay:(id < MKOverlay >)overlay
 {
-    NSLog(@"renderer");
     return [[TokyoOverlayRenderer alloc] initWithOverlay:overlay];
 }
 

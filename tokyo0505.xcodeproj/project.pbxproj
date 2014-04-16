@@ -12,6 +12,7 @@
 		89043A0C18FE5D2F003CF403 /* MapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 89043A0B18FE5D2F003CF403 /* MapViewController.m */; };
 		89043A0F18FE6EAB003CF403 /* TokyoOverlayRenderer.m in Sources */ = {isa = PBXBuildFile; fileRef = 89043A0E18FE6EAB003CF403 /* TokyoOverlayRenderer.m */; };
 		89043A1118FE6F7F003CF403 /* access_floorguide.gif in Resources */ = {isa = PBXBuildFile; fileRef = 89043A1018FE6F7F003CF403 /* access_floorguide.gif */; };
+		89043A1718FE7CAF003CF403 /* TimetableAnnotaion.m in Sources */ = {isa = PBXBuildFile; fileRef = 89043A1618FE7CAF003CF403 /* TimetableAnnotaion.m */; };
 		89C17F4418FE54B700324821 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 89C17F4318FE54B700324821 /* Foundation.framework */; };
 		89C17F4618FE54B700324821 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 89C17F4518FE54B700324821 /* CoreGraphics.framework */; };
 		89C17F4818FE54B700324821 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 89C17F4718FE54B700324821 /* UIKit.framework */; };
@@ -46,6 +47,8 @@
 		89043A0D18FE6EAB003CF403 /* TokyoOverlayRenderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TokyoOverlayRenderer.h; sourceTree = "<group>"; };
 		89043A0E18FE6EAB003CF403 /* TokyoOverlayRenderer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TokyoOverlayRenderer.m; sourceTree = "<group>"; };
 		89043A1018FE6F7F003CF403 /* access_floorguide.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = access_floorguide.gif; sourceTree = "<group>"; };
+		89043A1518FE7CAF003CF403 /* TimetableAnnotaion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TimetableAnnotaion.h; sourceTree = "<group>"; };
+		89043A1618FE7CAF003CF403 /* TimetableAnnotaion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TimetableAnnotaion.m; sourceTree = "<group>"; };
 		89C17F4018FE54B700324821 /* tokyo0505.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = tokyo0505.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		89C17F4318FE54B700324821 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		89C17F4518FE54B700324821 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -136,6 +139,8 @@
 				89043A0B18FE5D2F003CF403 /* MapViewController.m */,
 				89043A0D18FE6EAB003CF403 /* TokyoOverlayRenderer.h */,
 				89043A0E18FE6EAB003CF403 /* TokyoOverlayRenderer.m */,
+				89043A1518FE7CAF003CF403 /* TimetableAnnotaion.h */,
+				89043A1618FE7CAF003CF403 /* TimetableAnnotaion.m */,
 			);
 			path = tokyo0505;
 			sourceTree = "<group>";
@@ -305,6 +310,7 @@
 				89043A0F18FE6EAB003CF403 /* TokyoOverlayRenderer.m in Sources */,
 				89043A0C18FE5D2F003CF403 /* MapViewController.m in Sources */,
 				89C17F5418FE54B700324821 /* AppDelegate.m in Sources */,
+				89043A1718FE7CAF003CF403 /* TimetableAnnotaion.m in Sources */,
 				89C17F5018FE54B700324821 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

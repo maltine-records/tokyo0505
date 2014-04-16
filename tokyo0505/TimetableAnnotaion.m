@@ -7,7 +7,20 @@
 //
 
 #import "TimetableAnnotaion.h"
+#import <MapKit/MapKit.h>
 
-@implementation TimetableAnnotaion
+@implementation TimetableAnnotaion 
+
+@synthesize coordinate, subtitle, title;
+
+- (id) initWithCoordinate:(CLLocationCoordinate2D)c {
+	coordinate = c;
+	return self;
+}
+
+- (void)setCoordinate:(CLLocationCoordinate2D)c {
+    coordinate = c;
+}
+
 
 @end
