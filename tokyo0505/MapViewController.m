@@ -7,6 +7,7 @@
 //
 
 #import "MapViewController.h"
+#import "TokyoOverlayRenderer.h"
 
 @interface MapViewController ()
 
@@ -38,24 +39,34 @@
 
 - (void)setupMapView
 {
-    // move center
     CLLocationCoordinate2D tocho;
     tocho.latitude = 35.68664111;
     tocho.longitude = 139.6948839;
-    [self.mapView setCenterCoordinate:tocho];
+    CLLocationCoordinate2D koukyo;
+    koukyo.latitude = 35.683833;
+    koukyo.longitude = 139.753972;
+    
+    self.mapView.mapType = MKMapTypeHybrid;
+    
+    // move center
+    [self.mapView setCenterCoordinate:koukyo];
     MKCoordinateRegion region = self.mapView.region;
-    region.center = tocho;
+    region.center = koukyo;
     region.span.latitudeDelta = 0.5;
     region.span.longitudeDelta = 0.5;
     [self.mapView setRegion:region animated:TRUE];
     // add overlay
-    MKMapRect bounds = MKMapRectMake(tocho.latitude, tocho.longitude, 100, 100);
-    //MKMapOverlay *mapOverlay = [[MKMapOverlay alloc] initWithMapRect:bounds andCoord:tocho];
-    MKOverlayView *mkov = [[MKOverlayView alloc] init];
-    [self.mapView addOverlay:mkov];
-
+    int radius = 10000;
+    MKCircle *c = [MKCircle circleWithCenterCoordinate:koukyo radius:radius];
+    [self.mapView addOverlay:c];
 }
 
+
+- (MKOverlayRenderer *)mapView:(MKMapView *)mapView rendererForOverlay:(id < MKOverlay >)overlay
+{
+    NSLog(@"renderer");
+    return [[TokyoOverlayRenderer alloc] initWithOverlay:overlay];
+}
 
 
 /*
