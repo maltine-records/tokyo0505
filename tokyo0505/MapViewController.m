@@ -8,7 +8,6 @@
 
 #import "MapViewController.h"
 #import "TokyoOverlayRenderer.h"
-#import "TimetableAnnotaion.h"
 
 @interface MapViewController ()
 
@@ -28,8 +27,10 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
     // Do any additional setup after loading the view.
     [self setupMapView];
+    [self setupBeaconMonitor];
 }
 
 - (void)didReceiveMemoryWarning
@@ -49,6 +50,9 @@
     CLLocationCoordinate2D tocho;
     tocho.latitude = 35.68664111;
     tocho.longitude = 139.6948839;
+    CLLocationCoordinate2D nogata;
+    nogata.latitude = 35.7200116;
+    nogata.longitude = 139.6522843;
 
     self.mapView.mapType = MKMapTypeHybrid;
     // move center
@@ -76,6 +80,10 @@
     subtt.title = @"西東京";
     [self.mapView addAnnotation:subtt];
     
+    //prepare for beacon
+    self.nogataAnnotation = [[TimetableAnnotaion alloc] init];
+    self.nogataAnnotation.coordinate = nogata;
+    self.nogataAnnotation.title = @"野方";
 }
 
 
@@ -95,5 +103,82 @@
     // Pass the selected object to the new view controller.
 }
 */
+
+- (void)setupBeaconMonitor
+{
+    if ([CLLocationManager isMonitoringAvailableForClass:[CLBeaconRegion class]]) {
+        // CLLocationManagerの生成とデリゲートの設定
+        self.locationManager = [CLLocationManager new];
+        self.locationManager.delegate = self;
+        
+        // NSUUIDを作成
+        self.proximityUUID = [[NSUUID alloc] initWithUUIDString:@"00000000-31d9-1001-b000-001c4dc4c8af"];
+        // CLBeaconRegionを作成
+        self.beaconRegion = [[CLBeaconRegion alloc] initWithProximityUUID:self.proximityUUID identifier:@"com.nubot.tokyo0505.testregion"];
+        // Beaconによる領域観測を開始
+        [self.locationManager startMonitoringForRegion:self.beaconRegion];
+    }
+}
+
+- (void)locationManager:(CLLocationManager *)manager didStartMonitoringForRegion:(CLRegion *)region
+{
+    [self.locationManager requestStateForRegion:self.beaconRegion];
+}
+
+- (void)locationManager:(CLLocationManager *)manager didDetermineState:(CLRegionState)state forRegion:(CLRegion *)region
+{
+    switch (state) {
+        case CLRegionStateInside: // リージョン内にいる
+            if ([region isMemberOfClass:[CLBeaconRegion class]] && [CLLocationManager isRangingAvailable]) {
+                [self.locationManager startRangingBeaconsInRegion:self.beaconRegion];
+            }
+            break;
+        case CLRegionStateOutside:
+        case CLRegionStateUnknown:
+        default:
+            break;
+    }
+}
+
+- (void)locationManager:(CLLocationManager *)manager didEnterRegion:(CLRegion *)region
+{
+    [self.mapView addAnnotation:self.nogataAnnotation];
+    if ([region isMemberOfClass:[CLBeaconRegion class]] && [CLLocationManager isRangingAvailable]) {
+        [self.locationManager startRangingBeaconsInRegion:(CLBeaconRegion *)region];
+    }
+}
+
+- (void)locationManager:(CLLocationManager *)manager didExitRegion:(CLRegion *)region
+{
+    [self.mapView removeAnnotation:self.nogataAnnotation];
+}
+
+- (void)locationManager:(CLLocationManager *)manager didRangeBeacons:(NSArray *)beacons inRegion:(CLBeaconRegion *)region
+{
+    if (beacons.count > 0) {
+        CLBeacon *nearestBeacon = beacons.firstObject;
+        
+        NSString *rangeMessage;
+        
+        switch (nearestBeacon.proximity) {
+            case CLProximityImmediate:
+                rangeMessage = @"Range Immediate: ";
+                break;
+            case CLProximityNear:
+                rangeMessage = @"Range Near: ";
+                break;
+            case CLProximityFar:
+                rangeMessage = @"Range Far: ";
+                break;
+            default:
+                rangeMessage = @"Range Unknown: ";
+                break;
+        }
+        
+        NSString *message = [NSString stringWithFormat:@"major:%@, minor:%@, accuracy:%f, rssi:%d",
+                             nearestBeacon.major, nearestBeacon.minor, nearestBeacon.accuracy, nearestBeacon.rssi];
+        NSLog(message);
+    }
+}
 
 @end
