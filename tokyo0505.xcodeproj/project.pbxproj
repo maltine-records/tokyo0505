@@ -1,0 +1,513 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		89043A0718FE5BE6003CF403 /* Storyboard_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 89043A0618FE5BE6003CF403 /* Storyboard_iPhone.storyboard */; };
+		89043A0918FE5C62003CF403 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 89043A0818FE5C62003CF403 /* MapKit.framework */; };
+		89043A0C18FE5D2F003CF403 /* MapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 89043A0B18FE5D2F003CF403 /* MapViewController.m */; };
+		89C17F4418FE54B700324821 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 89C17F4318FE54B700324821 /* Foundation.framework */; };
+		89C17F4618FE54B700324821 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 89C17F4518FE54B700324821 /* CoreGraphics.framework */; };
+		89C17F4818FE54B700324821 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 89C17F4718FE54B700324821 /* UIKit.framework */; };
+		89C17F4E18FE54B700324821 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 89C17F4C18FE54B700324821 /* InfoPlist.strings */; };
+		89C17F5018FE54B700324821 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 89C17F4F18FE54B700324821 /* main.m */; };
+		89C17F5418FE54B700324821 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 89C17F5318FE54B700324821 /* AppDelegate.m */; };
+		89C17F5618FE54B700324821 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 89C17F5518FE54B700324821 /* Images.xcassets */; };
+		89C17F5D18FE54B700324821 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 89C17F5C18FE54B700324821 /* XCTest.framework */; };
+		89C17F5E18FE54B700324821 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 89C17F4318FE54B700324821 /* Foundation.framework */; };
+		89C17F5F18FE54B700324821 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 89C17F4718FE54B700324821 /* UIKit.framework */; };
+		89C17F6718FE54B700324821 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 89C17F6518FE54B700324821 /* InfoPlist.strings */; };
+		89C17F6918FE54B700324821 /* tokyo0505Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = 89C17F6818FE54B700324821 /* tokyo0505Tests.m */; };
+		8AEA531279834F928D632783 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DFCB485FE0D840B39B5B8300 /* libPods.a */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		89C17F6018FE54B700324821 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 89C17F3818FE54B700324821 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 89C17F3F18FE54B700324821;
+			remoteInfo = tokyo0505;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		6ACE4CDFE563465B9D4E14B5 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
+		89043A0618FE5BE6003CF403 /* Storyboard_iPhone.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Storyboard_iPhone.storyboard; sourceTree = "<group>"; };
+		89043A0818FE5C62003CF403 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		89043A0A18FE5D2F003CF403 /* MapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapViewController.h; sourceTree = "<group>"; };
+		89043A0B18FE5D2F003CF403 /* MapViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MapViewController.m; sourceTree = "<group>"; };
+		89C17F4018FE54B700324821 /* tokyo0505.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = tokyo0505.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		89C17F4318FE54B700324821 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		89C17F4518FE54B700324821 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		89C17F4718FE54B700324821 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		89C17F4B18FE54B700324821 /* tokyo0505-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "tokyo0505-Info.plist"; sourceTree = "<group>"; };
+		89C17F4D18FE54B700324821 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		89C17F4F18FE54B700324821 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		89C17F5118FE54B700324821 /* tokyo0505-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "tokyo0505-Prefix.pch"; sourceTree = "<group>"; };
+		89C17F5218FE54B700324821 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		89C17F5318FE54B700324821 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		89C17F5518FE54B700324821 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		89C17F5B18FE54B700324821 /* tokyo0505Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = tokyo0505Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		89C17F5C18FE54B700324821 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
+		89C17F6418FE54B700324821 /* tokyo0505Tests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "tokyo0505Tests-Info.plist"; sourceTree = "<group>"; };
+		89C17F6618FE54B700324821 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		89C17F6818FE54B700324821 /* tokyo0505Tests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = tokyo0505Tests.m; sourceTree = "<group>"; };
+		DFCB485FE0D840B39B5B8300 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		89C17F3D18FE54B700324821 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				89043A0918FE5C62003CF403 /* MapKit.framework in Frameworks */,
+				89C17F4618FE54B700324821 /* CoreGraphics.framework in Frameworks */,
+				89C17F4818FE54B700324821 /* UIKit.framework in Frameworks */,
+				89C17F4418FE54B700324821 /* Foundation.framework in Frameworks */,
+				8AEA531279834F928D632783 /* libPods.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		89C17F5818FE54B700324821 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				89C17F5D18FE54B700324821 /* XCTest.framework in Frameworks */,
+				89C17F5F18FE54B700324821 /* UIKit.framework in Frameworks */,
+				89C17F5E18FE54B700324821 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		89C17F3718FE54B700324821 = {
+			isa = PBXGroup;
+			children = (
+				89C17F4918FE54B700324821 /* tokyo0505 */,
+				89C17F6218FE54B700324821 /* tokyo0505Tests */,
+				89C17F4218FE54B700324821 /* Frameworks */,
+				89C17F4118FE54B700324821 /* Products */,
+				6ACE4CDFE563465B9D4E14B5 /* Pods.xcconfig */,
+			);
+			sourceTree = "<group>";
+		};
+		89C17F4118FE54B700324821 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				89C17F4018FE54B700324821 /* tokyo0505.app */,
+				89C17F5B18FE54B700324821 /* tokyo0505Tests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		89C17F4218FE54B700324821 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				89043A0818FE5C62003CF403 /* MapKit.framework */,
+				89C17F4318FE54B700324821 /* Foundation.framework */,
+				89C17F4518FE54B700324821 /* CoreGraphics.framework */,
+				89C17F4718FE54B700324821 /* UIKit.framework */,
+				89C17F5C18FE54B700324821 /* XCTest.framework */,
+				DFCB485FE0D840B39B5B8300 /* libPods.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		89C17F4918FE54B700324821 /* tokyo0505 */ = {
+			isa = PBXGroup;
+			children = (
+				89C17F5218FE54B700324821 /* AppDelegate.h */,
+				89C17F5318FE54B700324821 /* AppDelegate.m */,
+				89C17F5518FE54B700324821 /* Images.xcassets */,
+				89C17F4A18FE54B700324821 /* Supporting Files */,
+				89043A0618FE5BE6003CF403 /* Storyboard_iPhone.storyboard */,
+				89043A0A18FE5D2F003CF403 /* MapViewController.h */,
+				89043A0B18FE5D2F003CF403 /* MapViewController.m */,
+			);
+			path = tokyo0505;
+			sourceTree = "<group>";
+		};
+		89C17F4A18FE54B700324821 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				89C17F4B18FE54B700324821 /* tokyo0505-Info.plist */,
+				89C17F4C18FE54B700324821 /* InfoPlist.strings */,
+				89C17F4F18FE54B700324821 /* main.m */,
+				89C17F5118FE54B700324821 /* tokyo0505-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		89C17F6218FE54B700324821 /* tokyo0505Tests */ = {
+			isa = PBXGroup;
+			children = (
+				89C17F6818FE54B700324821 /* tokyo0505Tests.m */,
+				89C17F6318FE54B700324821 /* Supporting Files */,
+			);
+			path = tokyo0505Tests;
+			sourceTree = "<group>";
+		};
+		89C17F6318FE54B700324821 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				89C17F6418FE54B700324821 /* tokyo0505Tests-Info.plist */,
+				89C17F6518FE54B700324821 /* InfoPlist.strings */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		89C17F3F18FE54B700324821 /* tokyo0505 */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 89C17F6C18FE54B800324821 /* Build configuration list for PBXNativeTarget "tokyo0505" */;
+			buildPhases = (
+				DF60F5C7FEA544DA93C3A074 /* Check Pods Manifest.lock */,
+				89C17F3C18FE54B700324821 /* Sources */,
+				89C17F3D18FE54B700324821 /* Frameworks */,
+				89C17F3E18FE54B700324821 /* Resources */,
+				98A4F0B901CF4D85962729F9 /* Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = tokyo0505;
+			productName = tokyo0505;
+			productReference = 89C17F4018FE54B700324821 /* tokyo0505.app */;
+			productType = "com.apple.product-type.application";
+		};
+		89C17F5A18FE54B700324821 /* tokyo0505Tests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 89C17F6F18FE54B800324821 /* Build configuration list for PBXNativeTarget "tokyo0505Tests" */;
+			buildPhases = (
+				89C17F5718FE54B700324821 /* Sources */,
+				89C17F5818FE54B700324821 /* Frameworks */,
+				89C17F5918FE54B700324821 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				89C17F6118FE54B700324821 /* PBXTargetDependency */,
+			);
+			name = tokyo0505Tests;
+			productName = tokyo0505Tests;
+			productReference = 89C17F5B18FE54B700324821 /* tokyo0505Tests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		89C17F3818FE54B700324821 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0510;
+				ORGANIZATIONNAME = "Nubot, inc";
+				TargetAttributes = {
+					89C17F5A18FE54B700324821 = {
+						TestTargetID = 89C17F3F18FE54B700324821;
+					};
+				};
+			};
+			buildConfigurationList = 89C17F3B18FE54B700324821 /* Build configuration list for PBXProject "tokyo0505" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 89C17F3718FE54B700324821;
+			productRefGroup = 89C17F4118FE54B700324821 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				89C17F3F18FE54B700324821 /* tokyo0505 */,
+				89C17F5A18FE54B700324821 /* tokyo0505Tests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		89C17F3E18FE54B700324821 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				89C17F4E18FE54B700324821 /* InfoPlist.strings in Resources */,
+				89043A0718FE5BE6003CF403 /* Storyboard_iPhone.storyboard in Resources */,
+				89C17F5618FE54B700324821 /* Images.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		89C17F5918FE54B700324821 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				89C17F6718FE54B700324821 /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		98A4F0B901CF4D85962729F9 /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Pods-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		DF60F5C7FEA544DA93C3A074 /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		89C17F3C18FE54B700324821 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				89043A0C18FE5D2F003CF403 /* MapViewController.m in Sources */,
+				89C17F5418FE54B700324821 /* AppDelegate.m in Sources */,
+				89C17F5018FE54B700324821 /* main.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		89C17F5718FE54B700324821 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				89C17F6918FE54B700324821 /* tokyo0505Tests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		89C17F6118FE54B700324821 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 89C17F3F18FE54B700324821 /* tokyo0505 */;
+			targetProxy = 89C17F6018FE54B700324821 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		89C17F4C18FE54B700324821 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				89C17F4D18FE54B700324821 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		89C17F6518FE54B700324821 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				89C17F6618FE54B700324821 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		89C17F6A18FE54B800324821 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		89C17F6B18FE54B800324821 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				ENABLE_NS_ASSERTIONS = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		89C17F6D18FE54B800324821 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 6ACE4CDFE563465B9D4E14B5 /* Pods.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "tokyo0505/tokyo0505-Prefix.pch";
+				INFOPLIST_FILE = "tokyo0505/tokyo0505-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		89C17F6E18FE54B800324821 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 6ACE4CDFE563465B9D4E14B5 /* Pods.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "tokyo0505/tokyo0505-Prefix.pch";
+				INFOPLIST_FILE = "tokyo0505/tokyo0505-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+		89C17F7018FE54B800324821 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/tokyo0505.app/tokyo0505";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "tokyo0505/tokyo0505-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = "tokyo0505Tests/tokyo0505Tests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = xctest;
+			};
+			name = Debug;
+		};
+		89C17F7118FE54B800324821 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/tokyo0505.app/tokyo0505";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "tokyo0505/tokyo0505-Prefix.pch";
+				INFOPLIST_FILE = "tokyo0505Tests/tokyo0505Tests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = xctest;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		89C17F3B18FE54B700324821 /* Build configuration list for PBXProject "tokyo0505" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				89C17F6A18FE54B800324821 /* Debug */,
+				89C17F6B18FE54B800324821 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		89C17F6C18FE54B800324821 /* Build configuration list for PBXNativeTarget "tokyo0505" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				89C17F6D18FE54B800324821 /* Debug */,
+				89C17F6E18FE54B800324821 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		89C17F6F18FE54B800324821 /* Build configuration list for PBXNativeTarget "tokyo0505Tests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				89C17F7018FE54B800324821 /* Debug */,
+				89C17F7118FE54B800324821 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 89C17F3818FE54B700324821 /* Project object */;
+}
