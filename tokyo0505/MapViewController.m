@@ -8,6 +8,7 @@
 
 #import "MapViewController.h"
 #import "TokyoOverlayRenderer.h"
+#import "AFNetworking.h"
 
 @interface MapViewController ()
 
@@ -148,5 +149,20 @@
         NSLog(@"out");
     }
 }
+
+
+- (void)postUserData:(void (^)())callback {
+    NSString *url_str = @"http://yuiseki.net:3000/user";
+    NSDictionary *param = @{@"uuid": @"user uuid", @"beacon_uuid":@"beacon uuid"};
+    AFHTTPRequestOperationManager *man = [AFHTTPRequestOperationManager manager];
+    man.requestSerializer = [AFJSONRequestSerializer serializer];
+    [man POST:url_str parameters:param
+      success:^(AFHTTPRequestOperation *operation, id responseObject) {
+          callback();
+      } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+          NSLog(@"failed...");
+      }];
+}
+
 
 @end
