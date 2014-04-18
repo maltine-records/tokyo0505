@@ -10,6 +10,8 @@
 #import "TokyoOverlayRenderer.h"
 #import "AFNetworking.h"
 #import "Common.h"
+#import <Accounts/Accounts.h>
+#import <Social/Social.h>
 
 @interface MapViewController ()
 
@@ -34,6 +36,7 @@
     // Do any additional setup after loading the view.
     [self setupMapView];
     [self setupBeaconMonitor];
+    [self requestTwitterAccount];
 }
 
 - (void)didReceiveMemoryWarning
@@ -165,6 +168,7 @@
 }
 
 
+# pragma mark bigbrother api
 - (void)postUserData:(NSDictionary *)params withCallback:(void (^)())callback {
     NSUUID *vendorUUID = [UIDevice currentDevice].identifierForVendor;
     [params setValue:vendorUUID.UUIDString forKey:@"uuid"];
@@ -180,6 +184,88 @@
           NSLog(@"failed...");
       }];
 }
+
+
+# pragma mark pick twitter account
+
+- (void)requestTwitterAccount
+{
+    if ([SLComposeViewController isAvailableForServiceType:SLServiceTypeTwitter]) {
+        ACAccountStore *accountStore = [[ACAccountStore alloc] init];
+        ACAccountType *twitterAC = [accountStore
+                                    accountTypeWithAccountTypeIdentifier:ACAccountTypeIdentifierTwitter];
+        [accountStore
+         requestAccessToAccountsWithType:twitterAC
+         options:NULL
+         completion:^(BOOL granted, NSError *error) {
+            if (granted) {
+                self.twitterAccounts = [accountStore accountsWithAccountType:twitterAC];
+                [self showTwitterPickerView];
+            }
+        }];
+    }
+    
+}
+
+- (void)showTwitterPickerView{
+    UIPickerView *pickerView = [[UIPickerView alloc] init];
+    pickerView.delegate = self;
+    pickerView.dataSource = self;
+    
+    CGRect pf = pickerView.frame;
+    // pickerViewの下に表示したい
+    UIToolbar *toolbar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, pf.size.height, 320, 44)];
+    UIBarButtonItem *space = [[UIBarButtonItem alloc]
+                              initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace
+                              target:nil action:nil];
+    UIBarButtonItem *doneButton = [[UIBarButtonItem alloc]
+                                   initWithTitle:@"このTwitterアカウントを使う"
+                                   style:UIBarButtonItemStyleDone
+                                   target:self action:@selector(doneTwitterPick)];
+    [toolbar setItems:[NSArray arrayWithObjects:space, doneButton, nil]];
+    // pickerView height + toolbar height
+    CGRect pbf = CGRectMake(pf.origin.x, pf.origin.y, pf.size.width, pf.size.height+44);
+    UIView *pickerViewBackView = [[UIView alloc] initWithFrame:pbf];
+    pickerViewBackView.backgroundColor = [UIColor whiteColor];
+    pickerViewBackView.center = self.view.center;
+    [pickerViewBackView addSubview:toolbar];
+    [pickerViewBackView addSubview:pickerView];
+    self.twitterPickerView = pickerViewBackView;
+    [self.view addSubview:self.twitterPickerView];
+}
+
+-(void)doneTwitterPick{
+    // 一度もdidSelectRowが呼ばれていない場合、先頭のやつとする
+    if (!didSelected) {
+        NSString *username = [[self.twitterAccounts objectAtIndex:0] username];
+        [[NSUserDefaults standardUserDefaults] setObject:username forKey:@"screen_name"];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+    }
+    // close picker view
+    [self.twitterPickerView removeFromSuperview];
+}
+
+# pragma mark UIPickerView Delegate
+BOOL didSelected = false;
+-(void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component{
+    didSelected = true;
+    NSString *username = [[self.twitterAccounts objectAtIndex:row] username];
+    [[NSUserDefaults standardUserDefaults] setObject:username forKey:@"screen_name"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
+# pragma mark UIPickerView DataSource
+-(NSInteger)numberOfComponentsInPickerView:(UIPickerView*)pickerView{
+    return 1;
+}
+-(NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component{
+    return [self.twitterAccounts count];
+}
+-(NSString*)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component{
+    return [[self.twitterAccounts objectAtIndex:row] username];
+}
+
+
 
 
 @end

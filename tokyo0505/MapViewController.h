@@ -10,13 +10,15 @@
 #import <MapKit/MapKit.h>
 #import "TimetableAnnotaion.h"
 
-@interface MapViewController : UIViewController <MKMapViewDelegate, CLLocationManagerDelegate>
+@interface MapViewController : UIViewController <MKMapViewDelegate, CLLocationManagerDelegate, UIPickerViewDelegate, UIPickerViewDataSource>
 
 @property (strong, nonatomic) TimetableAnnotaion *nogataAnnotation;
 @property (strong, nonatomic) CLLocationManager *locationManager;
 @property (strong, nonatomic) CLBeaconRegion *beaconRegion;
 @property (strong, nonatomic) NSUUID *proximityUUID;
 @property (strong, nonatomic) NSString *currentUUID;
+@property (strong, nonatomic) NSArray *twitterAccounts;
+@property (weak, nonatomic) UIView *twitterPickerView;
 @property (weak, nonatomic) IBOutlet MKMapView *mapView;
 
 @end
