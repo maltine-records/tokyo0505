@@ -73,8 +73,6 @@
     maintt.title = @"東東京";
     [self.mapView addAnnotation:maintt];
     
-
-    
     TimetableAnnotaion *subtt = [[TimetableAnnotaion alloc] init];
     subtt.coordinate = tocho;
     subtt.title = @"西東京";
@@ -116,41 +114,9 @@
         // CLBeaconRegionを作成
         self.beaconRegion = [[CLBeaconRegion alloc] initWithProximityUUID:self.proximityUUID identifier:@"com.nubot.tokyo0505.testregion"];
         // Beaconによる領域観測を開始
-        [self.locationManager startMonitoringForRegion:self.beaconRegion];
+        // [self.locationManager startMonitoringForRegion:self.beaconRegion];
+        [self.locationManager startRangingBeaconsInRegion:self.beaconRegion];
     }
-}
-
-- (void)locationManager:(CLLocationManager *)manager didStartMonitoringForRegion:(CLRegion *)region
-{
-    [self.locationManager requestStateForRegion:self.beaconRegion];
-}
-
-- (void)locationManager:(CLLocationManager *)manager didDetermineState:(CLRegionState)state forRegion:(CLRegion *)region
-{
-    switch (state) {
-        case CLRegionStateInside: // リージョン内にいる
-            if ([region isMemberOfClass:[CLBeaconRegion class]] && [CLLocationManager isRangingAvailable]) {
-                [self.locationManager startRangingBeaconsInRegion:self.beaconRegion];
-            }
-            break;
-        case CLRegionStateOutside:
-        case CLRegionStateUnknown:
-        default:
-            break;
-    }
-}
-
-- (void)locationManager:(CLLocationManager *)manager didEnterRegion:(CLRegion *)region
-{
-    [self.mapView addAnnotation:self.nogataAnnotation];
-    if ([region isMemberOfClass:[CLBeaconRegion class]] && [CLLocationManager isRangingAvailable]) {
-        [self.locationManager startRangingBeaconsInRegion:(CLBeaconRegion *)region];
-    }
-}
-
-- (void)locationManager:(CLLocationManager *)manager didExitRegion:(CLRegion *)region
-{
-    [self.mapView removeAnnotation:self.nogataAnnotation];
 }
 
 - (void)locationManager:(CLLocationManager *)manager didRangeBeacons:(NSArray *)beacons inRegion:(CLBeaconRegion *)region
@@ -175,9 +141,11 @@
                 break;
         }
         
-        NSString *message = [NSString stringWithFormat:@"major:%@, minor:%@, accuracy:%f, rssi:%d",
-                             nearestBeacon.major, nearestBeacon.minor, nearestBeacon.accuracy, nearestBeacon.rssi];
+        NSString *message = [NSString stringWithFormat:@"UUID:%@, major:%@, minor:%@, accuracy:%f, rssi:%d",
+                             nearestBeacon.proximityUUID,nearestBeacon.major, nearestBeacon.minor, nearestBeacon.accuracy, nearestBeacon.rssi];
         NSLog(message);
+    } else {
+        NSLog(@"out");
     }
 }
 
