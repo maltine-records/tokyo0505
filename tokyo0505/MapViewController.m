@@ -159,7 +159,7 @@
     if(![gotUUID isEqualToString:self.currentUUID]) {
         NSLog(@"俺は変わった %@ to %@", self.currentUUID, gotUUID);
         if(![gotUUID isEqualToString:@""]) {
-            NSDictionary *param = @{@"beacon_uuid":gotUUID};
+            NSMutableDictionary *param = [NSMutableDictionary dictionaryWithDictionary:@{@"beacon_uuid":gotUUID}];
             [self postUserData:param withCallback:^(void) {
             }];
         }
@@ -169,9 +169,9 @@
 
 
 # pragma mark bigbrother api
-- (void)postUserData:(NSDictionary *)params withCallback:(void (^)())callback {
+- (void)postUserData:(NSMutableDictionary *)params withCallback:(void (^)())callback {
     NSUUID *vendorUUID = [UIDevice currentDevice].identifierForVendor;
-    [params setValue:vendorUUID.UUIDString forKey:@"uuid"];
+    [params setObject:[vendorUUID UUIDString] forKey:@"uuid"];
     NSLog(@"postUserData params : %@", params);
 
     NSString *url_str = [NSString stringWithFormat:@"%@/user", UrlEndPoint];
