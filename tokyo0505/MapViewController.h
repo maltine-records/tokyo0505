@@ -16,6 +16,7 @@
 @property (strong, nonatomic) CLLocationManager *locationManager;
 @property (strong, nonatomic) CLBeaconRegion *beaconRegion;
 @property (strong, nonatomic) NSUUID *proximityUUID;
+@property (strong, nonatomic) NSString *currentUUID;
 @property (weak, nonatomic) IBOutlet MKMapView *mapView;
 
 @end

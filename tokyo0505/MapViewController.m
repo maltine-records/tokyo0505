@@ -17,11 +17,12 @@
 
 @implementation MapViewController
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+- (id)initWithCoder:(NSCoder *)aDecoder
 {
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    self = [super initWithCoder:aDecoder];
     if (self) {
         // Custom initialization
+        self.currentUUID = @"";
     }
     return self;
 }
@@ -123,6 +124,7 @@
 
 - (void)locationManager:(CLLocationManager *)manager didRangeBeacons:(NSArray *)beacons inRegion:(CLBeaconRegion *)region
 {
+    NSString* gotUUID;
     if (beacons.count > 0) {
         CLBeacon *nearestBeacon = beacons.firstObject;
         
@@ -145,10 +147,20 @@
         
         NSString *message = [NSString stringWithFormat:@"UUID:%@, major:%@, minor:%@, accuracy:%f, rssi:%d",
                              nearestBeacon.proximityUUID,nearestBeacon.major, nearestBeacon.minor, nearestBeacon.accuracy, nearestBeacon.rssi];
-        NSLog(message);
+        gotUUID = [NSString stringWithFormat:@"%@-%@-%@", [nearestBeacon.proximityUUID UUIDString], nearestBeacon.major, nearestBeacon.minor];
+        //NSLog(message);
     } else {
-        NSLog(@"out");
+        gotUUID = @"";
     }
+    //check if UUID changed
+    if(![gotUUID isEqualToString:self.currentUUID]) {
+        NSLog(@"俺は変わった %@ to %@", self.currentUUID, gotUUID);
+        if(![gotUUID isEqualToString:@""]) {
+            [self postUserData:^(void) {
+            }];
+        }
+    }
+    self.currentUUID = [NSString stringWithString:gotUUID];
 }
 
 
