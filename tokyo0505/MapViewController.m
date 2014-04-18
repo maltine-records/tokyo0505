@@ -156,7 +156,8 @@
     if(![gotUUID isEqualToString:self.currentUUID]) {
         NSLog(@"俺は変わった %@ to %@", self.currentUUID, gotUUID);
         if(![gotUUID isEqualToString:@""]) {
-            [self postUserData:^(void) {
+            NSDictionary *param = @{@"beacon_uuid":gotUUID};
+            [self postUserData:param withCallback:^(void) {
             }];
         }
     }
@@ -164,12 +165,15 @@
 }
 
 
-- (void)postUserData:(void (^)())callback {
+- (void)postUserData:(NSDictionary *)params withCallback:(void (^)())callback {
+    NSUUID *vendorUUID = [UIDevice currentDevice].identifierForVendor;
+    [params setValue:vendorUUID.UUIDString forKey:@"uuid"];
+    NSLog(@"postUserData params : %@", params);
+
     NSString *url_str = [NSString stringWithFormat:@"%@/user", UrlEndPoint];
-    NSDictionary *param = @{@"uuid": @"user uuid", @"beacon_uuid":@"beacon uuid"};
     AFHTTPRequestOperationManager *man = [AFHTTPRequestOperationManager manager];
     man.requestSerializer = [AFJSONRequestSerializer serializer];
-    [man POST:url_str parameters:param
+    [man POST:url_str parameters:params
       success:^(AFHTTPRequestOperation *operation, id responseObject) {
           callback();
       } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
