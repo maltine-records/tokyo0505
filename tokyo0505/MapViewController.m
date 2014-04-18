@@ -182,9 +182,14 @@
           callback();
       } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
           NSLog(@"failed...");
+          NSLog(@"%@", error);
       }];
 }
-
+- (void)postTwitterName {
+    NSString *username = [[NSUserDefaults standardUserDefaults] objectForKey:@"screen_name"];
+    NSMutableDictionary *param = [NSMutableDictionary dictionaryWithDictionary:@{@"screen_name":username}];
+    [self postUserData:param withCallback:^{}];
+}
 
 # pragma mark pick twitter account
 
@@ -241,6 +246,7 @@
         [[NSUserDefaults standardUserDefaults] setObject:username forKey:@"screen_name"];
         [[NSUserDefaults standardUserDefaults] synchronize];
     }
+    [self postTwitterName];
     // close picker view
     [self.twitterPickerView removeFromSuperview];
 }
