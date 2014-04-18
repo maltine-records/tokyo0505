@@ -10,8 +10,7 @@
 #import "TokyoOverlayRenderer.h"
 #import "AFNetworking.h"
 #import "Common.h"
-#import <Accounts/Accounts.h>
-#import <Social/Social.h>
+
 
 @interface MapViewController ()
 
@@ -185,10 +184,18 @@
           NSLog(@"%@", error);
       }];
 }
-- (void)postTwitterName {
-    NSString *username = [[NSUserDefaults standardUserDefaults] objectForKey:@"screen_name"];
-    NSMutableDictionary *param = [NSMutableDictionary dictionaryWithDictionary:@{@"screen_name":username}];
-    [self postUserData:param withCallback:^{}];
+- (void)postTwitterData {
+    [self getTwitterProfileImage:^(NSString *url) {
+        NSString *username = [[NSUserDefaults standardUserDefaults] objectForKey:@"screen_name"];
+        NSMutableDictionary *param = [NSMutableDictionary
+                                      dictionaryWithDictionary:@{
+                                                                 @"screen_name": username,
+                                                                 @"icon_url": url
+                                                                 }];
+        [self postUserData:param withCallback:^{}];
+    }];
+
+
 }
 
 # pragma mark pick twitter account
@@ -242,11 +249,12 @@
 -(void)doneTwitterPick{
     // 一度もdidSelectRowが呼ばれていない場合、先頭のやつとする
     if (!didSelected) {
-        NSString *username = [[self.twitterAccounts objectAtIndex:0] username];
+        self.twitterAccount = [self.twitterAccounts objectAtIndex:0];
+        NSString *username = [self.twitterAccount username];
         [[NSUserDefaults standardUserDefaults] setObject:username forKey:@"screen_name"];
         [[NSUserDefaults standardUserDefaults] synchronize];
     }
-    [self postTwitterName];
+    [self postTwitterData];
     // close picker view
     [self.twitterPickerView removeFromSuperview];
 }
@@ -255,7 +263,8 @@
 BOOL didSelected = false;
 -(void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component{
     didSelected = true;
-    NSString *username = [[self.twitterAccounts objectAtIndex:row] username];
+    self.twitterAccount = [self.twitterAccounts objectAtIndex:row];
+    NSString *username = [self.twitterAccount username];
     [[NSUserDefaults standardUserDefaults] setObject:username forKey:@"screen_name"];
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
@@ -269,6 +278,42 @@ BOOL didSelected = false;
 }
 -(NSString*)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component{
     return [[self.twitterAccounts objectAtIndex:row] username];
+}
+
+# pragma mark twitter profile image
+-(void)getTwitterProfileImage:(void(^)(NSString*url))callback{
+    if (!self.twitterAccount) {
+        return;
+    }
+    NSDictionary *param = [NSDictionary dictionaryWithObject:[self.twitterAccount username] forKey:@"screen_name"];
+    SLRequest *twreq = [SLRequest
+                            requestForServiceType:SLServiceTypeTwitter
+                            requestMethod:SLRequestMethodGET
+                            URL:[NSURL URLWithString:@"https://api.twitter.com/1.1/users/show.json"]
+                            parameters:param];
+    [twreq setAccount:self.twitterAccount];
+    [twreq performRequestWithHandler:^(NSData *responseData, NSHTTPURLResponse *urlResponse, NSError *error) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if ([urlResponse statusCode] == 429) {
+                NSLog(@"Rate limit reached");
+                return;
+            }
+            if (error) {
+                NSLog(@"Error: %@", error.localizedDescription);
+                return;
+            }
+            if (responseData) {
+                NSError *error = nil;
+                NSArray *twres = [NSJSONSerialization JSONObjectWithData:responseData options:NSJSONReadingMutableLeaves error:&error];
+                //NSString *screen_name = [(NSDictionary *)twres objectForKey:@"screen_name"];
+                //NSString *name = [(NSDictionary *)twres objectForKey:@"name"];
+                NSString *profileImageStringURL = [(NSDictionary *)twres objectForKey:@"profile_image_url"];
+                // original profile image
+                //profileImageStringURL = [profileImageStringURL stringByReplacingOccurrencesOfString:@"_normal" withString:@""];
+                callback(profileImageStringURL);
+            }
+        });
+    }];
 }
 
 
