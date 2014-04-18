@@ -9,6 +9,7 @@
 #import "MapViewController.h"
 #import "TokyoOverlayRenderer.h"
 #import "AFNetworking.h"
+#import "Common.h"
 
 @interface MapViewController ()
 
@@ -152,7 +153,7 @@
 
 
 - (void)postUserData:(void (^)())callback {
-    NSString *url_str = @"http://yuiseki.net:3000/user";
+    NSString *url_str = [NSString stringWithFormat:@"%@/user", UrlEndPoint];
     NSDictionary *param = @{@"uuid": @"user uuid", @"beacon_uuid":@"beacon uuid"};
     AFHTTPRequestOperationManager *man = [AFHTTPRequestOperationManager manager];
     man.requestSerializer = [AFJSONRequestSerializer serializer];
