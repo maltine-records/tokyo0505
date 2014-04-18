@@ -8,6 +8,6 @@
 
 #import "Common.h"
 
-NSString *const UrlEndPoint = @"http://geekhouse-nogata.xn--sprr0q.biz:81/";
+NSString *const UrlEndPoint = @"http://yuiseki.net:3000";
 @implementation Common
 @end
