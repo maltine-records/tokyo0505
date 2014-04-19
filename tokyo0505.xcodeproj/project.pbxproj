@@ -22,6 +22,8 @@
 		8948C73A1902A1F1004FB6BF /* BeaconAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 8948C7391902A1F0004FB6BF /* BeaconAnnotation.m */; };
 		8948C73C1902DE41004FB6BF /* bacon.png in Resources */ = {isa = PBXBuildFile; fileRef = 8948C73B1902DE41004FB6BF /* bacon.png */; };
 		8948C73E1902E0DB004FB6BF /* bacon-80.png in Resources */ = {isa = PBXBuildFile; fileRef = 8948C73D1902E0DB004FB6BF /* bacon-80.png */; };
+		8948C7451902EC30004FB6BF /* time-main.png in Resources */ = {isa = PBXBuildFile; fileRef = 8948C7431902EC30004FB6BF /* time-main.png */; };
+		8948C7461902EC30004FB6BF /* time-sub.png in Resources */ = {isa = PBXBuildFile; fileRef = 8948C7441902EC30004FB6BF /* time-sub.png */; };
 		89C17F4418FE54B700324821 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 89C17F4318FE54B700324821 /* Foundation.framework */; };
 		89C17F4618FE54B700324821 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 89C17F4518FE54B700324821 /* CoreGraphics.framework */; };
 		89C17F4818FE54B700324821 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 89C17F4718FE54B700324821 /* UIKit.framework */; };
@@ -71,6 +73,8 @@
 		8948C7391902A1F0004FB6BF /* BeaconAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BeaconAnnotation.m; sourceTree = "<group>"; };
 		8948C73B1902DE41004FB6BF /* bacon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bacon.png; sourceTree = "<group>"; };
 		8948C73D1902E0DB004FB6BF /* bacon-80.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bacon-80.png"; sourceTree = "<group>"; };
+		8948C7431902EC30004FB6BF /* time-main.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "time-main.png"; sourceTree = "<group>"; };
+		8948C7441902EC30004FB6BF /* time-sub.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "time-sub.png"; sourceTree = "<group>"; };
 		89C17F4018FE54B700324821 /* tokyo0505.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = tokyo0505.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		89C17F4318FE54B700324821 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		89C17F4518FE54B700324821 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -187,6 +191,8 @@
 				89043A1018FE6F7F003CF403 /* access_floorguide.gif */,
 				8948C73B1902DE41004FB6BF /* bacon.png */,
 				8948C73D1902E0DB004FB6BF /* bacon-80.png */,
+				8948C7431902EC30004FB6BF /* time-main.png */,
+				8948C7441902EC30004FB6BF /* time-sub.png */,
 				89C17F4B18FE54B700324821 /* tokyo0505-Info.plist */,
 				89C17F4C18FE54B700324821 /* InfoPlist.strings */,
 				89C17F4F18FE54B700324821 /* main.m */,
@@ -302,7 +308,9 @@
 				89043A1118FE6F7F003CF403 /* access_floorguide.gif in Resources */,
 				89C17F5618FE54B700324821 /* Images.xcassets in Resources */,
 				8948C73C1902DE41004FB6BF /* bacon.png in Resources */,
+				8948C7461902EC30004FB6BF /* time-sub.png in Resources */,
 				8948C73E1902E0DB004FB6BF /* bacon-80.png in Resources */,
+				8948C7451902EC30004FB6BF /* time-main.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

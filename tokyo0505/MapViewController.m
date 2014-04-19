@@ -76,15 +76,19 @@
     CLLocationCoordinate2D nogata;
     nogata.latitude = 35.7200116;
     nogata.longitude = 139.6522843;
+    
+    CLLocationCoordinate2D akasakamituke;
+    akasakamituke.latitude = 35.678323;
+    akasakamituke.longitude = 139.736282;
 
     self.mapView.mapType = MKMapTypeHybrid;
     
     // move center
-    [self.mapView setCenterCoordinate:koukyo];
+    [self.mapView setCenterCoordinate:akasakamituke];
     MKCoordinateRegion region = self.mapView.region;
-    region.center = koukyo;
-    region.span.latitudeDelta = 0.3;
-    region.span.longitudeDelta = 0.3;
+    region.center = akasakamituke;
+    region.span.latitudeDelta = 0.2;
+    region.span.longitudeDelta = 0.2;
     [self.mapView setRegion:region animated:TRUE];
     
     // add overlay
@@ -140,26 +144,19 @@
     // add annotation
     TimetableAnnotaion *maintt = [[TimetableAnnotaion alloc] init];
     maintt.coordinate = tokyoeki;
-    maintt.title = @"東東京";
+    maintt.title = @"メイン";
+    maintt.imageName = @"time-main.png";
     [self.mapView addAnnotation:maintt];
-    /*
-     TimetableAnnotaion *subtt = [[TimetableAnnotaion alloc] init];
-     subtt.coordinate = tocho;
-     subtt.title = @"西東京";
-     [self.mapView addAnnotation:subtt];
-     */
-    JPSThumbnail *subtt = [[JPSThumbnail alloc] init];
-    subtt.image = [UIImage imageNamed:@"access_floorguide.gif"];
-    subtt.title = @"西東京";
-    subtt.subtitle = @"sub";
+    TimetableAnnotaion *subtt = [[TimetableAnnotaion alloc] init];
     subtt.coordinate = tocho;
-    subtt.disclosureBlock = ^{ NSLog(@"selected sub"); };
-    JPSThumbnailAnnotation *subtta = [JPSThumbnailAnnotation annotationWithThumbnail:subtt];
-    [self.mapView addAnnotation:subtta];
+    subtt.title = @"サブ";
+    subtt.imageName = @"time-sub.png";
+    [self.mapView addAnnotation:subtt];
 }
 
 #pragma mark - MKMapViewDelegate
 - (void)mapView:(MKMapView *)mapView didSelectAnnotationView:(MKAnnotationView *)view {
+    NSLog(@"didSelectAnnotationView");
     if ([view conformsToProtocol:@protocol(JPSThumbnailAnnotationViewProtocol)]) {
         [((NSObject<JPSThumbnailAnnotationViewProtocol> *)view) didSelectAnnotationViewInMap:mapView];
     }
@@ -199,7 +196,6 @@
         MKAnnotationView *av=(MKPinAnnotationView*)[mapView
                                                     dequeueReusableAnnotationViewWithIdentifier:@"beacon"];
         if (av==nil) {
-            
             av = [[MKAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:@"beacon"];
             UIImage *image = [UIImage imageNamed:@"bacon-80.png"];
             av.image = image;
@@ -209,19 +205,11 @@
     }
     // timetable
     if ([annotation isKindOfClass:[TimetableAnnotaion class]]) {
-        MKAnnotationView *av=(MKAnnotationView*)[mapView
-                                                 dequeueReusableAnnotationViewWithIdentifier:@"timetable"];
-        if (av==nil) {
-            av = [[MKAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:@"timetable"];
-            CGSize tpinsize = CGSizeMake(50.0, 50.0);
-            CGRect tpinrect = CGRectMake(0, 0, tpinsize.height, tpinsize.width);
-            UIImage* image = [UIImage imageNamed:@"access_floorguide.gif"];
-            UIGraphicsBeginImageContext(tpinsize);
-            [image drawInRect:tpinrect];
-            av.image = UIGraphicsGetImageFromCurrentImageContext();
-            UIGraphicsEndImageContext();
-            av.canShowCallout = YES;
-        }
+        TimetableAnnotaion* annot = (TimetableAnnotaion*)annotation;
+        MKAnnotationView *av = [[MKAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:@"timetable"];
+        UIImage *image = [UIImage imageNamed:annot.imageName];
+        av.image = image;
+        av.canShowCallout = YES;
         return av;
     }
     // なんでもないようなアノテーション
