@@ -10,6 +10,7 @@
 #import "TokyoOverlayRenderer.h"
 #import "AFNetworking.h"
 #import "Common.h"
+#import "UserService.h"
 
 
 @interface MapViewController ()
@@ -17,13 +18,19 @@
 @end
 
 @implementation MapViewController
+{
+    UserService *userService;
+    __block NSDictionary* beacons;
+}
 
 - (id)initWithCoder:(NSCoder *)aDecoder
 {
     self = [super initWithCoder:aDecoder];
     if (self) {
         // Custom initialization
-        self.currentUUID = @"";
+        self.currentUUID = @"a"; //実在しない値
+        userService = [[UserService alloc] init];
+        [self fetchUUIDLocations];
     }
     return self;
 }
@@ -41,6 +48,15 @@
     } else {
         NSLog(@"screen_name: %@", screen_name);
     }
+}
+
+-(void)viewDidAppear:(BOOL)animated {
+    [userService startFetchUsers:10.0f];
+    [userService fetchUsers];
+}
+
+-(void)viewWillDisappear:(BOOL)animated {
+    [userService stopFetchUsers];
 }
 
 - (void)didReceiveMemoryWarning
@@ -92,6 +108,23 @@
     self.nogataAnnotation = [[TimetableAnnotaion alloc] init];
     self.nogataAnnotation.coordinate = nogata;
     self.nogataAnnotation.title = @"野方";
+    //when get user, annotation changes
+    __unsafe_unretained typeof(self) weakSelf = self;
+    [userService setCallback:^(NSDictionary *users) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [weakSelf.mapView removeAnnotations:weakSelf.mapView.annotations];
+            for(NSString* key in users) {
+                NSDictionary *tmpDict = [users objectForKey:key];
+                CLLocationCoordinate2D tmpLocation;
+                tmpLocation.latitude = [[tmpDict objectForKey:@"lat"] doubleValue];
+                tmpLocation.longitude = [[tmpDict objectForKey:@"lon"] doubleValue];
+                TimetableAnnotaion *tmpAnnotation = [[TimetableAnnotaion alloc] init];
+                tmpAnnotation.coordinate = tmpLocation;
+                tmpAnnotation.title = [tmpDict objectForKey:@"name"];
+                [weakSelf.mapView addAnnotation:tmpAnnotation];
+            }
+        });
+    }];
 }
 
 
@@ -162,11 +195,9 @@
     //check if UUID changed
     if(![gotUUID isEqualToString:self.currentUUID]) {
         NSLog(@"俺は変わった %@ to %@", self.currentUUID, gotUUID);
-        if(![gotUUID isEqualToString:@""]) {
-            NSMutableDictionary *param = [NSMutableDictionary dictionaryWithDictionary:@{@"beacon_uuid":gotUUID}];
-            [self postUserData:param withCallback:^(void) {
+        NSMutableDictionary *param = [NSMutableDictionary dictionaryWithDictionary:@{@"beacon_uuid":gotUUID}];
+        [self postUserData:param withCallback:^(void) {
             }];
-        }
     }
     self.currentUUID = [NSString stringWithString:gotUUID];
 }
@@ -322,6 +353,18 @@ BOOL didSelected = false;
     }];
 }
 
+//fetch location of UUIDs
+-(void)fetchUUIDLocations {
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    manager.requestSerializer = [AFJSONRequestSerializer serializer];
+    NSString *url = [NSString stringWithFormat:@"%@/beacon", UrlEndPoint];
+    [manager GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSLog(@"get beacon locations");
+        beacons = responseObject;
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+    }];
+}
 
 
 
