@@ -198,6 +198,7 @@
         if (av==nil) {
             av = [[MKPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:@"beacon"];
             av.pinColor = MKPinAnnotationColorGreen;
+            av.canShowCallout = YES;
         }
         return av;
     }
