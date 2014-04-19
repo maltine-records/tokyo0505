@@ -28,7 +28,7 @@
     self = [super initWithCoder:aDecoder];
     if (self) {
         // Custom initialization
-        self.currentUUID = @"";
+        self.currentUUID = @"a"; //実在しない値
         userService = [[UserService alloc] init];
         [self fetchUUIDLocations];
     }
@@ -48,6 +48,11 @@
     } else {
         NSLog(@"screen_name: %@", screen_name);
     }
+}
+
+-(void)viewDidAppear:(BOOL)animated {
+    [userService startFetchUsers:10.0f];
+    [userService fetchUsers];
 }
 
 -(void)viewWillDisappear:(BOOL)animated {
@@ -103,6 +108,7 @@
     self.nogataAnnotation = [[TimetableAnnotaion alloc] init];
     self.nogataAnnotation.coordinate = nogata;
     self.nogataAnnotation.title = @"野方";
+    //when get user, annotation changes
     __unsafe_unretained typeof(self) weakSelf = self;
     [userService setCallback:^(NSDictionary *users) {
         dispatch_async(dispatch_get_main_queue(), ^{
@@ -119,8 +125,6 @@
             }
         });
     }];
-    [userService startFetchUsers:10.0f];
-    [userService fetchUsers];
 }
 
 
