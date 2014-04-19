@@ -100,6 +100,7 @@
         dispatch_async(dispatch_get_main_queue(), ^{
             [weakSelf.mapView removeAnnotations:weakSelf.mapView.annotations];
             [weakSelf addDefaultMapAnnotations];
+            //drawing beacons
             for(NSString* beaconKey in users) {
                 NSDictionary *beaconDict = [users objectForKey:beaconKey];
                 CLLocationCoordinate2D tmpLocation;
@@ -109,6 +110,7 @@
                 tmpAnnotation.coordinate = tmpLocation;
                 tmpAnnotation.title = [beaconDict objectForKey:@"name"];
                 [weakSelf.mapView addAnnotation:tmpAnnotation];
+                //drawing users
                 for(NSDictionary *user in [beaconDict objectForKey:@"users"]) {
                     CLLocationCoordinate2D tmpUserLocation;
                     tmpUserLocation.latitude = [[beaconDict objectForKey:@"lat"] doubleValue] + ((double)arc4random() / 0x100000000) * annotation_random * 2 - annotation_random;
@@ -184,6 +186,7 @@
             UserAnnotation *an = annotation;
             [imageView setImageWithURL:an.imageUrl placeholderImage:[UIImage imageNamed:@"access_floorguide.gif"]];
             [imageView setFrame:CGRectMake(-20, -20, 40, 40)];
+            av.canShowCallout = YES;
             [av addSubview:imageView];
             return av;
         }
