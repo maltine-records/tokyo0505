@@ -196,9 +196,12 @@
             av = [[MKAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:@"user"];
             UIImageView *imageView = [[UIImageView alloc] init];
             UserAnnotation *an = annotation;
-            [imageView setImageWithURL:an.imageUrl placeholderImage:[UIImage imageNamed:@"access_floorguide.gif"]];
+            [imageView setImageWithURL:an.imageUrl placeholderImage:[UIImage imageNamed:@"twitter.png"]];
             [imageView setFrame:CGRectMake(-15, 0, 30, 30)];
             av.canShowCallout = YES;
+            UIButton *btn=[[UIButton alloc] init];
+            [btn setImage:[UIImage imageNamed:@"twitter.png"] forState:UIControlStateNormal];
+            av.rightCalloutAccessoryView = btn;
             [av addSubview:imageView];
             return av;
         }
