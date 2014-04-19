@@ -9,6 +9,6 @@
 #import "Common.h"
 
 NSString *const UrlEndPoint = @"http://yuiseki.net:3000";
-double const annotation_random = 0.005f;
+double const annotation_random = 0.02f;
 @implementation Common
 @end

@@ -78,13 +78,15 @@
     nogata.longitude = 139.6522843;
 
     self.mapView.mapType = MKMapTypeHybrid;
+    
     // move center
     [self.mapView setCenterCoordinate:koukyo];
     MKCoordinateRegion region = self.mapView.region;
     region.center = koukyo;
-    region.span.latitudeDelta = 0.5;
-    region.span.longitudeDelta = 0.5;
+    region.span.latitudeDelta = 0.3;
+    region.span.longitudeDelta = 0.3;
     [self.mapView setRegion:region animated:TRUE];
+    
     // add overlay
     int radius = 10000;
     MKCircle *c = [MKCircle circleWithCenterCoordinate:koukyo radius:radius];
@@ -94,6 +96,7 @@
     self.nogataAnnotation = [[TimetableAnnotaion alloc] init];
     self.nogataAnnotation.coordinate = nogata;
     self.nogataAnnotation.title = @"野方";
+    
     //when get user, annotation changes
     __unsafe_unretained typeof(self) weakSelf = self;
     [userService setCallback:^(NSDictionary *users) {
@@ -193,11 +196,13 @@
     }
     // beacon
     if ([annotation isKindOfClass:[BeaconAnnotation class]]) {
-        MKPinAnnotationView *av=(MKPinAnnotationView*)[mapView
-                                                 dequeueReusableAnnotationViewWithIdentifier:@"beacon"];
+        MKAnnotationView *av=(MKPinAnnotationView*)[mapView
+                                                    dequeueReusableAnnotationViewWithIdentifier:@"beacon"];
         if (av==nil) {
-            av = [[MKPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:@"beacon"];
-            av.pinColor = MKPinAnnotationColorGreen;
+            
+            av = [[MKAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:@"beacon"];
+            UIImage *image = [UIImage imageNamed:@"bacon-80.png"];
+            av.image = image;
             av.canShowCallout = YES;
         }
         return av;
