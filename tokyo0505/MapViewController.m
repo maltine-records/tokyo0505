@@ -250,12 +250,12 @@
         self.proximityUUID = [[NSUUID alloc] initWithUUIDString:@"00000000-31d9-1001-b000-001c4dc4c8af"];
         // CLBeaconRegionを作成
         self.beaconRegion = [[CLBeaconRegion alloc] initWithProximityUUID:self.proximityUUID identifier:@"com.nubot.tokyo0505.testregion"];
-        NSUUID *uuid2 = [[NSUUID alloc] initWithUUIDString:@"00000000-879F-1001-B000-001C4DE6C3AB"];
-        CLBeaconRegion *region2 = [[CLBeaconRegion alloc] initWithProximityUUID:uuid2 identifier:@"com.nubot.tokyo0505.testregion2"];
+        //NSUUID *uuid2 = [[NSUUID alloc] initWithUUIDString:@"00000000-879F-1001-B000-001C4DE6C3AB"];
+        //CLBeaconRegion *region2 = [[CLBeaconRegion alloc] initWithProximityUUID:uuid2 identifier:@"com.nubot.tokyo0505.testregion2"];
         // Beaconによる領域観測を開始
         // [self.locationManager startMonitoringForRegion:self.beaconRegion];
         [self.locationManager startRangingBeaconsInRegion:self.beaconRegion];
-        [self.locationManager startRangingBeaconsInRegion:region2];
+        //[self.locationManager startRangingBeaconsInRegion:region2];
     }
 }
 
