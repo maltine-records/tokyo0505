@@ -9,6 +9,7 @@
 #import "MapViewController.h"
 #import "TokyoOverlayRenderer.h"
 #import "AFNetworking.h"
+#import "JPSThumbnailAnnotation.h"
 #import "Common.h"
 #import "UserService.h"
 
@@ -70,12 +71,6 @@
     CLLocationCoordinate2D koukyo;
     koukyo.latitude = 35.683833;
     koukyo.longitude = 139.753972;
-    CLLocationCoordinate2D tokyoeki;
-    tokyoeki.latitude = 35.681382;
-    tokyoeki.longitude = 139.766084;
-    CLLocationCoordinate2D tocho;
-    tocho.latitude = 35.68664111;
-    tocho.longitude = 139.6948839;
     CLLocationCoordinate2D nogata;
     nogata.latitude = 35.7200116;
     nogata.longitude = 139.6522843;
@@ -93,17 +88,6 @@
     MKCircle *c = [MKCircle circleWithCenterCoordinate:koukyo radius:radius];
     [self.mapView addOverlay:c];
     
-    // add annotation
-    TimetableAnnotaion *maintt = [[TimetableAnnotaion alloc] init];
-    maintt.coordinate = tokyoeki;
-    maintt.title = @"東東京";
-    [self.mapView addAnnotation:maintt];
-    
-    TimetableAnnotaion *subtt = [[TimetableAnnotaion alloc] init];
-    subtt.coordinate = tocho;
-    subtt.title = @"西東京";
-    [self.mapView addAnnotation:subtt];
-    
     //prepare for beacon
     self.nogataAnnotation = [[TimetableAnnotaion alloc] init];
     self.nogataAnnotation.coordinate = nogata;
@@ -113,6 +97,7 @@
     [userService setCallback:^(NSDictionary *users) {
         dispatch_async(dispatch_get_main_queue(), ^{
             [weakSelf.mapView removeAnnotations:weakSelf.mapView.annotations];
+            [weakSelf addDefaultMapAnnotations];
             for(NSString* key in users) {
                 NSDictionary *tmpDict = [users objectForKey:key];
                 CLLocationCoordinate2D tmpLocation;
@@ -125,9 +110,54 @@
             }
         });
     }];
+
 }
 
+- (void) addDefaultMapAnnotations{
+    CLLocationCoordinate2D tokyoeki;
+    tokyoeki.latitude = 35.681382;
+    tokyoeki.longitude = 139.766084;
+    CLLocationCoordinate2D tocho;
+    tocho.latitude = 35.68664111;
+    tocho.longitude = 139.6948839;
+    // add annotation
+    TimetableAnnotaion *maintt = [[TimetableAnnotaion alloc] init];
+    maintt.coordinate = tokyoeki;
+    maintt.title = @"東東京";
+    [self.mapView addAnnotation:maintt];
+    /*
+     TimetableAnnotaion *subtt = [[TimetableAnnotaion alloc] init];
+     subtt.coordinate = tocho;
+     subtt.title = @"西東京";
+     [self.mapView addAnnotation:subtt];
+     */
+    JPSThumbnail *subtt = [[JPSThumbnail alloc] init];
+    subtt.image = [UIImage imageNamed:@"access_floorguide.gif"];
+    subtt.title = @"西東京";
+    subtt.subtitle = @"sub";
+    subtt.coordinate = tocho;
+    subtt.disclosureBlock = ^{ NSLog(@"selected sub"); };
+    JPSThumbnailAnnotation *subtta = [JPSThumbnailAnnotation annotationWithThumbnail:subtt];
+    [self.mapView addAnnotation:subtta];
+}
 
+#pragma mark - MKMapViewDelegate
+- (void)mapView:(MKMapView *)mapView didSelectAnnotationView:(MKAnnotationView *)view {
+    if ([view conformsToProtocol:@protocol(JPSThumbnailAnnotationViewProtocol)]) {
+        [((NSObject<JPSThumbnailAnnotationViewProtocol> *)view) didSelectAnnotationViewInMap:mapView];
+    }
+}
+- (void)mapView:(MKMapView *)mapView didDeselectAnnotationView:(MKAnnotationView *)view {
+    if ([view conformsToProtocol:@protocol(JPSThumbnailAnnotationViewProtocol)]) {
+        [((NSObject<JPSThumbnailAnnotationViewProtocol> *)view) didDeselectAnnotationViewInMap:mapView];
+    }
+}
+- (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id<MKAnnotation>)annotation {
+    if ([annotation conformsToProtocol:@protocol(JPSThumbnailAnnotationProtocol)]) {
+        return [((NSObject<JPSThumbnailAnnotationProtocol> *)annotation) annotationViewInMap:mapView];
+    }
+    return nil;
+}
 - (MKOverlayRenderer *)mapView:(MKMapView *)mapView rendererForOverlay:(id < MKOverlay >)overlay
 {
     return [[TokyoOverlayRenderer alloc] initWithOverlay:overlay];
