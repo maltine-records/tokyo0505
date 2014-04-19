@@ -101,12 +101,23 @@
     self.nogataAnnotation.coordinate = nogata;
     self.nogataAnnotation.title = @"野方";
     
+    [self addDefaultMapAnnotations];
+    
     //when get user, annotation changes
     __unsafe_unretained typeof(self) weakSelf = self;
     [userService setCallback:^(NSDictionary *users) {
         dispatch_async(dispatch_get_main_queue(), ^{
-            [weakSelf.mapView removeAnnotations:weakSelf.mapView.annotations];
-            [weakSelf addDefaultMapAnnotations];
+            NSPredicate* isMatchClassBeaconA = [NSPredicate
+                                                predicateWithFormat:@"self isKindOfClass: %@", [BeaconAnnotation class]];
+            NSArray* beaconA = [weakSelf.mapView.annotations filteredArrayUsingPredicate:isMatchClassBeaconA];
+            [weakSelf.mapView removeAnnotations:beaconA];
+            NSPredicate* isMatchClassUserA = [NSPredicate
+                                                predicateWithFormat:@"self isKindOfClass: %@", [UserAnnotation class]];
+            NSArray* userA = [weakSelf.mapView.annotations filteredArrayUsingPredicate:isMatchClassUserA];
+            [weakSelf.mapView removeAnnotations:userA];
+            
+            //[weakSelf.mapView removeAnnotations:weakSelf.mapView.annotations];
+            //[weakSelf addDefaultMapAnnotations];
             //drawing beacons
             for(NSString* beaconKey in users) {
                 NSDictionary *beaconDict = [users objectForKey:beaconKey];
@@ -146,17 +157,18 @@
     maintt.coordinate = tokyoeki;
     maintt.title = @"メイン";
     maintt.imageName = @"time-main.png";
+    maintt.isSub = false;
     [self.mapView addAnnotation:maintt];
     TimetableAnnotaion *subtt = [[TimetableAnnotaion alloc] init];
     subtt.coordinate = tocho;
     subtt.title = @"サブ";
+    subtt.isSub = true;
     subtt.imageName = @"time-sub.png";
     [self.mapView addAnnotation:subtt];
 }
 
 #pragma mark - MKMapViewDelegate
 - (void)mapView:(MKMapView *)mapView didSelectAnnotationView:(MKAnnotationView *)view {
-    NSLog(@"didSelectAnnotationView");
     if ([view conformsToProtocol:@protocol(JPSThumbnailAnnotationViewProtocol)]) {
         [((NSObject<JPSThumbnailAnnotationViewProtocol> *)view) didSelectAnnotationViewInMap:mapView];
     }
@@ -205,17 +217,36 @@
     }
     // timetable
     if ([annotation isKindOfClass:[TimetableAnnotaion class]]) {
-        TimetableAnnotaion* annot = (TimetableAnnotaion*)annotation;
-        MKAnnotationView *av = [[MKAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:@"timetable"];
-        UIImage *image = [UIImage imageNamed:annot.imageName];
+        TimetableAnnotaion* tta = (TimetableAnnotaion*)annotation;
+        MKAnnotationView *av=nil;
+        NSString* reuseIdentifier;
+        if (tta.isSub) {
+            reuseIdentifier = @"timetable-sub";
+        } else {
+            reuseIdentifier = @"timetable-main";
+        }
+        av = (MKAnnotationView*)[mapView
+                                 dequeueReusableAnnotationViewWithIdentifier:reuseIdentifier];
+        if (av==nil) {
+            NSLog(@"cannot reuse, %@",reuseIdentifier);
+            av = [[MKAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:reuseIdentifier];
+        }
+        UIImage *image = [UIImage imageNamed:tta.imageName];
         av.image = image;
         av.canShowCallout = YES;
+        av.rightCalloutAccessoryView = [UIButton buttonWithType:UIButtonTypeInfoLight];
         return av;
     }
     // なんでもないようなアノテーション
     return nil;
 }
-
+-(void)mapView:(MKMapView *)mapView annotationView:(MKAnnotationView *)view calloutAccessoryControlTapped:(UIControl *)control{
+    NSLog(@"taped");
+    if ([view.annotation isKindOfClass:[TimetableAnnotaion class]]) {
+        TimetableAnnotaion* tta = (TimetableAnnotaion*)view.annotation;
+        [tta addTimetableSubView:self.view];
+    }
+}
 /*
 #pragma mark - Navigation
 
