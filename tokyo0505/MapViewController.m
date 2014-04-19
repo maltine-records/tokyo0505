@@ -188,7 +188,7 @@
             UIImageView *imageView = [[UIImageView alloc] init];
             UserAnnotation *an = annotation;
             [imageView setImageWithURL:an.imageUrl placeholderImage:[UIImage imageNamed:@"access_floorguide.gif"]];
-            [imageView setFrame:CGRectMake(-20, -20, 40, 40)];
+            [imageView setFrame:CGRectMake(-15, 0, 30, 30)];
             av.canShowCallout = YES;
             [av addSubview:imageView];
             return av;
