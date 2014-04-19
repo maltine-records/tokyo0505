@@ -184,7 +184,8 @@
     return [[TokyoOverlayRenderer alloc] initWithOverlay:overlay];
 }
 
--(MKAnnotationView*)mapView:(MKMapView *)mapView viewForAnnotation:(id<MKAnnotation>)annotation{
+-(MKAnnotationView*)mapView:(MKMapView *)mapView viewForAnnotation:(id<MKAnnotation>)annotation
+{
     // user icon
     if ([annotation conformsToProtocol:@protocol(JPSThumbnailAnnotationProtocol)]) {
         return [((NSObject<JPSThumbnailAnnotationProtocol> *)annotation) annotationViewInMap:mapView];
@@ -197,12 +198,14 @@
             UIImageView *imageView = [[UIImageView alloc] init];
             UserAnnotation *an = annotation;
             [imageView setImageWithURL:an.imageUrl placeholderImage:[UIImage imageNamed:@"twitter.png"]];
-            [imageView setFrame:CGRectMake(-15, 0, 30, 30)];
+            [imageView setFrame:CGRectMake(0, 0, 44, 44)];
             av.canShowCallout = YES;
             UIButton *btn=[[UIButton alloc] init];
             [btn setImage:[UIImage imageNamed:@"twitter.png"] forState:UIControlStateNormal];
             av.rightCalloutAccessoryView = btn;
             [av addSubview:imageView];
+            av.frame = imageView.frame;
+            NSLog(@"size %@", NSStringFromCGSize(av.frame.size));
             return av;
         }
     }
@@ -243,7 +246,19 @@
     // なんでもないようなアノテーション
     return nil;
 }
--(void)mapView:(MKMapView *)mapView annotationView:(MKAnnotationView *)view calloutAccessoryControlTapped:(UIControl *)control{
+- (void) mapView:(MKMapView *)aMapView didAddAnnotationViews:(NSArray *)views
+{
+    for (MKAnnotationView*view in views) {
+        if ([view.annotation isKindOfClass:[UserAnnotation class]]) {
+            [[view superview] bringSubviewToFront:view];
+        }
+        if ([view.annotation isKindOfClass:[BeaconAnnotation class]] || [view.annotation isKindOfClass:[TimetableAnnotaion class]]){
+            [[view superview] sendSubviewToBack:view];
+        }
+    }
+}
+-(void)mapView:(MKMapView *)mapView annotationView:(MKAnnotationView *)view calloutAccessoryControlTapped:(UIControl *)control
+{
     NSLog(@"taped");
     if ([view.annotation isKindOfClass:[TimetableAnnotaion class]]) {
         TimetableAnnotaion* tta = (TimetableAnnotaion*)view.annotation;
@@ -260,6 +275,8 @@
     // Pass the selected object to the new view controller.
 }
 */
+
+# pragma mark iBeacon
 
 - (void)setupBeaconMonitor
 {
