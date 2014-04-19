@@ -12,6 +12,7 @@
 #import <Social/Social.h>
 #import "TimetableAnnotaion.h"
 #import "BeaconAnnotation.h"
+#import "UserAnnotation.h"
 
 @interface MapViewController : UIViewController <MKMapViewDelegate, CLLocationManagerDelegate, UIPickerViewDelegate, UIPickerViewDataSource>
 

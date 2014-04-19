@@ -12,6 +12,7 @@
 #import "JPSThumbnailAnnotation.h"
 #import "Common.h"
 #import "UserService.h"
+#import "UIImageView+AFNetworking.h"
 
 
 @interface MapViewController ()
@@ -99,15 +100,25 @@
         dispatch_async(dispatch_get_main_queue(), ^{
             [weakSelf.mapView removeAnnotations:weakSelf.mapView.annotations];
             [weakSelf addDefaultMapAnnotations];
-            for(NSString* key in users) {
-                NSDictionary *tmpDict = [users objectForKey:key];
+            for(NSString* beaconKey in users) {
+                NSDictionary *beaconDict = [users objectForKey:beaconKey];
                 CLLocationCoordinate2D tmpLocation;
-                tmpLocation.latitude = [[tmpDict objectForKey:@"lat"] doubleValue] + ((double)arc4random() / 0x100000000) * annotation_random * 2 - annotation_random;
-                tmpLocation.longitude = [[tmpDict objectForKey:@"lon"] doubleValue] + ((double)arc4random() / 0x100000000) * annotation_random * 2 - annotation_random;
+                tmpLocation.latitude = [[beaconDict objectForKey:@"lat"] doubleValue];
+                tmpLocation.longitude = [[beaconDict objectForKey:@"lon"] doubleValue];
                 BeaconAnnotation *tmpAnnotation = [[BeaconAnnotation alloc] init];
                 tmpAnnotation.coordinate = tmpLocation;
-                tmpAnnotation.title = [tmpDict objectForKey:@"name"];
+                tmpAnnotation.title = [beaconDict objectForKey:@"name"];
                 [weakSelf.mapView addAnnotation:tmpAnnotation];
+                for(NSDictionary *user in [beaconDict objectForKey:@"users"]) {
+                    CLLocationCoordinate2D tmpUserLocation;
+                    tmpUserLocation.latitude = [[beaconDict objectForKey:@"lat"] doubleValue] + ((double)arc4random() / 0x100000000) * annotation_random * 2 - annotation_random;
+                    tmpUserLocation.longitude = [[beaconDict objectForKey:@"lon"] doubleValue] + ((double)arc4random() / 0x100000000) * annotation_random * 2 - annotation_random;
+                    UserAnnotation *tmpUserAnnotation = [[UserAnnotation alloc] init];
+                    tmpUserAnnotation.coordinate = tmpUserLocation;
+                    tmpUserAnnotation.title = [user objectForKey:@"screen_name"];
+                    tmpUserAnnotation.imageUrl = [NSURL URLWithString:[user objectForKey:@"icon_url"]];
+                    [weakSelf.mapView addAnnotation:tmpUserAnnotation];
+                }
             }
         });
     }];
@@ -163,6 +174,19 @@
     // user icon
     if ([annotation conformsToProtocol:@protocol(JPSThumbnailAnnotationProtocol)]) {
         return [((NSObject<JPSThumbnailAnnotationProtocol> *)annotation) annotationViewInMap:mapView];
+    }
+    // user icon
+    if ([annotation isKindOfClass:[UserAnnotation class]]) {
+        MKAnnotationView *av = nil; // なぜかreuseすると破滅
+        if(av == nil) {
+            av = [[MKAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:@"user"];
+            UIImageView *imageView = [[UIImageView alloc] init];
+            UserAnnotation *an = annotation;
+            [imageView setImageWithURL:an.imageUrl placeholderImage:[UIImage imageNamed:@"access_floorguide.gif"]];
+            [imageView setFrame:CGRectMake(-20, -20, 40, 40)];
+            [av addSubview:imageView];
+            return av;
+        }
     }
     // beacon
     if ([annotation isKindOfClass:[BeaconAnnotation class]]) {
@@ -420,7 +444,9 @@ BOOL didSelected = false;
     manager.requestSerializer = [AFJSONRequestSerializer serializer];
     NSString *url = [NSString stringWithFormat:@"%@/beacon", UrlEndPoint];
     [manager GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSLog(@"get beacon locations");
+        dispatch_async(dispatch_get_main_queue(), ^{
+            
+        });
         beacons = responseObject;
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         

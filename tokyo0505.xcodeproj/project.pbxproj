@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		2D33868718FF1F67005A03C6 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D33868618FF1F67005A03C6 /* CoreLocation.framework */; };
 		2D65EACE19017BED004D3CDC /* Common.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D65EACD19017BED004D3CDC /* Common.m */; };
+		2DD1C8091902B53E004CDC04 /* UserAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DD1C8081902B53E004CDC04 /* UserAnnotation.m */; };
 		2DF535DD19023D6F00627FC6 /* UserService.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DF535DC19023D6F00627FC6 /* UserService.m */; };
 		89043A0718FE5BE6003CF403 /* Storyboard_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 89043A0618FE5BE6003CF403 /* Storyboard_iPhone.storyboard */; };
 		89043A0918FE5C62003CF403 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 89043A0818FE5C62003CF403 /* MapKit.framework */; };
@@ -48,6 +49,8 @@
 		2D33868618FF1F67005A03C6 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		2D65EACC19017BED004D3CDC /* Common.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Common.h; sourceTree = "<group>"; };
 		2D65EACD19017BED004D3CDC /* Common.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Common.m; sourceTree = "<group>"; };
+		2DD1C8071902B53E004CDC04 /* UserAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserAnnotation.h; sourceTree = "<group>"; };
+		2DD1C8081902B53E004CDC04 /* UserAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserAnnotation.m; sourceTree = "<group>"; };
 		2DF535DB19023D6F00627FC6 /* UserService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserService.h; sourceTree = "<group>"; };
 		2DF535DC19023D6F00627FC6 /* UserService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserService.m; sourceTree = "<group>"; };
 		6ACE4CDFE563465B9D4E14B5 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
@@ -112,13 +115,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		2DD1C8061902AB82004CDC04 /* lib */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = lib;
-			sourceTree = "<group>";
-		};
 		89C17F3718FE54B700324821 = {
 			isa = PBXGroup;
 			children = (
@@ -158,7 +154,6 @@
 		89C17F4918FE54B700324821 /* tokyo0505 */ = {
 			isa = PBXGroup;
 			children = (
-				2DD1C8061902AB82004CDC04 /* lib */,
 				2D65EACC19017BED004D3CDC /* Common.h */,
 				2D65EACD19017BED004D3CDC /* Common.m */,
 				89C17F5218FE54B700324821 /* AppDelegate.h */,
@@ -176,6 +171,8 @@
 				8948C7391902A1F0004FB6BF /* BeaconAnnotation.m */,
 				89043A1518FE7CAF003CF403 /* TimetableAnnotaion.h */,
 				89043A1618FE7CAF003CF403 /* TimetableAnnotaion.m */,
+				2DD1C8071902B53E004CDC04 /* UserAnnotation.h */,
+				2DD1C8081902B53E004CDC04 /* UserAnnotation.m */,
 			);
 			path = tokyo0505;
 			sourceTree = "<group>";
@@ -356,6 +353,7 @@
 				89043A0C18FE5D2F003CF403 /* MapViewController.m in Sources */,
 				89C17F5418FE54B700324821 /* AppDelegate.m in Sources */,
 				89043A1718FE7CAF003CF403 /* TimetableAnnotaion.m in Sources */,
+				2DD1C8091902B53E004CDC04 /* UserAnnotation.m in Sources */,
 				89C17F5018FE54B700324821 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
