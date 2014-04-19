@@ -42,7 +42,12 @@
     // Do any additional setup after loading the view.
     [self setupMapView];
     [self setupBeaconMonitor];
-    [self requestTwitterAccount];
+    NSString *screen_name = [[NSUserDefaults standardUserDefaults] objectForKey:@"screen_name"];
+    if ([screen_name length] == 0) {
+        [self requestTwitterAccount];
+    } else {
+        NSLog(@"screen_name: %@", screen_name);
+    }
 }
 
 -(void)viewWillDisappear:(BOOL)animated {
