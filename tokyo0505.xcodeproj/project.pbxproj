@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		2D33868718FF1F67005A03C6 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D33868618FF1F67005A03C6 /* CoreLocation.framework */; };
 		2D65EACE19017BED004D3CDC /* Common.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D65EACD19017BED004D3CDC /* Common.m */; };
+		2DF535DD19023D6F00627FC6 /* UserService.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DF535DC19023D6F00627FC6 /* UserService.m */; };
 		89043A0718FE5BE6003CF403 /* Storyboard_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 89043A0618FE5BE6003CF403 /* Storyboard_iPhone.storyboard */; };
 		89043A0918FE5C62003CF403 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 89043A0818FE5C62003CF403 /* MapKit.framework */; };
 		89043A0C18FE5D2F003CF403 /* MapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 89043A0B18FE5D2F003CF403 /* MapViewController.m */; };
@@ -46,6 +47,8 @@
 		2D33868618FF1F67005A03C6 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		2D65EACC19017BED004D3CDC /* Common.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Common.h; sourceTree = "<group>"; };
 		2D65EACD19017BED004D3CDC /* Common.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Common.m; sourceTree = "<group>"; };
+		2DF535DB19023D6F00627FC6 /* UserService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserService.h; sourceTree = "<group>"; };
+		2DF535DC19023D6F00627FC6 /* UserService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserService.m; sourceTree = "<group>"; };
 		6ACE4CDFE563465B9D4E14B5 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
 		89043A0618FE5BE6003CF403 /* Storyboard_iPhone.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Storyboard_iPhone.storyboard; sourceTree = "<group>"; };
 		89043A0818FE5C62003CF403 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
@@ -154,6 +157,8 @@
 				89043A0618FE5BE6003CF403 /* Storyboard_iPhone.storyboard */,
 				89043A0A18FE5D2F003CF403 /* MapViewController.h */,
 				89043A0B18FE5D2F003CF403 /* MapViewController.m */,
+				2DF535DB19023D6F00627FC6 /* UserService.h */,
+				2DF535DC19023D6F00627FC6 /* UserService.m */,
 				89043A0D18FE6EAB003CF403 /* TokyoOverlayRenderer.h */,
 				89043A0E18FE6EAB003CF403 /* TokyoOverlayRenderer.m */,
 				89043A1518FE7CAF003CF403 /* TimetableAnnotaion.h */,
@@ -333,6 +338,7 @@
 			files = (
 				2D65EACE19017BED004D3CDC /* Common.m in Sources */,
 				89043A0F18FE6EAB003CF403 /* TokyoOverlayRenderer.m in Sources */,
+				2DF535DD19023D6F00627FC6 /* UserService.m in Sources */,
 				89043A0C18FE5D2F003CF403 /* MapViewController.m in Sources */,
 				89C17F5418FE54B700324821 /* AppDelegate.m in Sources */,
 				89043A1718FE7CAF003CF403 /* TimetableAnnotaion.m in Sources */,
