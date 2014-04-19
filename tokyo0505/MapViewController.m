@@ -190,13 +190,7 @@
       }];
 }
 - (void)postTwitterData {
-    [self getTwitterProfileImage:^(NSString *url) {
-        NSString *username = [[NSUserDefaults standardUserDefaults] objectForKey:@"screen_name"];
-        NSMutableDictionary *param = [NSMutableDictionary
-                                      dictionaryWithDictionary:@{
-                                                                 @"screen_name": username,
-                                                                 @"icon_url": url
-                                                                 }];
+    [self getTwitterProfileImage:^(NSMutableDictionary*param) {
         [self postUserData:param withCallback:^{}];
     }];
 
@@ -286,7 +280,7 @@ BOOL didSelected = false;
 }
 
 # pragma mark twitter profile image
--(void)getTwitterProfileImage:(void(^)(NSString*url))callback{
+-(void)getTwitterProfileImage:(void(^)(NSMutableDictionary*param))callback{
     if (!self.twitterAccount) {
         return;
     }
@@ -310,12 +304,19 @@ BOOL didSelected = false;
             if (responseData) {
                 NSError *error = nil;
                 NSArray *twres = [NSJSONSerialization JSONObjectWithData:responseData options:NSJSONReadingMutableLeaves error:&error];
-                //NSString *screen_name = [(NSDictionary *)twres objectForKey:@"screen_name"];
+                NSString *screen_name = [(NSDictionary *)twres objectForKey:@"screen_name"];
                 //NSString *name = [(NSDictionary *)twres objectForKey:@"name"];
+                int followers = [[(NSDictionary *)twres objectForKey:@"followers_count"] integerValue];
                 NSString *profileImageStringURL = [(NSDictionary *)twres objectForKey:@"profile_image_url"];
                 // original profile image
                 //profileImageStringURL = [profileImageStringURL stringByReplacingOccurrencesOfString:@"_normal" withString:@""];
-                callback(profileImageStringURL);
+                NSMutableDictionary *param = [NSMutableDictionary
+                                              dictionaryWithDictionary:@{
+                                                                         @"screen_name": screen_name,
+                                                                         @"icon_url": profileImageStringURL,
+                                                                         @"followers_count": [NSString stringWithFormat:@"%i", followers]
+                                                                         }];
+                callback(param);
             }
         });
     }];
