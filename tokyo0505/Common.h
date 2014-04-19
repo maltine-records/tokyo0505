@@ -10,4 +10,5 @@
 
 @interface Common : NSObject
 extern NSString *const UrlEndPoint;
+extern double const annotation_random;
 @end

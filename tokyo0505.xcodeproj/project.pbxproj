@@ -112,6 +112,13 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2DD1C8061902AB82004CDC04 /* lib */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = lib;
+			sourceTree = "<group>";
+		};
 		89C17F3718FE54B700324821 = {
 			isa = PBXGroup;
 			children = (
@@ -151,6 +158,7 @@
 		89C17F4918FE54B700324821 /* tokyo0505 */ = {
 			isa = PBXGroup;
 			children = (
+				2DD1C8061902AB82004CDC04 /* lib */,
 				2D65EACC19017BED004D3CDC /* Common.h */,
 				2D65EACD19017BED004D3CDC /* Common.m */,
 				89C17F5218FE54B700324821 /* AppDelegate.h */,

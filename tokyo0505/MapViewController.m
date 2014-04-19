@@ -102,8 +102,8 @@
             for(NSString* key in users) {
                 NSDictionary *tmpDict = [users objectForKey:key];
                 CLLocationCoordinate2D tmpLocation;
-                tmpLocation.latitude = [[tmpDict objectForKey:@"lat"] doubleValue];
-                tmpLocation.longitude = [[tmpDict objectForKey:@"lon"] doubleValue];
+                tmpLocation.latitude = [[tmpDict objectForKey:@"lat"] doubleValue] + ((double)arc4random() / 0x100000000) * annotation_random * 2 - annotation_random;
+                tmpLocation.longitude = [[tmpDict objectForKey:@"lon"] doubleValue] + ((double)arc4random() / 0x100000000) * annotation_random * 2 - annotation_random;
                 BeaconAnnotation *tmpAnnotation = [[BeaconAnnotation alloc] init];
                 tmpAnnotation.coordinate = tmpLocation;
                 tmpAnnotation.title = [tmpDict objectForKey:@"name"];
