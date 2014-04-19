@@ -11,5 +11,6 @@
 @interface UserService : NSObject
 -(void)startFetchUsers:(float)duration;
 -(void)stopFetchUsers;
+-(void)fetchUsers;
 -(void)setCallback:(void (^)(NSDictionary* users))cb;
 @end

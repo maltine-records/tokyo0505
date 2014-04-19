@@ -120,6 +120,7 @@
         });
     }];
     [userService startFetchUsers:10.0f];
+    [userService fetchUsers];
 }
 
 
@@ -190,11 +191,9 @@
     //check if UUID changed
     if(![gotUUID isEqualToString:self.currentUUID]) {
         NSLog(@"俺は変わった %@ to %@", self.currentUUID, gotUUID);
-        if(![gotUUID isEqualToString:@""]) {
-            NSMutableDictionary *param = [NSMutableDictionary dictionaryWithDictionary:@{@"beacon_uuid":gotUUID}];
-            [self postUserData:param withCallback:^(void) {
+        NSMutableDictionary *param = [NSMutableDictionary dictionaryWithDictionary:@{@"beacon_uuid":gotUUID}];
+        [self postUserData:param withCallback:^(void) {
             }];
-        }
     }
     self.currentUUID = [NSString stringWithString:gotUUID];
 }

@@ -29,8 +29,10 @@
     [timer invalidate];
 }
 -(void)fetchUsers:(NSTimer *)timer {
+    [self fetchUsers];
+}
+-(void)fetchUsers {
     NSString *url_str = [NSString stringWithFormat:@"%@/user", UrlEndPoint];
-    NSLog(@"%@", url_str);
     AFHTTPRequestOperationManager *man = [AFHTTPRequestOperationManager manager];
     man.requestSerializer = [AFJSONRequestSerializer serializer];
     [man GET:url_str parameters:nil
