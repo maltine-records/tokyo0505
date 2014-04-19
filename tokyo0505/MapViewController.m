@@ -41,6 +41,7 @@
     [super viewDidLoad];
     
     // Do any additional setup after loading the view.
+    [self.mapView setDelegate:self];
     [self setupMapView];
     [self setupBeaconMonitor];
     NSString *screen_name = [[NSUserDefaults standardUserDefaults] objectForKey:@"screen_name"];
@@ -103,7 +104,7 @@
                 CLLocationCoordinate2D tmpLocation;
                 tmpLocation.latitude = [[tmpDict objectForKey:@"lat"] doubleValue];
                 tmpLocation.longitude = [[tmpDict objectForKey:@"lon"] doubleValue];
-                TimetableAnnotaion *tmpAnnotation = [[TimetableAnnotaion alloc] init];
+                BeaconAnnotation *tmpAnnotation = [[BeaconAnnotation alloc] init];
                 tmpAnnotation.coordinate = tmpLocation;
                 tmpAnnotation.title = [tmpDict objectForKey:@"name"];
                 [weakSelf.mapView addAnnotation:tmpAnnotation];
@@ -152,17 +153,47 @@
         [((NSObject<JPSThumbnailAnnotationViewProtocol> *)view) didDeselectAnnotationViewInMap:mapView];
     }
 }
-- (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id<MKAnnotation>)annotation {
-    if ([annotation conformsToProtocol:@protocol(JPSThumbnailAnnotationProtocol)]) {
-        return [((NSObject<JPSThumbnailAnnotationProtocol> *)annotation) annotationViewInMap:mapView];
-    }
-    return nil;
-}
+// KASANE
 - (MKOverlayRenderer *)mapView:(MKMapView *)mapView rendererForOverlay:(id < MKOverlay >)overlay
 {
     return [[TokyoOverlayRenderer alloc] initWithOverlay:overlay];
 }
 
+-(MKAnnotationView*)mapView:(MKMapView *)mapView viewForAnnotation:(id<MKAnnotation>)annotation{
+    // user icon
+    if ([annotation conformsToProtocol:@protocol(JPSThumbnailAnnotationProtocol)]) {
+        return [((NSObject<JPSThumbnailAnnotationProtocol> *)annotation) annotationViewInMap:mapView];
+    }
+    // beacon
+    if ([annotation isKindOfClass:[BeaconAnnotation class]]) {
+        MKPinAnnotationView *av=(MKPinAnnotationView*)[mapView
+                                                 dequeueReusableAnnotationViewWithIdentifier:@"beacon"];
+        if (av==nil) {
+            av = [[MKPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:@"beacon"];
+            av.pinColor = MKPinAnnotationColorGreen;
+        }
+        return av;
+    }
+    // timetable
+    if ([annotation isKindOfClass:[TimetableAnnotaion class]]) {
+        MKAnnotationView *av=(MKAnnotationView*)[mapView
+                                                 dequeueReusableAnnotationViewWithIdentifier:@"timetable"];
+        if (av==nil) {
+            av = [[MKAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:@"timetable"];
+            CGSize tpinsize = CGSizeMake(50.0, 50.0);
+            CGRect tpinrect = CGRectMake(0, 0, tpinsize.height, tpinsize.width);
+            UIImage* image = [UIImage imageNamed:@"access_floorguide.gif"];
+            UIGraphicsBeginImageContext(tpinsize);
+            [image drawInRect:tpinrect];
+            av.image = UIGraphicsGetImageFromCurrentImageContext();
+            UIGraphicsEndImageContext();
+            av.canShowCallout = YES;
+        }
+        return av;
+    }
+    // なんでもないようなアノテーション
+    return nil;
+}
 
 /*
 #pragma mark - Navigation

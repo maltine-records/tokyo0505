@@ -18,6 +18,7 @@
 		89043A1718FE7CAF003CF403 /* TimetableAnnotaion.m in Sources */ = {isa = PBXBuildFile; fileRef = 89043A1618FE7CAF003CF403 /* TimetableAnnotaion.m */; };
 		892C034B19019CE8007F4CA2 /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 892C034A19019CE8007F4CA2 /* Social.framework */; };
 		892C034D19019CEF007F4CA2 /* Accounts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 892C034C19019CEF007F4CA2 /* Accounts.framework */; };
+		8948C73A1902A1F1004FB6BF /* BeaconAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 8948C7391902A1F0004FB6BF /* BeaconAnnotation.m */; };
 		89C17F4418FE54B700324821 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 89C17F4318FE54B700324821 /* Foundation.framework */; };
 		89C17F4618FE54B700324821 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 89C17F4518FE54B700324821 /* CoreGraphics.framework */; };
 		89C17F4818FE54B700324821 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 89C17F4718FE54B700324821 /* UIKit.framework */; };
@@ -61,6 +62,8 @@
 		89043A1618FE7CAF003CF403 /* TimetableAnnotaion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TimetableAnnotaion.m; sourceTree = "<group>"; };
 		892C034A19019CE8007F4CA2 /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
 		892C034C19019CEF007F4CA2 /* Accounts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accounts.framework; path = System/Library/Frameworks/Accounts.framework; sourceTree = SDKROOT; };
+		8948C7381902A1F0004FB6BF /* BeaconAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BeaconAnnotation.h; sourceTree = "<group>"; };
+		8948C7391902A1F0004FB6BF /* BeaconAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BeaconAnnotation.m; sourceTree = "<group>"; };
 		89C17F4018FE54B700324821 /* tokyo0505.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = tokyo0505.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		89C17F4318FE54B700324821 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		89C17F4518FE54B700324821 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -161,6 +164,8 @@
 				2DF535DC19023D6F00627FC6 /* UserService.m */,
 				89043A0D18FE6EAB003CF403 /* TokyoOverlayRenderer.h */,
 				89043A0E18FE6EAB003CF403 /* TokyoOverlayRenderer.m */,
+				8948C7381902A1F0004FB6BF /* BeaconAnnotation.h */,
+				8948C7391902A1F0004FB6BF /* BeaconAnnotation.m */,
 				89043A1518FE7CAF003CF403 /* TimetableAnnotaion.h */,
 				89043A1618FE7CAF003CF403 /* TimetableAnnotaion.m */,
 			);
@@ -336,6 +341,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8948C73A1902A1F1004FB6BF /* BeaconAnnotation.m in Sources */,
 				2D65EACE19017BED004D3CDC /* Common.m in Sources */,
 				89043A0F18FE6EAB003CF403 /* TokyoOverlayRenderer.m in Sources */,
 				2DF535DD19023D6F00627FC6 /* UserService.m in Sources */,

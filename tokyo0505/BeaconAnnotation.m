@@ -1,15 +1,15 @@
 //
-//  TimetableAnnotaion.m
+//  BeaconAnnotation.m
 //  tokyo0505
 //
-//  Created by cerevo on 2014/04/16.
+//  Created by cerevo on 2014/04/19.
 //  Copyright (c) 2014年 Nubot, inc. All rights reserved.
 //
 
-#import "TimetableAnnotaion.h"
+#import "BeaconAnnotation.h"
 #import <MapKit/MapKit.h>
 
-@implementation TimetableAnnotaion 
+@implementation BeaconAnnotation
 
 @synthesize coordinate, subtitle, title;
 
