@@ -270,18 +270,17 @@
         self.proximityUUID = [[NSUUID alloc] initWithUUIDString:@"00000000-31d9-1001-b000-001c4dc4c8af"];
         // CLBeaconRegionを作成
         self.beaconRegion = [[CLBeaconRegion alloc] initWithProximityUUID:self.proximityUUID identifier:@"com.nubot.tokyo0505.testregion"];
-        //NSUUID *uuid2 = [[NSUUID alloc] initWithUUIDString:@"00000000-879F-1001-B000-001C4DE6C3AB"];
-        //CLBeaconRegion *region2 = [[CLBeaconRegion alloc] initWithProximityUUID:uuid2 identifier:@"com.nubot.tokyo0505.testregion2"];
+        self.beaconRegion.notifyEntryStateOnDisplay = YES;
         // Beaconによる領域観測を開始
-        // [self.locationManager startMonitoringForRegion:self.beaconRegion];
+        [self.locationManager startMonitoringForRegion:self.beaconRegion];
         [self.locationManager startRangingBeaconsInRegion:self.beaconRegion];
-        //[self.locationManager startRangingBeaconsInRegion:region2];
     }
 }
 
 - (void)locationManager:(CLLocationManager *)manager didRangeBeacons:(NSArray *)beacons inRegion:(CLBeaconRegion *)region
 {
     NSString* gotUUID;
+    NSString* message;
     if (beacons.count > 0) {
         CLBeacon *nearestBeacon = beacons.firstObject;
         
@@ -302,12 +301,11 @@
                 break;
         }
         
-        NSString *message = [NSString stringWithFormat:@"UUID:%@, major:%@, minor:%@, accuracy:%f, rssi:%d",
+        message = [NSString stringWithFormat:@"UUID:%@, major:%@, minor:%@, accuracy:%f, rssi:%d",
                              nearestBeacon.proximityUUID,nearestBeacon.major, nearestBeacon.minor, nearestBeacon.accuracy, nearestBeacon.rssi];
         gotUUID = [NSString stringWithFormat:@"%@-%@-%@", [nearestBeacon.proximityUUID UUIDString], nearestBeacon.major, nearestBeacon.minor];
-        //NSLog(message);
     } else {
-        gotUUID = @"";
+        gotUUID = @"null";
     }
     //check if UUID changed
     if(![gotUUID isEqualToString:self.currentUUID]) {
@@ -315,6 +313,7 @@
         NSMutableDictionary *param = [NSMutableDictionary dictionaryWithDictionary:@{@"beacon_uuid":gotUUID}];
         [self postUserData:param withCallback:^(void) {
             }];
+        NSLog(@"%@", message);
     }
     self.currentUUID = [NSString stringWithString:gotUUID];
 }
