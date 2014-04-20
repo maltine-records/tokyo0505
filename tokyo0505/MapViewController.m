@@ -6,6 +6,7 @@
 //  Copyright (c) 2014年 Nubot, inc. All rights reserved.
 //
 
+#import "AppDelegate.h"
 #import "MapViewController.h"
 #import "TokyoOverlayRenderer.h"
 #import "AFNetworking.h"
@@ -200,12 +201,12 @@
             [imageView setImageWithURL:an.imageUrl placeholderImage:[UIImage imageNamed:@"twitter.png"]];
             [imageView setFrame:CGRectMake(0, 0, 44, 44)];
             av.canShowCallout = YES;
-            UIButton *btn=[[UIButton alloc] init];
-            [btn setImage:[UIImage imageNamed:@"twitter.png"] forState:UIControlStateNormal];
+            UIButton *btn=[UIButton buttonWithType:UIButtonTypeDetailDisclosure];
+            //[btn setBackgroundImage:[UIImage imageNamed:@"twitter.png"] forState:UIControlStateNormal];
+            //[btn setImage:[UIImage imageNamed:@"twitter.png"] forState:UIControlStateNormal];
             av.rightCalloutAccessoryView = btn;
             [av addSubview:imageView];
             av.frame = imageView.frame;
-            NSLog(@"size %@", NSStringFromCGSize(av.frame.size));
             return av;
         }
     }
@@ -234,7 +235,6 @@
         av = (MKAnnotationView*)[mapView
                                  dequeueReusableAnnotationViewWithIdentifier:reuseIdentifier];
         if (av==nil) {
-            NSLog(@"cannot reuse, %@",reuseIdentifier);
             av = [[MKAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:reuseIdentifier];
         }
         UIImage *image = [UIImage imageNamed:tta.imageName];
@@ -259,10 +259,16 @@
 }
 -(void)mapView:(MKMapView *)mapView annotationView:(MKAnnotationView *)view calloutAccessoryControlTapped:(UIControl *)control
 {
-    NSLog(@"taped");
+    //NSLog(@"callout tapped");
     if ([view.annotation isKindOfClass:[TimetableAnnotaion class]]) {
         TimetableAnnotaion* tta = (TimetableAnnotaion*)view.annotation;
         [tta addTimetableSubView:self.view];
+    }else if ([view.annotation isKindOfClass:[UserAnnotation class]]){
+        UserAnnotation*ua =(UserAnnotation*) view.annotation;
+        NSString *url = [NSString stringWithFormat:@"twitter://user?screen_name=%@", ua.title];
+        NSLog(@"open %@", url);
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:url]];
+        //AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
     }
 }
 /*
