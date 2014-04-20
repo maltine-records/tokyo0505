@@ -8,11 +8,10 @@
 
 #import "AppDelegate.h"
 #import "MapViewController.h"
-#import "TokyoOverlayRenderer.h"
-#import "AFNetworking.h"
-#import "JPSThumbnailAnnotation.h"
 #import "Common.h"
 #import "UserService.h"
+#import "TokyoOverlayRenderer.h"
+#import "AFNetworking.h"
 #import "UIImageView+AFNetworking.h"
 
 
@@ -117,8 +116,6 @@
             NSArray* userA = [weakSelf.mapView.annotations filteredArrayUsingPredicate:isMatchClassUserA];
             [weakSelf.mapView removeAnnotations:userA];
             
-            //[weakSelf.mapView removeAnnotations:weakSelf.mapView.annotations];
-            //[weakSelf addDefaultMapAnnotations];
             //drawing beacons
             for(NSString* beaconKey in users) {
                 NSDictionary *beaconDict = [users objectForKey:beaconKey];
@@ -169,16 +166,6 @@
 }
 
 #pragma mark - MKMapViewDelegate
-- (void)mapView:(MKMapView *)mapView didSelectAnnotationView:(MKAnnotationView *)view {
-    if ([view conformsToProtocol:@protocol(JPSThumbnailAnnotationViewProtocol)]) {
-        [((NSObject<JPSThumbnailAnnotationViewProtocol> *)view) didSelectAnnotationViewInMap:mapView];
-    }
-}
-- (void)mapView:(MKMapView *)mapView didDeselectAnnotationView:(MKAnnotationView *)view {
-    if ([view conformsToProtocol:@protocol(JPSThumbnailAnnotationViewProtocol)]) {
-        [((NSObject<JPSThumbnailAnnotationViewProtocol> *)view) didDeselectAnnotationViewInMap:mapView];
-    }
-}
 // KASANE
 - (MKOverlayRenderer *)mapView:(MKMapView *)mapView rendererForOverlay:(id < MKOverlay >)overlay
 {
@@ -187,10 +174,6 @@
 
 -(MKAnnotationView*)mapView:(MKMapView *)mapView viewForAnnotation:(id<MKAnnotation>)annotation
 {
-    // user icon
-    if ([annotation conformsToProtocol:@protocol(JPSThumbnailAnnotationProtocol)]) {
-        return [((NSObject<JPSThumbnailAnnotationProtocol> *)annotation) annotationViewInMap:mapView];
-    }
     // user icon
     if ([annotation isKindOfClass:[UserAnnotation class]]) {
         MKAnnotationView *av = nil; // なぜかreuseすると破滅
@@ -259,28 +242,16 @@
 }
 -(void)mapView:(MKMapView *)mapView annotationView:(MKAnnotationView *)view calloutAccessoryControlTapped:(UIControl *)control
 {
-    //NSLog(@"callout tapped");
     if ([view.annotation isKindOfClass:[TimetableAnnotaion class]]) {
         TimetableAnnotaion* tta = (TimetableAnnotaion*)view.annotation;
         [tta addTimetableSubView:self.view];
     }else if ([view.annotation isKindOfClass:[UserAnnotation class]]){
         UserAnnotation*ua =(UserAnnotation*) view.annotation;
         NSString *url = [NSString stringWithFormat:@"twitter://user?screen_name=%@", ua.title];
-        NSLog(@"open %@", url);
         [[UIApplication sharedApplication] openURL:[NSURL URLWithString:url]];
-        //AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
     }
 }
-/*
-#pragma mark - Navigation
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 # pragma mark iBeacon
 
