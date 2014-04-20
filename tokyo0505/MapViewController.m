@@ -30,7 +30,8 @@
     self = [super initWithCoder:aDecoder];
     if (self) {
         // Custom initialization
-        self.currentUUID = @"a"; //実在しない値
+        self.currentMainUUID = @"a"; //実在しない値
+        self.currentSubUUID = @"a";
         userService = [[UserService alloc] init];
         [self fetchUUIDLocations];
     }
@@ -269,23 +270,30 @@
         // NSUUIDを作成
         self.proximityUUID = [[NSUUID alloc] initWithUUIDString:@"00000000-31d9-1001-b000-001c4dc4c8af"];
         // CLBeaconRegionを作成
-        self.beaconRegion = [[CLBeaconRegion alloc] initWithProximityUUID:self.proximityUUID identifier:@"com.nubot.tokyo0505.testregion"];
+        self.beaconRegion = [[CLBeaconRegion alloc] initWithProximityUUID:self.proximityUUID identifier:@"com.nubot.tokyo0505.mainregion"];
         self.beaconRegion.notifyEntryStateOnDisplay = YES;
         // Beaconによる領域観測を開始
         [self.locationManager startMonitoringForRegion:self.beaconRegion];
         [self.locationManager startRangingBeaconsInRegion:self.beaconRegion];
+        
+        
+        NSUUID* proximityUUID2 = [[NSUUID alloc] initWithUUIDString:@"00000000-879F-1001-B000-001C4DE6C3AB"];
+        CLBeaconRegion* beaconRegion2 = [[CLBeaconRegion alloc] initWithProximityUUID:proximityUUID2 identifier:@"com.nubot.tokyo0505.subregion"];
+        beaconRegion2.notifyEntryStateOnDisplay = YES;
+        [self.locationManager startMonitoringForRegion:beaconRegion2];
+        [self.locationManager startRangingBeaconsInRegion:beaconRegion2];
+        
     }
 }
 
 - (void)locationManager:(CLLocationManager *)manager didRangeBeacons:(NSArray *)beacons inRegion:(CLBeaconRegion *)region
 {
     NSString* gotUUID;
+    NSString* gotRegion;
     NSString* message;
     if (beacons.count > 0) {
         CLBeacon *nearestBeacon = beacons.firstObject;
-        
         NSString *rangeMessage;
-        
         switch (nearestBeacon.proximity) {
             case CLProximityImmediate:
                 rangeMessage = @"Range Immediate: ";
@@ -300,22 +308,32 @@
                 rangeMessage = @"Range Unknown: ";
                 break;
         }
-        
         message = [NSString stringWithFormat:@"UUID:%@, major:%@, minor:%@, accuracy:%f, rssi:%d",
                              nearestBeacon.proximityUUID,nearestBeacon.major, nearestBeacon.minor, nearestBeacon.accuracy, nearestBeacon.rssi];
         gotUUID = [NSString stringWithFormat:@"%@-%@-%@", [nearestBeacon.proximityUUID UUIDString], nearestBeacon.major, nearestBeacon.minor];
+        gotRegion = [region identifier];
     } else {
         gotUUID = @"null";
+        gotRegion = nil;
+    }
+    
+    if ([[region identifier] isEqualToString:@"com.nubot.tokyo0505.mainregion"]) {
+        if(![gotUUID isEqualToString:self.currentMainUUID]) {
+            NSLog(@"俺は変わった %@ to %@", self.currentMainUUID, gotUUID);
+            NSMutableDictionary *param = [NSMutableDictionary dictionaryWithDictionary:@{@"beacon_uuid":gotUUID}];
+            [self postUserData:param withCallback:^(void) {}];
+        }
+        self.currentMainUUID = [NSString stringWithString:gotUUID];
+    }else if ([[region identifier] isEqualToString:@"com.nubot.tokyo0505.subregion"]){
+        if(![gotUUID isEqualToString:self.currentSubUUID]) {
+            NSLog(@"俺は変わった %@ to %@", self.currentSubUUID, gotUUID);
+            NSMutableDictionary *param = [NSMutableDictionary dictionaryWithDictionary:@{@"beacon_uuid":gotUUID}];
+            [self postUserData:param withCallback:^(void) {}];
+        }
+        self.currentSubUUID = [NSString stringWithString:gotUUID];
     }
     //check if UUID changed
-    if(![gotUUID isEqualToString:self.currentUUID]) {
-        NSLog(@"俺は変わった %@ to %@", self.currentUUID, gotUUID);
-        NSMutableDictionary *param = [NSMutableDictionary dictionaryWithDictionary:@{@"beacon_uuid":gotUUID}];
-        [self postUserData:param withCallback:^(void) {
-            }];
-        NSLog(@"%@", message);
-    }
-    self.currentUUID = [NSString stringWithString:gotUUID];
+
 }
 
 

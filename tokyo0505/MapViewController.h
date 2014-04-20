@@ -20,7 +20,8 @@
 @property (strong, nonatomic) CLLocationManager *locationManager;
 @property (strong, nonatomic) CLBeaconRegion *beaconRegion;
 @property (strong, nonatomic) NSUUID *proximityUUID;
-@property (strong, nonatomic) NSString *currentUUID;
+@property (strong, nonatomic) NSString *currentMainUUID;
+@property (strong, nonatomic) NSString *currentSubUUID;
 @property (strong, nonatomic) NSArray *twitterAccounts;
 @property (strong, nonatomic) ACAccount *twitterAccount;
 @property (weak, nonatomic) UIView *twitterPickerView;
