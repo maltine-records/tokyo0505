@@ -92,8 +92,9 @@
     [self.mapView setRegion:region animated:TRUE];
     
     // add overlay
+    // サークルじゃなくてしかくにする
     int radius = 10000;
-    MKCircle *c = [MKCircle circleWithCenterCoordinate:koukyo radius:radius];
+    MKCircle *c = [MKCircle circleWithCenterCoordinate:akasakamituke radius:radius];
     [self.mapView addOverlay:c];
     
     //prepare for beacon
