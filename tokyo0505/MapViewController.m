@@ -92,10 +92,13 @@
     [self.mapView setRegion:region animated:TRUE];
     
     // add overlay
-    // サークルじゃなくてしかくにする
-    int radius = 10000;
-    MKCircle *c = [MKCircle circleWithCenterCoordinate:akasakamituke radius:radius];
-    [self.mapView addOverlay:c];
+    CLLocationCoordinate2D *coords = malloc(sizeof(CLLocationCoordinate2D)*4);
+    coords[0] = CLLocationCoordinate2DMake(35.727523, 139.632645);//左上
+    coords[1] = CLLocationCoordinate2DMake(35.603426, 139.632645);//左下
+    coords[2] = CLLocationCoordinate2DMake(35.727523, 139.864241);//右上
+    coords[3] = CLLocationCoordinate2DMake(35.630224, 139.864241);//右下
+    MKPolygon *p = [MKPolygon polygonWithCoordinates:coords count:4];
+    [self.mapView addOverlay:p];
     
     //prepare for beacon
     self.nogataAnnotation = [[TimetableAnnotaion alloc] init];

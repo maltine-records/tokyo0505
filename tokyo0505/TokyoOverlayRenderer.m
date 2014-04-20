@@ -23,7 +23,7 @@
     CGContextTranslateCTM(context, 0.0, -theRect.size.height);
     
     CGContextSetBlendMode(context, kCGBlendModeMultiply);
-    CGContextSetAlpha(context, 0.5);
+    CGContextSetAlpha(context, 0.4);
     CGContextDrawImage(context, theRect, imageReference);
 }
 
