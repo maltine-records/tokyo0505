@@ -33,7 +33,7 @@
         self.currentMainUUID = @"null"; //実在しない値
         self.currentSubUUID = @"null";
         userService = [[UserService alloc] init];
-        [self fetchUUIDLocations];
+        [self getBeaconsData];
     }
     return self;
 }
@@ -46,6 +46,7 @@
     [self.mapView setDelegate:self];
     [self setupMapView];
     [self setupBeaconMonitor];
+    [self setupUserService];
     NSString *screen_name = [[NSUserDefaults standardUserDefaults] objectForKey:@"screen_name"];
     if ([screen_name length] == 0) {
         [self requestTwitterAccount];
@@ -69,30 +70,22 @@
     // Dispose of any resources that can be recreated.
 }
 
+# pragma mark setup view
+
 - (void)setupMapView
 {
-    CLLocationCoordinate2D koukyo;
-    koukyo.latitude = 35.683833;
-    koukyo.longitude = 139.753972;
-    CLLocationCoordinate2D nogata;
-    nogata.latitude = 35.7200116;
-    nogata.longitude = 139.6522843;
-    
-    CLLocationCoordinate2D akasakamituke;
-    akasakamituke.latitude = 35.678323;
-    akasakamituke.longitude = 139.736282;
-
+    // map type
     self.mapView.mapType = MKMapTypeHybrid;
-    
     // move center
+    CLLocationCoordinate2D koukyo = CLLocationCoordinate2DMake(35.683833, 139.753972);
     [self.mapView setCenterCoordinate:koukyo];
     MKCoordinateRegion region = self.mapView.region;
     region.center = koukyo;
     region.span.latitudeDelta = 0.25;
     region.span.longitudeDelta = 0.25;
     [self.mapView setRegion:region animated:TRUE];
-    
     // add overlay
+    // TODO 縦横比を画像と合わせないと歪む
     CLLocationCoordinate2D *coords = malloc(sizeof(CLLocationCoordinate2D)*4);
     coords[0] = CLLocationCoordinate2DMake(35.727523, 139.632645);//左上
     coords[1] = CLLocationCoordinate2DMake(35.603426, 139.632645);//左下
@@ -100,14 +93,30 @@
     coords[3] = CLLocationCoordinate2DMake(35.630224, 139.864241);//右下
     MKPolygon *p = [MKPolygon polygonWithCoordinates:coords count:4];
     [self.mapView addOverlay:p];
-    
-    //prepare for beacon
-    self.nogataAnnotation = [[TimetableAnnotaion alloc] init];
-    self.nogataAnnotation.coordinate = nogata;
-    self.nogataAnnotation.title = @"野方";
-    
-    [self addDefaultMapAnnotations];
-    
+
+    [self addTimetableAnnotations];
+}
+
+- (void) addTimetableAnnotations
+{
+    CLLocationCoordinate2D asakusa = CLLocationCoordinate2DMake(35.712074, 139.79843);
+    CLLocationCoordinate2D nogata = CLLocationCoordinate2DMake(35.7200116, 139.6522843);
+    TimetableAnnotaion *maintt = [[TimetableAnnotaion alloc] init];
+    maintt.coordinate = asakusa;
+    maintt.title = @"メイン";
+    maintt.imageName = @"time-main.png";
+    maintt.isSub = false;
+    [self.mapView addAnnotation:maintt];
+    TimetableAnnotaion *subtt = [[TimetableAnnotaion alloc] init];
+    subtt.coordinate = nogata;
+    subtt.title = @"サブ";
+    subtt.isSub = true;
+    subtt.imageName = @"time-sub.png";
+    [self.mapView addAnnotation:subtt];
+}
+
+- (void)setupUserService
+{
     //when get user, annotation changes
     __unsafe_unretained typeof(self) weakSelf = self;
     [userService setCallback:^(NSDictionary *users) {
@@ -117,7 +126,7 @@
             NSArray* beaconA = [weakSelf.mapView.annotations filteredArrayUsingPredicate:isMatchClassBeaconA];
             [weakSelf.mapView removeAnnotations:beaconA];
             NSPredicate* isMatchClassUserA = [NSPredicate
-                                                predicateWithFormat:@"self isKindOfClass: %@", [UserAnnotation class]];
+                                              predicateWithFormat:@"self isKindOfClass: %@", [UserAnnotation class]];
             NSArray* userA = [weakSelf.mapView.annotations filteredArrayUsingPredicate:isMatchClassUserA];
             [weakSelf.mapView removeAnnotations:userA];
             
@@ -145,32 +154,9 @@
             }
         });
     }];
-
 }
 
-- (void) addDefaultMapAnnotations{
-    CLLocationCoordinate2D tokyoeki;
-    tokyoeki.latitude = 35.681382;
-    tokyoeki.longitude = 139.766084;
-    CLLocationCoordinate2D tocho;
-    tocho.latitude = 35.68664111;
-    tocho.longitude = 139.6948839;
-    CLLocationCoordinate2D asakusa = CLLocationCoordinate2DMake(35.712074, 139.79843);
-    CLLocationCoordinate2D nogata = CLLocationCoordinate2DMake(35.7200116, 139.6522843);
-    // add annotation
-    TimetableAnnotaion *maintt = [[TimetableAnnotaion alloc] init];
-    maintt.coordinate = asakusa;
-    maintt.title = @"メイン";
-    maintt.imageName = @"time-main.png";
-    maintt.isSub = false;
-    [self.mapView addAnnotation:maintt];
-    TimetableAnnotaion *subtt = [[TimetableAnnotaion alloc] init];
-    subtt.coordinate = nogata;
-    subtt.title = @"サブ";
-    subtt.isSub = true;
-    subtt.imageName = @"time-sub.png";
-    [self.mapView addAnnotation:subtt];
-}
+
 
 #pragma mark - MKMapViewDelegate
 // KASANE
@@ -178,11 +164,12 @@
 {
     return [[TokyoOverlayRenderer alloc] initWithOverlay:overlay];
 }
-
+// pin
 -(MKAnnotationView*)mapView:(MKMapView *)mapView viewForAnnotation:(id<MKAnnotation>)annotation
 {
     // user icon
-    if ([annotation isKindOfClass:[UserAnnotation class]]) {
+    if ([annotation isKindOfClass:[UserAnnotation class]])
+    {
         MKAnnotationView *av = nil; // なぜかreuseすると破滅
         if(av == nil) {
             av = [[MKAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:@"user"];
@@ -201,7 +188,8 @@
         }
     }
     // beacon
-    if ([annotation isKindOfClass:[BeaconAnnotation class]]) {
+    if ([annotation isKindOfClass:[BeaconAnnotation class]])
+    {
         MKAnnotationView *av=(MKPinAnnotationView*)[mapView
                                                     dequeueReusableAnnotationViewWithIdentifier:@"beacon"];
         if (av==nil) {
@@ -213,7 +201,8 @@
         return av;
     }
     // timetable
-    if ([annotation isKindOfClass:[TimetableAnnotaion class]]) {
+    if ([annotation isKindOfClass:[TimetableAnnotaion class]])
+    {
         TimetableAnnotaion* tta = (TimetableAnnotaion*)annotation;
         MKAnnotationView *av=nil;
         NSString* reuseIdentifier;
@@ -237,6 +226,7 @@
     // なんでもないようなアノテーション
     return nil;
 }
+// ピン表示の被りを調節
 - (void) mapView:(MKMapView *)aMapView didAddAnnotationViews:(NSArray *)views
 {
     for (MKAnnotationView*view in views) {
@@ -248,6 +238,7 @@
         }
     }
 }
+// ピンの吹き出し内コントロールがタップされたときの処理
 -(void)mapView:(MKMapView *)mapView annotationView:(MKAnnotationView *)view calloutAccessoryControlTapped:(UIControl *)control
 {
     if ([view.annotation isKindOfClass:[TimetableAnnotaion class]]) {
@@ -346,6 +337,22 @@
 
 
 # pragma mark bigbrother api
+
+//fetch location of UUIDs
+-(void)getBeaconsData {
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    manager.requestSerializer = [AFJSONRequestSerializer serializer];
+    NSString *url = [NSString stringWithFormat:@"%@/beacon", UrlEndPoint];
+    [manager GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            
+        });
+        beacons = responseObject;
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+    }];
+}
+
 - (void)postUserData:(NSMutableDictionary *)params withCallback:(void (^)())callback {
     NSUUID *vendorUUID = [UIDevice currentDevice].identifierForVendor;
     [params setObject:[vendorUUID UUIDString] forKey:@"uuid"];
@@ -492,21 +499,6 @@ BOOL didSelected = false;
                 callback(param);
             }
         });
-    }];
-}
-
-//fetch location of UUIDs
--(void)fetchUUIDLocations {
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    manager.requestSerializer = [AFJSONRequestSerializer serializer];
-    NSString *url = [NSString stringWithFormat:@"%@/beacon", UrlEndPoint];
-    [manager GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        dispatch_async(dispatch_get_main_queue(), ^{
-            
-        });
-        beacons = responseObject;
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        
     }];
 }
 
