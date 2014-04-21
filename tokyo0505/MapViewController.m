@@ -13,6 +13,7 @@
 #import "TokyoOverlayRenderer.h"
 #import "AFNetworking.h"
 #import "UIImageView+AFNetworking.h"
+#import "UIImage+animatedGif.h"
 
 
 @interface MapViewController ()
@@ -44,6 +45,7 @@
     
     // Do any additional setup after loading the view.
     [self.mapView setDelegate:self];
+    [self setupFishButton];
     [self setupMapView];
     [self setupBeaconMonitor];
     [self setupUserService];
@@ -71,6 +73,18 @@
 }
 
 # pragma mark setup view
+
+- (void)setupFishButton
+{
+    NSURL *url = [NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"fish" ofType:@"gif"]];
+    UIImage *img = [UIImage animatedImageWithAnimatedGIFURL:url];
+    UIButton *button = [[UIButton alloc] init];
+    [button setBackgroundImage:img forState:UIControlStateNormal];
+    float fWidth =60;
+    float fHeight = 40;
+    button.frame = CGRectMake(10, self.view.frame.size.height-fHeight-10, fWidth, fHeight);
+    [self.view addSubview:button];
+}
 
 - (void)setupMapView
 {

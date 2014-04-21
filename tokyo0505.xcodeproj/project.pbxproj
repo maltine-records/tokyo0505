@@ -19,6 +19,7 @@
 		89043A1718FE7CAF003CF403 /* TimetableAnnotaion.m in Sources */ = {isa = PBXBuildFile; fileRef = 89043A1618FE7CAF003CF403 /* TimetableAnnotaion.m */; };
 		8904E2A11905719F004B5600 /* bacon-40.png in Resources */ = {isa = PBXBuildFile; fileRef = 8904E2A01905719F004B5600 /* bacon-40.png */; };
 		8904E2A3190576F5004B5600 /* LocationArrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 8904E2A2190576F5004B5600 /* LocationArrow.png */; };
+		8904E2A519057CC2004B5600 /* fish.gif in Resources */ = {isa = PBXBuildFile; fileRef = 8904E2A419057CC2004B5600 /* fish.gif */; };
 		892C034B19019CE8007F4CA2 /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 892C034A19019CE8007F4CA2 /* Social.framework */; };
 		892C034D19019CEF007F4CA2 /* Accounts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 892C034C19019CEF007F4CA2 /* Accounts.framework */; };
 		8948C73A1902A1F1004FB6BF /* BeaconAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 8948C7391902A1F0004FB6BF /* BeaconAnnotation.m */; };
@@ -74,6 +75,7 @@
 		89043A1618FE7CAF003CF403 /* TimetableAnnotaion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TimetableAnnotaion.m; sourceTree = "<group>"; };
 		8904E2A01905719F004B5600 /* bacon-40.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bacon-40.png"; sourceTree = "<group>"; };
 		8904E2A2190576F5004B5600 /* LocationArrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = LocationArrow.png; sourceTree = "<group>"; };
+		8904E2A419057CC2004B5600 /* fish.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = fish.gif; sourceTree = "<group>"; };
 		892C034A19019CE8007F4CA2 /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
 		892C034C19019CEF007F4CA2 /* Accounts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accounts.framework; path = System/Library/Frameworks/Accounts.framework; sourceTree = SDKROOT; };
 		8948C7381902A1F0004FB6BF /* BeaconAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BeaconAnnotation.h; sourceTree = "<group>"; };
@@ -202,6 +204,7 @@
 				8948C74919041981004FB6BF /* tokyo0505map.png */,
 				8948C74B1905555B004FB6BF /* tokyo0505map_big.png */,
 				8904E2A2190576F5004B5600 /* LocationArrow.png */,
+				8904E2A419057CC2004B5600 /* fish.gif */,
 				8948C73B1902DE41004FB6BF /* bacon.png */,
 				8904E2A01905719F004B5600 /* bacon-40.png */,
 				8948C73D1902E0DB004FB6BF /* bacon-80.png */,
@@ -320,6 +323,7 @@
 			files = (
 				89C17F4E18FE54B700324821 /* InfoPlist.strings in Resources */,
 				8948C74C1905555B004FB6BF /* tokyo0505map_big.png in Resources */,
+				8904E2A519057CC2004B5600 /* fish.gif in Resources */,
 				89043A0718FE5BE6003CF403 /* Storyboard_iPhone.storyboard in Resources */,
 				89043A1118FE6F7F003CF403 /* access_floorguide.gif in Resources */,
 				8948C74A19041981004FB6BF /* tokyo0505map.png in Resources */,
