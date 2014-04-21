@@ -30,8 +30,8 @@
     self = [super initWithCoder:aDecoder];
     if (self) {
         // Custom initialization
-        self.currentMainUUID = @"a"; //実在しない値
-        self.currentSubUUID = @"a";
+        self.currentMainUUID = @"null"; //実在しない値
+        self.currentSubUUID = @"null";
         userService = [[UserService alloc] init];
         [self fetchUUIDLocations];
     }
@@ -85,11 +85,11 @@
     self.mapView.mapType = MKMapTypeHybrid;
     
     // move center
-    [self.mapView setCenterCoordinate:akasakamituke];
+    [self.mapView setCenterCoordinate:koukyo];
     MKCoordinateRegion region = self.mapView.region;
-    region.center = akasakamituke;
-    region.span.latitudeDelta = 0.2;
-    region.span.longitudeDelta = 0.2;
+    region.center = koukyo;
+    region.span.latitudeDelta = 0.25;
+    region.span.longitudeDelta = 0.25;
     [self.mapView setRegion:region animated:TRUE];
     
     // add overlay
@@ -155,15 +155,17 @@
     CLLocationCoordinate2D tocho;
     tocho.latitude = 35.68664111;
     tocho.longitude = 139.6948839;
+    CLLocationCoordinate2D asakusa = CLLocationCoordinate2DMake(35.712074, 139.79843);
+    CLLocationCoordinate2D nogata = CLLocationCoordinate2DMake(35.7200116, 139.6522843);
     // add annotation
     TimetableAnnotaion *maintt = [[TimetableAnnotaion alloc] init];
-    maintt.coordinate = tokyoeki;
+    maintt.coordinate = asakusa;
     maintt.title = @"メイン";
     maintt.imageName = @"time-main.png";
     maintt.isSub = false;
     [self.mapView addAnnotation:maintt];
     TimetableAnnotaion *subtt = [[TimetableAnnotaion alloc] init];
-    subtt.coordinate = tocho;
+    subtt.coordinate = nogata;
     subtt.title = @"サブ";
     subtt.isSub = true;
     subtt.imageName = @"time-sub.png";
@@ -187,7 +189,7 @@
             UIImageView *imageView = [[UIImageView alloc] init];
             UserAnnotation *an = annotation;
             [imageView setImageWithURL:an.imageUrl placeholderImage:[UIImage imageNamed:@"twitter.png"]];
-            [imageView setFrame:CGRectMake(0, 0, 44, 44)];
+            [imageView setFrame:CGRectMake(0, 0, 22, 22)];
             av.canShowCallout = YES;
             UIButton *btn=[UIButton buttonWithType:UIButtonTypeDetailDisclosure];
             //[btn setBackgroundImage:[UIImage imageNamed:@"twitter.png"] forState:UIControlStateNormal];
@@ -204,7 +206,7 @@
                                                     dequeueReusableAnnotationViewWithIdentifier:@"beacon"];
         if (av==nil) {
             av = [[MKAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:@"beacon"];
-            UIImage *image = [UIImage imageNamed:@"bacon-80.png"];
+            UIImage *image = [UIImage imageNamed:@"bacon-40.png"];
             av.image = image;
             av.canShowCallout = YES;
         }
@@ -226,6 +228,7 @@
             av = [[MKAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:reuseIdentifier];
         }
         UIImage *image = [UIImage imageNamed:tta.imageName];
+
         av.image = image;
         av.canShowCallout = YES;
         av.rightCalloutAccessoryView = [UIButton buttonWithType:UIButtonTypeInfoLight];
@@ -332,8 +335,13 @@
         }
         self.currentSubUUID = [NSString stringWithString:gotUUID];
     }
-    //check if UUID changed
-
+    /*
+    if ([self.currentMainUUID isEqualToString:@"null"] && [self.currentSubUUID isEqualToString:@"null"]) {
+        NSLog(@"俺はもうダメだ〜どうすればいいんだ〜");
+        NSMutableDictionary *param = [NSMutableDictionary dictionaryWithDictionary:@{@"beacon_uuid":@"null"}];
+        [self postUserData:param withCallback:^(void) {}];
+    }
+     */
 }
 
 

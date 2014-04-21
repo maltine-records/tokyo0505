@@ -17,6 +17,8 @@
 		89043A0F18FE6EAB003CF403 /* TokyoOverlayRenderer.m in Sources */ = {isa = PBXBuildFile; fileRef = 89043A0E18FE6EAB003CF403 /* TokyoOverlayRenderer.m */; };
 		89043A1118FE6F7F003CF403 /* access_floorguide.gif in Resources */ = {isa = PBXBuildFile; fileRef = 89043A1018FE6F7F003CF403 /* access_floorguide.gif */; };
 		89043A1718FE7CAF003CF403 /* TimetableAnnotaion.m in Sources */ = {isa = PBXBuildFile; fileRef = 89043A1618FE7CAF003CF403 /* TimetableAnnotaion.m */; };
+		8904E2A11905719F004B5600 /* bacon-40.png in Resources */ = {isa = PBXBuildFile; fileRef = 8904E2A01905719F004B5600 /* bacon-40.png */; };
+		8904E2A3190576F5004B5600 /* LocationArrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 8904E2A2190576F5004B5600 /* LocationArrow.png */; };
 		892C034B19019CE8007F4CA2 /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 892C034A19019CE8007F4CA2 /* Social.framework */; };
 		892C034D19019CEF007F4CA2 /* Accounts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 892C034C19019CEF007F4CA2 /* Accounts.framework */; };
 		8948C73A1902A1F1004FB6BF /* BeaconAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 8948C7391902A1F0004FB6BF /* BeaconAnnotation.m */; };
@@ -26,6 +28,7 @@
 		8948C7461902EC30004FB6BF /* time-sub.png in Resources */ = {isa = PBXBuildFile; fileRef = 8948C7441902EC30004FB6BF /* time-sub.png */; };
 		8948C7481903012B004FB6BF /* twitter.png in Resources */ = {isa = PBXBuildFile; fileRef = 8948C7471903012B004FB6BF /* twitter.png */; };
 		8948C74A19041981004FB6BF /* tokyo0505map.png in Resources */ = {isa = PBXBuildFile; fileRef = 8948C74919041981004FB6BF /* tokyo0505map.png */; };
+		8948C74C1905555B004FB6BF /* tokyo0505map_big.png in Resources */ = {isa = PBXBuildFile; fileRef = 8948C74B1905555B004FB6BF /* tokyo0505map_big.png */; };
 		89C17F4418FE54B700324821 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 89C17F4318FE54B700324821 /* Foundation.framework */; };
 		89C17F4618FE54B700324821 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 89C17F4518FE54B700324821 /* CoreGraphics.framework */; };
 		89C17F4818FE54B700324821 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 89C17F4718FE54B700324821 /* UIKit.framework */; };
@@ -69,6 +72,8 @@
 		89043A1018FE6F7F003CF403 /* access_floorguide.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = access_floorguide.gif; sourceTree = "<group>"; };
 		89043A1518FE7CAF003CF403 /* TimetableAnnotaion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TimetableAnnotaion.h; sourceTree = "<group>"; };
 		89043A1618FE7CAF003CF403 /* TimetableAnnotaion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TimetableAnnotaion.m; sourceTree = "<group>"; };
+		8904E2A01905719F004B5600 /* bacon-40.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bacon-40.png"; sourceTree = "<group>"; };
+		8904E2A2190576F5004B5600 /* LocationArrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = LocationArrow.png; sourceTree = "<group>"; };
 		892C034A19019CE8007F4CA2 /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
 		892C034C19019CEF007F4CA2 /* Accounts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accounts.framework; path = System/Library/Frameworks/Accounts.framework; sourceTree = SDKROOT; };
 		8948C7381902A1F0004FB6BF /* BeaconAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BeaconAnnotation.h; sourceTree = "<group>"; };
@@ -79,6 +84,7 @@
 		8948C7441902EC30004FB6BF /* time-sub.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "time-sub.png"; sourceTree = "<group>"; };
 		8948C7471903012B004FB6BF /* twitter.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = twitter.png; sourceTree = "<group>"; };
 		8948C74919041981004FB6BF /* tokyo0505map.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tokyo0505map.png; sourceTree = "<group>"; };
+		8948C74B1905555B004FB6BF /* tokyo0505map_big.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tokyo0505map_big.png; sourceTree = "<group>"; };
 		89C17F4018FE54B700324821 /* tokyo0505.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = tokyo0505.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		89C17F4318FE54B700324821 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		89C17F4518FE54B700324821 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -166,13 +172,11 @@
 		89C17F4918FE54B700324821 /* tokyo0505 */ = {
 			isa = PBXGroup;
 			children = (
+				89C17F4A18FE54B700324821 /* Supporting Files */,
 				2D65EACC19017BED004D3CDC /* Common.h */,
 				2D65EACD19017BED004D3CDC /* Common.m */,
 				89C17F5218FE54B700324821 /* AppDelegate.h */,
 				89C17F5318FE54B700324821 /* AppDelegate.m */,
-				89C17F5518FE54B700324821 /* Images.xcassets */,
-				89C17F4A18FE54B700324821 /* Supporting Files */,
-				89043A0618FE5BE6003CF403 /* Storyboard_iPhone.storyboard */,
 				89043A0A18FE5D2F003CF403 /* MapViewController.h */,
 				89043A0B18FE5D2F003CF403 /* MapViewController.m */,
 				2DF535DB19023D6F00627FC6 /* UserService.h */,
@@ -192,9 +196,14 @@
 		89C17F4A18FE54B700324821 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				89C17F5518FE54B700324821 /* Images.xcassets */,
+				89043A0618FE5BE6003CF403 /* Storyboard_iPhone.storyboard */,
 				89043A1018FE6F7F003CF403 /* access_floorguide.gif */,
-				8948C73B1902DE41004FB6BF /* bacon.png */,
 				8948C74919041981004FB6BF /* tokyo0505map.png */,
+				8948C74B1905555B004FB6BF /* tokyo0505map_big.png */,
+				8904E2A2190576F5004B5600 /* LocationArrow.png */,
+				8948C73B1902DE41004FB6BF /* bacon.png */,
+				8904E2A01905719F004B5600 /* bacon-40.png */,
 				8948C73D1902E0DB004FB6BF /* bacon-80.png */,
 				8948C7431902EC30004FB6BF /* time-main.png */,
 				8948C7441902EC30004FB6BF /* time-sub.png */,
@@ -310,6 +319,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				89C17F4E18FE54B700324821 /* InfoPlist.strings in Resources */,
+				8948C74C1905555B004FB6BF /* tokyo0505map_big.png in Resources */,
 				89043A0718FE5BE6003CF403 /* Storyboard_iPhone.storyboard in Resources */,
 				89043A1118FE6F7F003CF403 /* access_floorguide.gif in Resources */,
 				8948C74A19041981004FB6BF /* tokyo0505map.png in Resources */,
@@ -319,6 +329,8 @@
 				8948C7481903012B004FB6BF /* twitter.png in Resources */,
 				8948C73E1902E0DB004FB6BF /* bacon-80.png in Resources */,
 				8948C7451902EC30004FB6BF /* time-main.png in Resources */,
+				8904E2A11905719F004B5600 /* bacon-40.png in Resources */,
+				8904E2A3190576F5004B5600 /* LocationArrow.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -456,7 +468,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -489,7 +501,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				SDKROOT = iphoneos;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -517,13 +529,13 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Distribution";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: NUBOT, K.K (374T7SU62K)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: NUBOT, K.K (374T7SU62K)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "tokyo0505/tokyo0505-Prefix.pch";
 				INFOPLIST_FILE = "tokyo0505/tokyo0505-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "B5AB9479-C409-4545-B09D-64259B998245";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

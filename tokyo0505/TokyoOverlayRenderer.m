@@ -13,7 +13,7 @@
 
 - (void)drawMapRect:(MKMapRect)mapRect zoomScale:(MKZoomScale)zoomScale inContext:(CGContextRef)context
 {
-    UIImage *image = [UIImage imageNamed:@"tokyo0505map.png"];
+    UIImage *image = [UIImage imageNamed:@"tokyo0505map_big.png"];
     CGImageRef imageReference = image.CGImage;
     
     MKMapRect theMapRect = [self.overlay boundingMapRect];
