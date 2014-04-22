@@ -9,5 +9,5 @@
 #import <UIKit/UIKit.h>
 
 @interface FishViewController : UIViewController
-@property (nonatomic, strong) UIView *timetableView;
+@property (nonatomic, retain) UITableView *fishTableView;
 @end

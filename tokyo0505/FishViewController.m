@@ -26,7 +26,13 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [self addTimetableSubView:self.view];
+    // load view
+    float width = self.preferredContentSize.width;
+    float height = self.preferredContentSize.height;
+    self.view = [[UIView alloc] initWithFrame:
+                 CGRectMake(self.view.frame.origin.x + 10, self.view.frame.origin.y + 10,
+                            width - 20, height - 20)];
+    [self loadFishTableView:self.view];
     // Do any additional setup after loading the view.
 }
 
@@ -36,33 +42,19 @@
     // Dispose of any resources that can be recreated.
 }
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
-
-- (void)addTimetableSubView:(UIView *)mainView{
-    float width = self.preferredContentSize.width;
-    float height = self.preferredContentSize.height;
-
-    self.timetableView = [[UIView alloc] initWithFrame:
-                          CGRectMake(self.view.frame.origin.x + 5, self.view.frame.origin.y + 5,
-                                     width - 20, height - 20)];
-    UITextView* timetableTextView = [[UITextView alloc] initWithFrame:
-                                     CGRectMake(self.timetableView.frame.origin.x, self.timetableView.frame.origin.y,
-                                                self.timetableView.frame.size.width, self.timetableView.frame.size.height)];
+- (void)loadFishTableView:(UIView *)mainView{
+    // テスト用のテキストビュー
+    UITextView* timetableTextView = [[UITextView alloc] initWithFrame:self.view.frame];
     timetableTextView.editable = NO;
     timetableTextView.font = [UIFont fontWithName:@"Helvetica" size:14];
     timetableTextView.text = @"お前を消す方法";
-    [self.timetableView addSubview:timetableTextView];
+    [self.view addSubview:timetableTextView];
     
-    [mainView addSubview:self.timetableView];
+    
 }
+
+# pragma mark UITableView delegate
+
+
 
 @end
