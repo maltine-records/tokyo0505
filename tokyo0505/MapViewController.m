@@ -83,7 +83,11 @@
     float fWidth =60;
     float fHeight = 40;
     button.frame = CGRectMake(10, self.view.frame.size.height-fHeight-10, fWidth, fHeight);
+    [button addTarget:self action:@selector(fishAction:) forControlEvents:UIControlEventTouchDown];
     [self.view addSubview:button];
+}
+
+- (void)fishAction:(UIButton *)button {
 }
 
 - (void)setupMapView
