@@ -48,10 +48,12 @@
 */
 
 - (void)addTimetableSubView:(UIView *)mainView{
-    NSLog(@"%@", NSStringFromCGRect(self.view.frame));
+    float width = self.preferredContentSize.width;
+    float height = self.preferredContentSize.height;
+
     self.timetableView = [[UIView alloc] initWithFrame:
-                          CGRectMake(self.view.frame.origin.x + 10, self.view.frame.origin.y + 10,
-                                     self.view.frame.size.width - 20, self.view.frame.size.height - 20)];
+                          CGRectMake(self.view.frame.origin.x + 5, self.view.frame.origin.y + 5,
+                                     width - 20, height - 20)];
     UITextView* timetableTextView = [[UITextView alloc] initWithFrame:
                                      CGRectMake(self.timetableView.frame.origin.x, self.timetableView.frame.origin.y,
                                                 self.timetableView.frame.size.width, self.timetableView.frame.size.height)];

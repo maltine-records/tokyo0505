@@ -90,8 +90,16 @@
 }
 
 - (void)fishAction:(UIButton *)button {
+    // すでに開いてたら一回閉じる
+    if (self.poc) {
+        if ([self.poc isPopoverVisible]) {
+            [self.poc dismissPopoverAnimated:YES];
+        }
+    }
     FishViewController *fishViewController = [FishViewController new];
+    fishViewController.preferredContentSize = CGSizeMake(280, 400);
     self.poc = [[UIPopoverController alloc] initWithContentViewController:fishViewController];
+    
     [self.poc setDelegate:self];
     [self.poc presentPopoverFromRect:self.fishButton.frame
                               inView:self.view
