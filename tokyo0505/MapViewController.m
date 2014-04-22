@@ -108,9 +108,14 @@
 }
 -(void)dismisPopover:(NSObject *)dismisWithData
 {
-    NSLog(@"%@", dismisWithData);
-    //[self.poc popoverControllerDidDismissPopover:self.poc];
     [self.poc dismissPopoverAnimated:YES];
+    NSLog(@"%@", dismisWithData);
+    NSString* selector = [dismisWithData valueForKey:@"selector"];
+    if ([selector isEqualToString:@"zoomInToSelf"]) {
+        [self zoomInToSelf];
+    }else if ([selector isEqualToString:@"zoomOutToSite"]){
+        [self zoomOutToSite];
+    }
 }
 
 -(BOOL)popoverControllerShouldDismissPopover:(UIPopoverController *)popoverController{
@@ -124,14 +129,8 @@
 {
     // map type
     self.mapView.mapType = MKMapTypeHybrid;
-    // move center
-    CLLocationCoordinate2D koukyo = CLLocationCoordinate2DMake(35.683833, 139.753972);
-    [self.mapView setCenterCoordinate:koukyo];
-    MKCoordinateRegion region = self.mapView.region;
-    region.center = koukyo;
-    region.span.latitudeDelta = 0.25;
-    region.span.longitudeDelta = 0.25;
-    [self.mapView setRegion:region animated:TRUE];
+    [self zoomOutToSite];
+    
     // add overlay
     // TODO 縦横比を画像と合わせないと歪む
     CLLocationCoordinate2D *coords = malloc(sizeof(CLLocationCoordinate2D)*4);
@@ -211,24 +210,42 @@
     if ([screen_name length] == 0) {
         [self requestTwitterAccount];
     } else {
-        NSLog(@"screen_name: %@", screen_name);
-        NSPredicate* isMatchClassUserA = [NSPredicate
-                                          predicateWithFormat:@"self isKindOfClass: %@", [UserAnnotation class]];
-        NSArray* users= [self.mapView.annotations filteredArrayUsingPredicate:isMatchClassUserA];
-        for (UserAnnotation*user in users) {
-            if (user.title==screen_name){
-                [self.mapView showAnnotations:@[user] animated:YES];
-            }
-        }
+        [self zoomInToScreenName:screen_name];
     }
 }
 -(void)zoomInToScreenName:(NSString *)screen_name
 {
     // 特定のスクリーンネームを探して表示する
+    NSLog(@"screen_name: %@", screen_name);
+    NSPredicate* isMatchClassUserA = [NSPredicate
+                                      predicateWithFormat:@"self isKindOfClass: %@", [UserAnnotation class]];
+    NSArray* users= [self.mapView.annotations filteredArrayUsingPredicate:isMatchClassUserA];
+    CLLocationCoordinate2D point=kCLLocationCoordinate2DInvalid;
+    for (UserAnnotation*user in users) {
+        if ([user.title isEqualToString:screen_name]){
+            point = user.coordinate;
+        }
+    }
+    if (CLLocationCoordinate2DIsValid(point)) {
+        MKCoordinateRegion region = self.mapView.region;
+        region.center = point;
+        NSLog(@"%f, %f", point.latitude, point.longitude);
+        region.span.latitudeDelta = 0.08;
+        region.span.longitudeDelta = 0.08;
+        [self.mapView setRegion:region animated:YES];
+    }
 }
 -(void)zoomOutToSite
 {
     // 会場全体を表示する
+    // move center
+    CLLocationCoordinate2D koukyo = CLLocationCoordinate2DMake(35.683833, 139.753972);
+    [self.mapView setCenterCoordinate:koukyo];
+    MKCoordinateRegion region = self.mapView.region;
+    region.center = koukyo;
+    region.span.latitudeDelta = 0.25;
+    region.span.longitudeDelta = 0.25;
+    [self.mapView setRegion:region animated:YES];
 }
 
 #pragma mark - MKMapViewDelegate
@@ -358,6 +375,8 @@
     NSString* gotUUID;
     NSString* gotRegion;
     NSString* message;
+    // 先にbeacons配列からtomadと外人のぶんを除外しておく（そうしないと、近くにいた場合位置がとれなくなってしまう）
+    
     if (beacons.count > 0) {
         CLBeacon *nearestBeacon = beacons.firstObject;
         NSString *rangeMessage;

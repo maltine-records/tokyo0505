@@ -88,14 +88,11 @@
 {
     NSLog(@"%d, %d", indexPath.section, indexPath.row);
     if (indexPath.section==0) {
-        NSLog(@"dismiss");
-        [self.delegate dismisPopover:@{@"zoomTo": @"hoge"}];
-    }
-
-    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
-        NSLog(@"%d", indexPath.row);
-        //NSDictionary *rowData = [self.deviceEvents objectAtIndex:indexPath.row];
-        //self.detailViewController.detailItem = rowData;
+        if (indexPath.row==0) {
+            [self.delegate dismisPopover:@{@"selector": @"zoomInToSelf"}];
+        }else if (indexPath.row==1){
+            [self.delegate dismisPopover:@{@"selector": @"zoomOutToSite"}];
+        }
     }
 }
 
