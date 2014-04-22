@@ -79,20 +79,24 @@
 {
     NSURL *url = [NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"fish" ofType:@"gif"]];
     UIImage *img = [UIImage animatedImageWithAnimatedGIFURL:url];
-    UIButton *button = [[UIButton alloc] init];
-    [button setBackgroundImage:img forState:UIControlStateNormal];
-    float fWidth =60;
+    self.fishButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [self.fishButton setBackgroundImage:img forState:UIControlStateNormal];
+    float fWidth = 60;
     float fHeight = 40;
-    button.frame = CGRectMake(10, self.view.frame.size.height-fHeight-10, fWidth, fHeight);
-    [button addTarget:self action:@selector(fishAction:) forControlEvents:UIControlEventTouchDown];
-    [self.view addSubview:button];
+    float fPadding = 10;
+    self.fishButton.frame = CGRectMake(fPadding, self.view.frame.size.height-fHeight-fPadding, fWidth, fHeight);
+    [self.fishButton addTarget:self action:@selector(fishAction:) forControlEvents:UIControlEventTouchDown];
+    [self.view addSubview:self.fishButton];
 }
 
 - (void)fishAction:(UIButton *)button {
     FishViewController *fishViewController = [FishViewController new];
     self.poc = [[UIPopoverController alloc] initWithContentViewController:fishViewController];
     [self.poc setDelegate:self];
-    [self.poc presentPopoverFromRect:CGRectMake(0, 0, 0, 0) inView:self.view permittedArrowDirections:UIPopoverArrowDirectionUp animated:YES];
+    [self.poc presentPopoverFromRect:self.fishButton.frame
+                              inView:self.view
+            permittedArrowDirections:UIPopoverArrowDirectionDown
+                            animated:YES];
 }
 
 - (void)setupMapView

@@ -48,22 +48,18 @@
 */
 
 - (void)addTimetableSubView:(UIView *)mainView{
-    self.timetableView = [[UIView alloc] initWithFrame:CGRectMake(self.view.frame.origin.x + 10, self.view.frame.origin.y + 10, self.view.frame.size.width - 50, self.view.frame.size.height - 50)];
-    UITextView* timetableTextView = [[UITextView alloc] initWithFrame:CGRectMake(self.timetableView.frame.origin.x, self.timetableView.frame.origin.y, self.timetableView.frame.size.width, self.timetableView.frame.size.height)];
-    timetableTextView.backgroundColor = [UIColor whiteColor];
+    NSLog(@"%@", NSStringFromCGRect(self.view.frame));
+    self.timetableView = [[UIView alloc] initWithFrame:
+                          CGRectMake(self.view.frame.origin.x + 10, self.view.frame.origin.y + 10,
+                                     self.view.frame.size.width - 20, self.view.frame.size.height - 20)];
+    UITextView* timetableTextView = [[UITextView alloc] initWithFrame:
+                                     CGRectMake(self.timetableView.frame.origin.x, self.timetableView.frame.origin.y,
+                                                self.timetableView.frame.size.width, self.timetableView.frame.size.height)];
     timetableTextView.editable = NO;
     timetableTextView.font = [UIFont fontWithName:@"Helvetica" size:14];
-    timetableTextView.text = @"fish";
+    timetableTextView.text = @"お前を消す方法";
     [self.timetableView addSubview:timetableTextView];
     
-    UIToolbar *toolbar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, timetableTextView.frame.size.height, 320, 44)];
-    UIBarButtonItem *space = [[UIBarButtonItem alloc]
-                              initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace
-                              target:nil action:nil];
-    UIBarButtonItem *doneButton = [[UIBarButtonItem alloc]
-                                   initWithTitle:@"close"
-                                   style:UIBarButtonItemStyleDone
-                                   target:self action:@selector(doneButton)];
     [mainView addSubview:self.timetableView];
 }
 

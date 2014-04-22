@@ -16,16 +16,20 @@
 
 @interface MapViewController : UIViewController <MKMapViewDelegate, CLLocationManagerDelegate, UIPickerViewDelegate, UIPickerViewDataSource, UIPopoverControllerDelegate>
 
-@property (strong, nonatomic) TimetableAnnotaion *nogataAnnotation;
+//@property (strong, nonatomic) TimetableAnnotaion *nogataAnnotation;
 @property (strong, nonatomic) CLLocationManager *locationManager;
 @property (strong, nonatomic) CLBeaconRegion *beaconRegion;
 @property (strong, nonatomic) NSUUID *proximityUUID;
+
 @property (strong, nonatomic) NSString *currentMainUUID;
 @property (strong, nonatomic) NSString *currentSubUUID;
+
 @property (strong, nonatomic) NSArray *twitterAccounts;
 @property (strong, nonatomic) ACAccount *twitterAccount;
 @property (weak, nonatomic) UIView *twitterPickerView;
+
 @property (weak, nonatomic) IBOutlet MKMapView *mapView;
 @property (nonatomic, retain) IBOutlet UIPopoverController *poc;
+@property (nonatomic, retain) IBOutlet UIButton *fishButton;
 
 @end
