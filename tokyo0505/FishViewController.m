@@ -7,6 +7,7 @@
 //
 
 #import "FishViewController.h"
+#import "UIImageView+AFNetworking.h"
 
 @interface FishViewController ()
 
@@ -34,7 +35,7 @@
                             width - 20, height - 20)];
     [self loadFishTableView:self.view];
     
-    self.titles = @[@"何か御用ですか？", @"実績"];
+    self.titles = @[@"何か御用ですか？", @"ん？"];
     self.section1 = @[@"自分の位置にズーム", @"会場全体にズームアウト"];
     self.section2 = @[@"tomad", @"boenyeah", @"MeishiSmile"];
     self.sections = @[self.section1, self.section2];
@@ -76,11 +77,27 @@
 {
     return [[self.sections objectAtIndex:section] count];
 }
+-(NSIndexPath *)tableView:(UITableView *)tableView willSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (indexPath.section==1)
+        return nil;
+    else
+        return indexPath;
+}
 -(UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     NSArray* rowValues = [self.sections objectAtIndex:indexPath.section];
     NSString* rowText = [rowValues objectAtIndex:indexPath.row];
-    UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
+    
+    UITableViewCell *cell;
+    if (indexPath.section==0) {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell0"];
+    } else if (indexPath.section==1){
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell1"];
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        //cell.imageView.image = [UIImage imageNamed:@"twitter.png"];
+    }
+
     cell.textLabel.text = rowText;
     return cell;
 }
