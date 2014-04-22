@@ -14,7 +14,7 @@
 #import "BeaconAnnotation.h"
 #import "UserAnnotation.h"
 
-@interface MapViewController : UIViewController <MKMapViewDelegate, CLLocationManagerDelegate, UIPickerViewDelegate, UIPickerViewDataSource>
+@interface MapViewController : UIViewController <MKMapViewDelegate, CLLocationManagerDelegate, UIPickerViewDelegate, UIPickerViewDataSource, UIPopoverControllerDelegate>
 
 @property (strong, nonatomic) TimetableAnnotaion *nogataAnnotation;
 @property (strong, nonatomic) CLLocationManager *locationManager;
@@ -26,5 +26,6 @@
 @property (strong, nonatomic) ACAccount *twitterAccount;
 @property (weak, nonatomic) UIView *twitterPickerView;
 @property (weak, nonatomic) IBOutlet MKMapView *mapView;
+@property (nonatomic, retain) IBOutlet UIPopoverController *poc;
 
 @end

@@ -14,6 +14,7 @@
 #import "AFNetworking.h"
 #import "UIImageView+AFNetworking.h"
 #import "UIImage+animatedGif.h"
+#import "FishViewController.h"
 
 
 @interface MapViewController ()
@@ -88,6 +89,10 @@
 }
 
 - (void)fishAction:(UIButton *)button {
+    FishViewController *fishViewController = [FishViewController new];
+    self.poc = [[UIPopoverController alloc] initWithContentViewController:fishViewController];
+    [self.poc setDelegate:self];
+    [self.poc presentPopoverFromRect:CGRectMake(0, 0, 0, 0) inView:self.view permittedArrowDirections:UIPopoverArrowDirectionUp animated:YES];
 }
 
 - (void)setupMapView
