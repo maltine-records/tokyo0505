@@ -97,7 +97,7 @@
         }
     }
     FishViewController *fishViewController = [FishViewController new];
-    fishViewController.preferredContentSize = CGSizeMake(280, 400);
+    fishViewController.preferredContentSize = CGSizeMake(280, 350);
     self.poc = [[UIPopoverController alloc] initWithContentViewController:fishViewController];
     
     [self.poc setDelegate:self];

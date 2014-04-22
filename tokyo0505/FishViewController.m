@@ -50,11 +50,54 @@
     timetableTextView.text = @"お前を消す方法";
     [self.view addSubview:timetableTextView];
     
-    
+    self.fishTableView = [[UITableView alloc] initWithFrame:self.view.frame style:UITableViewStyleGrouped];
+    self.fishTableView.delegate = self;
+    self.fishTableView.dataSource = self;
+    [self.view addSubview:self.fishTableView];
 }
 
 # pragma mark UITableView delegate
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return NO;
+}
+- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return NO;
+}
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    return 2;
+}
+-(NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
+{
+    if (section==0) {
+        return @"何か御用ですか？";
+    } else if (section==1) {
+        return @"実績";
+    }
+    return @"null";
+}
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    return 2;
+}
+-(UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    //UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
+    UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
+    cell.textLabel.text = @"hoge";
+    return cell;
+}
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    NSLog(@"%d, %d", indexPath.section, indexPath.row);
 
-
+    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
+        NSLog(@"%d", indexPath.row);
+        //NSDictionary *rowData = [self.deviceEvents objectAtIndex:indexPath.row];
+        //self.detailViewController.detailItem = rowData;
+    }
+}
 
 @end

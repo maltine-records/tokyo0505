@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface FishViewController : UIViewController
+@interface FishViewController : UIViewController <UITableViewDelegate, UITableViewDataSource>
 @property (nonatomic, retain) UITableView *fishTableView;
 @end
