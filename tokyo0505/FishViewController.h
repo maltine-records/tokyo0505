@@ -8,6 +8,18 @@
 
 #import <UIKit/UIKit.h>
 
-@interface FishViewController : UIViewController <UITableViewDelegate, UITableViewDataSource>
+@protocol DismisPopoverDelegate
+- (void) dismisPopover:(NSObject *)dismisWithData;
+@end
+
+@interface FishViewController : UIViewController <UITableViewDelegate, UITableViewDataSource>{
+    id<DismisPopoverDelegate> delegate;
+}
+@property (nonatomic, retain) NSArray *titles;
+@property (nonatomic, retain) NSArray *section1;
+@property (nonatomic, retain) NSArray *section2;
+@property (nonatomic, retain) NSArray *sections;
+
+@property (nonatomic, assign) id<DismisPopoverDelegate> delegate;
 @property (nonatomic, retain) UITableView *fishTableView;
 @end

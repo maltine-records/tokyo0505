@@ -98,13 +98,26 @@
     }
     FishViewController *fishViewController = [FishViewController new];
     fishViewController.preferredContentSize = CGSizeMake(280, 350);
+    fishViewController.delegate = self;
     self.poc = [[UIPopoverController alloc] initWithContentViewController:fishViewController];
-    
     [self.poc setDelegate:self];
     [self.poc presentPopoverFromRect:self.fishButton.frame
                               inView:self.view
             permittedArrowDirections:UIPopoverArrowDirectionDown
                             animated:YES];
+}
+-(void)dismisPopover:(NSObject *)dismisWithData
+{
+    NSLog(@"%@", dismisWithData);
+    //[self.poc popoverControllerDidDismissPopover:self.poc];
+    [self.poc dismissPopoverAnimated:YES];
+}
+
+-(BOOL)popoverControllerShouldDismissPopover:(UIPopoverController *)popoverController{
+    return YES;
+}
+-(void)popoverControllerDidDismissPopover:(UIPopoverController *)popoverController{
+    [self.poc dismissPopoverAnimated:YES];
 }
 
 - (void)setupMapView
@@ -191,7 +204,32 @@
     }];
 }
 
-
+#pragma mark
+-(void)zoomInToSelf
+{
+    NSString *screen_name = [[NSUserDefaults standardUserDefaults] objectForKey:@"screen_name"];
+    if ([screen_name length] == 0) {
+        [self requestTwitterAccount];
+    } else {
+        NSLog(@"screen_name: %@", screen_name);
+        NSPredicate* isMatchClassUserA = [NSPredicate
+                                          predicateWithFormat:@"self isKindOfClass: %@", [UserAnnotation class]];
+        NSArray* users= [self.mapView.annotations filteredArrayUsingPredicate:isMatchClassUserA];
+        for (UserAnnotation*user in users) {
+            if (user.title==screen_name){
+                [self.mapView showAnnotations:@[user] animated:YES];
+            }
+        }
+    }
+}
+-(void)zoomInToScreenName:(NSString *)screen_name
+{
+    // 特定のスクリーンネームを探して表示する
+}
+-(void)zoomOutToSite
+{
+    // 会場全体を表示する
+}
 
 #pragma mark - MKMapViewDelegate
 // KASANE

@@ -13,8 +13,11 @@
 #import "TimetableAnnotaion.h"
 #import "BeaconAnnotation.h"
 #import "UserAnnotation.h"
+#import "FishViewController.h"
 
-@interface MapViewController : UIViewController <MKMapViewDelegate, CLLocationManagerDelegate, UIPickerViewDelegate, UIPickerViewDataSource, UIPopoverControllerDelegate>
+@interface MapViewController : UIViewController <MKMapViewDelegate, CLLocationManagerDelegate,
+                                                 UIPickerViewDelegate, UIPickerViewDataSource,
+                                                 UIPopoverControllerDelegate, DismisPopoverDelegate>
 
 //@property (strong, nonatomic) TimetableAnnotaion *nogataAnnotation;
 @property (strong, nonatomic) CLLocationManager *locationManager;
@@ -32,4 +35,8 @@
 @property (nonatomic, retain) IBOutlet UIPopoverController *poc;
 @property (nonatomic, retain) IBOutlet UIButton *fishButton;
 
+-(void)dismisPopover:(NSObject *)dismisWithData;
+-(void)zoomInToSelf;
+-(void)zoomInToScreenName:(NSString*)screen_name;
+-(void)zoomOutToSite;
 @end

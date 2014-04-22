@@ -33,6 +33,12 @@
                  CGRectMake(self.view.frame.origin.x + 10, self.view.frame.origin.y + 10,
                             width - 20, height - 20)];
     [self loadFishTableView:self.view];
+    
+    self.titles = @[@"何か御用ですか？", @"実績"];
+    self.section1 = @[@"自分の位置にズーム", @"会場全体にズームアウト"];
+    self.section2 = @[@"tomad", @"boenyeah", @"MeishiSmile"];
+    self.sections = @[self.section1, self.section2];
+
     // Do any additional setup after loading the view.
 }
 
@@ -43,13 +49,6 @@
 }
 
 - (void)loadFishTableView:(UIView *)mainView{
-    // テスト用のテキストビュー
-    UITextView* timetableTextView = [[UITextView alloc] initWithFrame:self.view.frame];
-    timetableTextView.editable = NO;
-    timetableTextView.font = [UIFont fontWithName:@"Helvetica" size:14];
-    timetableTextView.text = @"お前を消す方法";
-    [self.view addSubview:timetableTextView];
-    
     self.fishTableView = [[UITableView alloc] initWithFrame:self.view.frame style:UITableViewStyleGrouped];
     self.fishTableView.delegate = self;
     self.fishTableView.dataSource = self;
@@ -71,27 +70,27 @@
 }
 -(NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
-    if (section==0) {
-        return @"何か御用ですか？";
-    } else if (section==1) {
-        return @"実績";
-    }
-    return @"null";
+    return [self.titles objectAtIndex:section];
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 2;
+    return [[self.sections objectAtIndex:section] count];
 }
 -(UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    //UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
+    NSArray* rowValues = [self.sections objectAtIndex:indexPath.section];
+    NSString* rowText = [rowValues objectAtIndex:indexPath.row];
     UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
-    cell.textLabel.text = @"hoge";
+    cell.textLabel.text = rowText;
     return cell;
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     NSLog(@"%d, %d", indexPath.section, indexPath.row);
+    if (indexPath.section==0) {
+        NSLog(@"dismiss");
+        [self.delegate dismisPopover:@{@"zoomTo": @"hoge"}];
+    }
 
     if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
         NSLog(@"%d", indexPath.row);
