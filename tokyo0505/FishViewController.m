@@ -35,10 +35,11 @@
                             width - 20, height - 20)];
     [self loadFishTableView:self.view];
     
-    self.titles = @[@"何か御用ですか？", @"ん？"];
+    self.titles = @[@"何か御用ですか？", @"ん？", @"その他"];
     self.section1 = @[@"自分の位置にズーム", @"会場全体にズームアウト"];
     self.section2 = @[@"tomad", @"boenyeah", @"MeishiSmile"];
-    self.sections = @[self.section1, self.section2];
+    self.section3 = @[@"Twitterアカウント再選択"];
+    self.sections = @[self.section1, self.section2, self.section3];
 
     // Do any additional setup after loading the view.
 }
@@ -67,7 +68,7 @@
 }
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 2;
+    return [self.sections count];
 }
 -(NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
@@ -90,7 +91,7 @@
     NSString* rowText = [rowValues objectAtIndex:indexPath.row];
     
     UITableViewCell *cell;
-    if (indexPath.section==0) {
+    if (indexPath.section==0 || indexPath.section==2) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell0"];
     } else if (indexPath.section==1){
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell1"];
@@ -119,13 +120,17 @@
         }else if (indexPath.row==1){
             [self.delegate dismisPopover:@{@"selector": @"zoomOutToSite"}];
         }
-    }else if (indexPath.section==0){
+    }else if (indexPath.section==1){
         if (indexPath.row==0) {
             [self.delegate dismisPopover:@{@"sendMetDirectMessage": @"tomad"}];
         }else if (indexPath.row==1){
             [self.delegate dismisPopover:@{@"sendMetDirectMessage": @"boenyeah"}];
         }else if (indexPath.row==2){
             [self.delegate dismisPopover:@{@"sendMetDirectMessage": @"MeishiSmile"}];
+        }
+    }else if (indexPath.section==2){
+        if (indexPath.row==0) {
+            [self.delegate dismisPopover:@{@"selector": @"changeTwitterAccount"}];
         }
     }
 }

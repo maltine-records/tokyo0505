@@ -18,6 +18,8 @@
 @property (nonatomic, retain) NSArray *titles;
 @property (nonatomic, retain) NSArray *section1;
 @property (nonatomic, retain) NSArray *section2;
+@property (nonatomic, retain) NSArray *section3;
+
 @property (nonatomic, retain) NSArray *sections;
 
 @property (nonatomic, assign) id<DismisPopoverDelegate> delegate;

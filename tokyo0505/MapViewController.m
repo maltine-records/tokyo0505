@@ -115,6 +115,8 @@
         [self zoomInToSelf];
     }else if ([selector isEqualToString:@"zoomOutToSite"]){
         [self zoomOutToSite];
+    }else if ([selector isEqualToString:@"changeTwitterAccount"]){
+        [self requestTwitterAccount];
     }
     NSString*screen_name = [dismisWithData valueForKey:@"sendMetDirectMessage"];
     if (screen_name) {
@@ -568,6 +570,8 @@
 }
 
 -(void)doneTwitterPick{
+    // close picker view
+    [self.twitterPickerView removeFromSuperview];
     // 一度もdidSelectRowが呼ばれていない場合、先頭のやつとする
     if (!didSelected) {
         self.twitterAccount = [self.twitterAccounts objectAtIndex:0];
@@ -576,8 +580,7 @@
         [[NSUserDefaults standardUserDefaults] synchronize];
     }
     [self postTwitterData];
-    // close picker view
-    [self.twitterPickerView removeFromSuperview];
+
 }
 
 # pragma mark UIPickerView Delegate
