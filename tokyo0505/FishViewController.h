@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @protocol DismisPopoverDelegate
-- (void) dismisPopover:(NSObject *)dismisWithData;
+- (void) dismisPopover:(NSDictionary *)dismisWithData;
 @end
 
 @interface FishViewController : UIViewController <UITableViewDelegate, UITableViewDataSource>{

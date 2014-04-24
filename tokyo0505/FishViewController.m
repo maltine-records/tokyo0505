@@ -119,9 +119,14 @@
         }else if (indexPath.row==1){
             [self.delegate dismisPopover:@{@"selector": @"zoomOutToSite"}];
         }
-    }else if (indexPath.section==1){
-        // DM再送処理
-        NSLog(@"hoge");
+    }else if (indexPath.section==0){
+        if (indexPath.row==0) {
+            [self.delegate dismisPopover:@{@"sendMetDirectMessage": @"tomad"}];
+        }else if (indexPath.row==1){
+            [self.delegate dismisPopover:@{@"sendMetDirectMessage": @"boenyeah"}];
+        }else if (indexPath.row==2){
+            [self.delegate dismisPopover:@{@"sendMetDirectMessage": @"MeishiSmile"}];
+        }
     }
 }
 

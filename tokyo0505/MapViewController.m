@@ -106,7 +106,7 @@
             permittedArrowDirections:UIPopoverArrowDirectionDown
                             animated:YES];
 }
--(void)dismisPopover:(NSObject *)dismisWithData
+-(void)dismisPopover:(NSDictionary *)dismisWithData
 {
     [self.poc dismissPopoverAnimated:YES];
     NSLog(@"%@", dismisWithData);
@@ -116,6 +116,11 @@
     }else if ([selector isEqualToString:@"zoomOutToSite"]){
         [self zoomOutToSite];
     }
+    NSString*screen_name = [dismisWithData valueForKey:@"sendMetDirectMessage"];
+    if (screen_name) {
+        [self sendMetDirectMessage:screen_name];
+    }
+    
 }
 
 -(BOOL)popoverControllerShouldDismissPopover:(UIPopoverController *)popoverController{
@@ -399,15 +404,15 @@
         switch (nearestBeacon.proximity) {
             case CLProximityImmediate:
                 rangeMessage = @"Range Immediate: ";
-                proximity = [NSNumber numberWithInt:5];
+                proximity = @5;
                 break;
             case CLProximityNear:
                 rangeMessage = @"Range Near: ";
-                proximity = [NSNumber numberWithInt:10];
+                proximity = @10;
                 break;
             case CLProximityFar:
                 rangeMessage = @"Range Far: ";
-                proximity = [NSNumber numberWithInt:30];
+                proximity = @30;
                 break;
             default:
                 rangeMessage = @"Range Unknown: ";
@@ -454,19 +459,23 @@
     if (!hasmet) {
         [[NSUserDefaults standardUserDefaults] setBool:YES forKey:who];
         [[NSUserDefaults standardUserDefaults] synchronize];
-        // send direct message
-        NSString *mp3url;
-        if ([screen_name isEqualToString:@"tomad"]) {
-            mp3url = @"http://maltinerecords.cs8.biz/Tokyo01.mp3";
-        }else if ([screen_name isEqualToString:@"boenyeah"]){
-            mp3url = @"http://maltinerecords.cs8.biz/Tokyo02.mp3";
-        }else if ([screen_name isEqualToString:@"MeishiSmile"]){
-            mp3url = @"http://maltinerecords.cs8.biz/Tokyo03.mp3";
-        }
-        NSString*text = [NSString stringWithFormat:
-                         @"%@とすれ違いました。曲をプレゼント！ %@", screen_name, mp3url];
-        [self sendTwitterDirectMessageToSelf:text];
+        [self sendMetDirectMessage:screen_name];
     }
+}
+
+-(void)sendMetDirectMessage:(NSString*)screen_name{
+    // send direct message
+    NSString *mp3url;
+    if ([screen_name isEqualToString:@"tomad"]) {
+        mp3url = @"http://maltinerecords.cs8.biz/Tokyo01.mp3";
+    }else if ([screen_name isEqualToString:@"boenyeah"]){
+        mp3url = @"http://maltinerecords.cs8.biz/Tokyo02.mp3";
+    }else if ([screen_name isEqualToString:@"MeishiSmile"]){
+        mp3url = @"http://maltinerecords.cs8.biz/Tokyo03.mp3";
+    }
+    NSString*text = [NSString stringWithFormat:
+                     @"%@とすれ違いました。曲をプレゼント！ %@", screen_name, mp3url];
+    [self sendTwitterDirectMessageToSelf:text];
 }
 
 # pragma mark bigbrother api

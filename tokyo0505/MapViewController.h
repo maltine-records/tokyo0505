@@ -35,7 +35,7 @@
 @property (nonatomic, retain) IBOutlet UIPopoverController *poc;
 @property (nonatomic, retain) IBOutlet UIButton *fishButton;
 
--(void)dismisPopover:(NSObject *)dismisWithData;
+-(void)dismisPopover:(NSDictionary *)dismisWithData;
 -(void)zoomInToSelf;
 -(void)zoomInToScreenName:(NSString*)screen_name;
 -(void)zoomOutToSite;
