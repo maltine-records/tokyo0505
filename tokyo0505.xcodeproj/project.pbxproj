@@ -32,6 +32,9 @@
 		8948C7481903012B004FB6BF /* twitter.png in Resources */ = {isa = PBXBuildFile; fileRef = 8948C7471903012B004FB6BF /* twitter.png */; };
 		8948C74A19041981004FB6BF /* tokyo0505map.png in Resources */ = {isa = PBXBuildFile; fileRef = 8948C74919041981004FB6BF /* tokyo0505map.png */; };
 		8948C74C1905555B004FB6BF /* tokyo0505map_big.png in Resources */ = {isa = PBXBuildFile; fileRef = 8948C74B1905555B004FB6BF /* tokyo0505map_big.png */; };
+		89A22BE71909042D00E7FC80 /* tomad.png in Resources */ = {isa = PBXBuildFile; fileRef = 89A22BE61909042D00E7FC80 /* tomad.png */; };
+		89A22BEB1909043800E7FC80 /* MeishiSmile.png in Resources */ = {isa = PBXBuildFile; fileRef = 89A22BEA1909043800E7FC80 /* MeishiSmile.png */; };
+		89A22BED1909044B00E7FC80 /* boenyeah.png in Resources */ = {isa = PBXBuildFile; fileRef = 89A22BEC1909044B00E7FC80 /* boenyeah.png */; };
 		89C17F4418FE54B700324821 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 89C17F4318FE54B700324821 /* Foundation.framework */; };
 		89C17F4618FE54B700324821 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 89C17F4518FE54B700324821 /* CoreGraphics.framework */; };
 		89C17F4818FE54B700324821 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 89C17F4718FE54B700324821 /* UIKit.framework */; };
@@ -93,6 +96,9 @@
 		8948C7471903012B004FB6BF /* twitter.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = twitter.png; sourceTree = "<group>"; };
 		8948C74919041981004FB6BF /* tokyo0505map.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tokyo0505map.png; sourceTree = "<group>"; };
 		8948C74B1905555B004FB6BF /* tokyo0505map_big.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tokyo0505map_big.png; sourceTree = "<group>"; };
+		89A22BE61909042D00E7FC80 /* tomad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tomad.png; sourceTree = "<group>"; };
+		89A22BEA1909043800E7FC80 /* MeishiSmile.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = MeishiSmile.png; sourceTree = "<group>"; };
+		89A22BEC1909044B00E7FC80 /* boenyeah.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = boenyeah.png; sourceTree = "<group>"; };
 		89C17F4018FE54B700324821 /* tokyo0505.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = tokyo0505.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		89C17F4318FE54B700324821 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		89C17F4518FE54B700324821 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -210,6 +216,9 @@
 			children = (
 				89C17F5518FE54B700324821 /* Images.xcassets */,
 				89043A0618FE5BE6003CF403 /* Storyboard_iPhone.storyboard */,
+				89A22BE61909042D00E7FC80 /* tomad.png */,
+				89A22BEC1909044B00E7FC80 /* boenyeah.png */,
+				89A22BEA1909043800E7FC80 /* MeishiSmile.png */,
 				89043A1018FE6F7F003CF403 /* access_floorguide.gif */,
 				8948C74919041981004FB6BF /* tokyo0505map.png */,
 				8948C74B1905555B004FB6BF /* tokyo0505map_big.png */,
@@ -331,17 +340,20 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				89A22BEB1909043800E7FC80 /* MeishiSmile.png in Resources */,
 				89C17F4E18FE54B700324821 /* InfoPlist.strings in Resources */,
 				8948C74C1905555B004FB6BF /* tokyo0505map_big.png in Resources */,
 				8904E2A519057CC2004B5600 /* fish.gif in Resources */,
 				89043A0718FE5BE6003CF403 /* Storyboard_iPhone.storyboard in Resources */,
 				89043A1118FE6F7F003CF403 /* access_floorguide.gif in Resources */,
+				89A22BED1909044B00E7FC80 /* boenyeah.png in Resources */,
 				8948C74A19041981004FB6BF /* tokyo0505map.png in Resources */,
 				89C17F5618FE54B700324821 /* Images.xcassets in Resources */,
 				8948C73C1902DE41004FB6BF /* bacon.png in Resources */,
 				8948C7461902EC30004FB6BF /* time-sub.png in Resources */,
 				8948C7481903012B004FB6BF /* twitter.png in Resources */,
 				8948C73E1902E0DB004FB6BF /* bacon-80.png in Resources */,
+				89A22BE71909042D00E7FC80 /* tomad.png in Resources */,
 				8948C7451902EC30004FB6BF /* time-main.png in Resources */,
 				8904E2A11905719F004B5600 /* bacon-40.png in Resources */,
 				8904E2A3190576F5004B5600 /* LocationArrow.png in Resources */,

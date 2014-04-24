@@ -94,8 +94,17 @@
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell0"];
     } else if (indexPath.section==1){
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell1"];
-        cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        //cell.imageView.image = [UIImage imageNamed:@"twitter.png"];
+        NSString *who = [[NSString alloc] initWithFormat:@"met_%@", rowText];
+        NSString *imgName = [[NSString alloc] initWithFormat:@"%@.png", rowText];
+        cell.imageView.image = [UIImage imageNamed:imgName];
+        BOOL met = [[NSUserDefaults standardUserDefaults] boolForKey:who];
+        // 会っていないひとはグレーアウトして選択不可
+        if (!met) {
+            cell.imageView.alpha = 0.5;
+            cell.backgroundColor = [UIColor grayColor];
+            cell.textLabel.textColor = [UIColor lightGrayColor];
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        }
     }
 
     cell.textLabel.text = rowText;
@@ -110,6 +119,9 @@
         }else if (indexPath.row==1){
             [self.delegate dismisPopover:@{@"selector": @"zoomOutToSite"}];
         }
+    }else if (indexPath.section==1){
+        // DM再送処理
+        NSLog(@"hoge");
     }
 }
 

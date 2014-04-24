@@ -370,63 +370,104 @@
     }
 }
 
-- (void)locationManager:(CLLocationManager *)manager didRangeBeacons:(NSArray *)beacons inRegion:(CLBeaconRegion *)region
+- (void)locationManager:(CLLocationManager *)manager didRangeBeacons:(NSArray *)rangeBeacons inRegion:(CLBeaconRegion *)region
 {
+    NSMutableArray* gotBeacons = [NSMutableArray arrayWithArray:rangeBeacons];
     NSString* gotUUID;
     NSString* gotRegion;
+    NSNumber* proximity;
     NSString* message;
     // 先にbeacons配列からtomadと外人のぶんを除外しておく（そうしないと、近くにいた場合位置がとれなくなってしまう）
+    for (CLBeacon *beacon in gotBeacons) {
+        NSString *uuidstr = [NSString stringWithFormat:@"%@-%@-%@",
+                             [beacon.proximityUUID UUIDString], beacon.major, beacon.minor];
+        if ([uuidstr isEqualToString:@"00000000-31D9-1001-B000-001C4DC4C8AF-1-3"]) {
+            [gotBeacons removeObject:beacon];
+            [self metPeople:@"boenyeah"];
+        }else if ([uuidstr isEqualToString:@"00000000-31D9-1001-B000-001C4DC4C8AF-1-4"]){
+            [gotBeacons removeObject:beacon];
+            [self metPeople:@"MeishiSmile"];
+        }else if ([uuidstr isEqualToString:@"00000000-879F-1001-B000-001C4DE6C3AB-1-4"]){
+            [gotBeacons removeObject:beacon];
+            [self metPeople:@"tomad"];
+        }
+    }
     
-    if (beacons.count > 0) {
-        CLBeacon *nearestBeacon = beacons.firstObject;
+    if (gotBeacons.count > 0) {
+        CLBeacon *nearestBeacon = gotBeacons.firstObject;
         NSString *rangeMessage;
         switch (nearestBeacon.proximity) {
             case CLProximityImmediate:
                 rangeMessage = @"Range Immediate: ";
+                proximity = [NSNumber numberWithInt:5];
                 break;
             case CLProximityNear:
                 rangeMessage = @"Range Near: ";
+                proximity = [NSNumber numberWithInt:10];
                 break;
             case CLProximityFar:
                 rangeMessage = @"Range Far: ";
+                proximity = [NSNumber numberWithInt:30];
                 break;
             default:
                 rangeMessage = @"Range Unknown: ";
                 break;
         }
         message = [NSString stringWithFormat:@"UUID:%@, major:%@, minor:%@, accuracy:%f, rssi:%d",
-                             nearestBeacon.proximityUUID,nearestBeacon.major, nearestBeacon.minor, nearestBeacon.accuracy, nearestBeacon.rssi];
+                             nearestBeacon.proximityUUID, nearestBeacon.major, nearestBeacon.minor, nearestBeacon.accuracy, nearestBeacon.rssi];
         gotUUID = [NSString stringWithFormat:@"%@-%@-%@", [nearestBeacon.proximityUUID UUIDString], nearestBeacon.major, nearestBeacon.minor];
         gotRegion = [region identifier];
     } else {
         gotUUID = @"null";
-        gotRegion = nil;
+        gotRegion = @"null";
     }
     
-    if ([[region identifier] isEqualToString:@"com.nubot.tokyo0505.mainregion"]) {
+    if ([gotRegion isEqualToString:@"com.nubot.tokyo0505.mainregion"]) {
         if(![gotUUID isEqualToString:self.currentMainUUID]) {
             NSLog(@"俺は変わった %@ to %@", self.currentMainUUID, gotUUID);
-            NSMutableDictionary *param = [NSMutableDictionary dictionaryWithDictionary:@{@"beacon_uuid":gotUUID}];
+            NSMutableDictionary *param = [NSMutableDictionary
+                                          dictionaryWithDictionary:@{@"beacon_uuid":gotUUID, @"proximity":proximity}];
             [self postUserData:param withCallback:^(void) {}];
         }
         self.currentMainUUID = [NSString stringWithString:gotUUID];
-    }else if ([[region identifier] isEqualToString:@"com.nubot.tokyo0505.subregion"]){
+    }else if ([gotRegion isEqualToString:@"com.nubot.tokyo0505.subregion"]){
         if(![gotUUID isEqualToString:self.currentSubUUID]) {
             NSLog(@"俺は変わった %@ to %@", self.currentSubUUID, gotUUID);
-            NSMutableDictionary *param = [NSMutableDictionary dictionaryWithDictionary:@{@"beacon_uuid":gotUUID}];
+            NSMutableDictionary *param = [NSMutableDictionary
+                                          dictionaryWithDictionary:@{@"beacon_uuid":gotUUID, @"proximity":proximity}];
             [self postUserData:param withCallback:^(void) {}];
         }
         self.currentSubUUID = [NSString stringWithString:gotUUID];
+    } else if ([gotRegion isEqualToString:@"null"]) {
+        if ([gotUUID isEqualToString:@"null"]) {
+            NSLog(@"俺はもうダメだ〜どうすればいいんだ〜");
+            NSMutableDictionary *param = [NSMutableDictionary dictionaryWithDictionary:@{@"beacon_uuid":@"null"}];
+            [self postUserData:param withCallback:^(void) {}];
+        }
     }
-    /*
-    if ([self.currentMainUUID isEqualToString:@"null"] && [self.currentSubUUID isEqualToString:@"null"]) {
-        NSLog(@"俺はもうダメだ〜どうすればいいんだ〜");
-        NSMutableDictionary *param = [NSMutableDictionary dictionaryWithDictionary:@{@"beacon_uuid":@"null"}];
-        [self postUserData:param withCallback:^(void) {}];
-    }
-     */
 }
 
+-(void)metPeople:(NSString*)screen_name{
+    NSString *who = [[NSString alloc] initWithFormat:@"met_%@", screen_name];
+    NSLog(@"%@", who);
+    BOOL hasmet = [[NSUserDefaults standardUserDefaults] boolForKey:who];
+    if (!hasmet) {
+        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:who];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+        // send direct message
+        NSString *mp3url;
+        if ([screen_name isEqualToString:@"tomad"]) {
+            mp3url = @"http://maltinerecords.cs8.biz/Tokyo01.mp3";
+        }else if ([screen_name isEqualToString:@"boenyeah"]){
+            mp3url = @"http://maltinerecords.cs8.biz/Tokyo02.mp3";
+        }else if ([screen_name isEqualToString:@"MeishiSmile"]){
+            mp3url = @"http://maltinerecords.cs8.biz/Tokyo03.mp3";
+        }
+        NSString*text = [NSString stringWithFormat:
+                         @"%@とすれ違いました。曲をプレゼント！ %@", screen_name, mp3url];
+        [self sendTwitterDirectMessageToSelf:text];
+    }
+}
 
 # pragma mark bigbrother api
 
@@ -551,7 +592,8 @@ BOOL didSelected = false;
     return [[self.twitterAccounts objectAtIndex:row] username];
 }
 
-# pragma mark twitter profile image
+# pragma mark twitter api
+// profile image
 -(void)getTwitterProfileImage:(void(^)(NSMutableDictionary*param))callback{
     if (!self.twitterAccount) {
         return;
@@ -593,7 +635,41 @@ BOOL didSelected = false;
         });
     }];
 }
-
-
+// direct message
+-(void)sendTwitterDirectMessageToSelf:(NSString*)text{
+    NSURL *url = [NSURL URLWithString:@"http://api.twitter.com/1.1/direct_messages/new.json"];
+    NSDictionary *parameters = @{@"text": text,
+                                 @"screen_name": [self.twitterAccount username]};
+    
+    SLRequest *request = [SLRequest requestForServiceType:SLServiceTypeTwitter
+                                            requestMethod:SLRequestMethodPOST
+                                                      URL:url
+                                               parameters:parameters];
+    
+    [request setAccount:self.twitterAccount];
+    [request performRequestWithHandler:^(NSData *responseData,
+                                         NSHTTPURLResponse *urlResponse,
+                                         NSError *error)
+     {
+         NSError *jsonError = nil;
+         id jsonData = [NSJSONSerialization JSONObjectWithData:responseData
+                                                       options:0
+                                                         error:&jsonError];
+         if (error){
+             
+             NSLog(@"error:%@", error);
+         }
+         
+         if (jsonError) {
+             
+             NSLog(@"jsonerror:%@", jsonError);
+         }
+         
+         dispatch_async(dispatch_get_main_queue(), ^{
+             
+             NSLog(@"jsondata:%@" , jsonData);
+         });
+     }];
+}
 
 @end
