@@ -550,6 +550,8 @@
 }
 
 - (void)showTwitterPickerView{
+    NSLog(@"showTwitterPickerView start");
+    
     UIPickerView *pickerView = [[UIPickerView alloc] init];
     pickerView.delegate = self;
     pickerView.dataSource = self;
@@ -567,13 +569,18 @@
     [toolbar setItems:[NSArray arrayWithObjects:space, doneButton, nil]];
     // pickerView height + toolbar height
     CGRect pbf = CGRectMake(pf.origin.x, pf.origin.y, pf.size.width, pf.size.height+44);
-    UIView *pickerViewBackView = [[UIView alloc] initWithFrame:pbf];
-    pickerViewBackView.backgroundColor = [UIColor whiteColor];
-    pickerViewBackView.center = self.view.center;
-    [pickerViewBackView addSubview:toolbar];
-    [pickerViewBackView addSubview:pickerView];
-    self.twitterPickerView = pickerViewBackView;
-    [self.view addSubview:self.twitterPickerView];
+    
+    UIView*backView = [[UIView alloc] initWithFrame:pbf];
+    backView.backgroundColor = [UIColor whiteColor];
+    backView.center = self.view.center;
+    [backView addSubview:toolbar];
+    [backView addSubview:pickerView];
+    
+    [self.view addSubview:backView];
+    [self.view bringSubviewToFront:backView];
+    self.twitterPickerView = backView;
+    NSLog(@"showTwitterPickerView end");
+
 }
 
 -(void)doneTwitterPick{
@@ -587,7 +594,6 @@
         [[NSUserDefaults standardUserDefaults] synchronize];
     }
     [self postTwitterData];
-
 }
 
 # pragma mark UIPickerView Delegate
