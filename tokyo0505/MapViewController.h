@@ -29,9 +29,9 @@
 
 @property (strong, nonatomic) NSArray *twitterAccounts;
 @property (strong, nonatomic) ACAccount *twitterAccount;
-@property (weak, nonatomic) UIView *twitterPickerView;
+@property (strong, nonatomic) UIView *twitterPickerView;
 
-@property (weak, nonatomic) IBOutlet MKMapView *mapView;
+@property (strong, nonatomic) IBOutlet MKMapView *mapView;
 @property (nonatomic, retain) IBOutlet UIPopoverController *poc;
 @property (nonatomic, retain) IBOutlet UIButton *fishButton;
 
