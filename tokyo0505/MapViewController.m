@@ -240,6 +240,8 @@
         region.span.latitudeDelta = 0.08;
         region.span.longitudeDelta = 0.08;
         [self.mapView setRegion:region animated:YES];
+    } else {
+        NSLog(@"user not found");
     }
 }
 -(void)zoomOutToSite
