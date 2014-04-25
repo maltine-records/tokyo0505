@@ -52,9 +52,10 @@
     [self setupUserService];
     NSString *screen_name = [[NSUserDefaults standardUserDefaults] objectForKey:@"screen_name"];
     if ([screen_name length] == 0) {
-        [self requestTwitterAccount];
+        [self requestTwitterAccount:nil];
     } else {
         NSLog(@"screen_name: %@", screen_name);
+        [self requestTwitterAccount:screen_name];
     }
 }
 
@@ -116,7 +117,7 @@
     }else if ([selector isEqualToString:@"zoomOutToSite"]){
         [self zoomOutToSite];
     }else if ([selector isEqualToString:@"changeTwitterAccount"]){
-        [self requestTwitterAccount];
+        [self requestTwitterAccount:nil];
     }
     NSString*screen_name = [dismisWithData valueForKey:@"sendMetDirectMessage"];
     if (screen_name) {
@@ -215,7 +216,7 @@
 {
     NSString *screen_name = [[NSUserDefaults standardUserDefaults] objectForKey:@"screen_name"];
     if ([screen_name length] == 0) {
-        [self requestTwitterAccount];
+        [self requestTwitterAccount:nil];
     } else {
         [self zoomInToScreenName:screen_name];
     }
@@ -521,7 +522,7 @@
 
 # pragma mark pick twitter account
 
-- (void)requestTwitterAccount
+- (void)requestTwitterAccount:(NSString*)screen_name
 {
     if ([SLComposeViewController isAvailableForServiceType:SLServiceTypeTwitter]) {
         ACAccountStore *accountStore = [[ACAccountStore alloc] init];
@@ -533,7 +534,15 @@
          completion:^(BOOL granted, NSError *error) {
             if (granted) {
                 self.twitterAccounts = [accountStore accountsWithAccountType:twitterAC];
-                [self showTwitterPickerView];
+                if (screen_name) {
+                    for (ACAccount*twac in self.twitterAccounts) {
+                        if ([twac.username isEqualToString:screen_name]) {
+                            self.twitterAccount = twac;
+                        }
+                    }
+                }else{
+                    [self showTwitterPickerView];
+                }
             }
         }];
     }
@@ -647,6 +656,10 @@ BOOL didSelected = false;
 }
 // direct message
 -(void)sendTwitterDirectMessageToSelf:(NSString*)text{
+    if (!self.twitterAccount) {
+        return;
+    }
+    
     NSURL *url = [NSURL URLWithString:@"https://api.twitter.com/1.1/direct_messages/new.json"];
     NSDictionary *parameters = @{@"text": text,
                                  @"screen_name": [self.twitterAccount username]};
