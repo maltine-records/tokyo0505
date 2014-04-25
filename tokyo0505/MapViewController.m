@@ -380,28 +380,29 @@
 - (void)locationManager:(CLLocationManager *)manager didRangeBeacons:(NSArray *)rangeBeacons inRegion:(CLBeaconRegion *)region
 {
     NSMutableArray* gotBeacons = [NSMutableArray arrayWithArray:rangeBeacons];
+    NSMutableArray* withoutPeopleBeacons = [[NSMutableArray alloc] init];
     NSString* gotUUID;
     NSString* gotRegion;
-    NSNumber* proximity;
+    NSNumber* proximity = @-1;
     NSString* message;
     // 先にbeacons配列からtomadと外人のぶんを除外しておく（そうしないと、近くにいた場合位置がとれなくなってしまう）
     for (CLBeacon *beacon in gotBeacons) {
         NSString *uuidstr = [NSString stringWithFormat:@"%@-%@-%@",
                              [beacon.proximityUUID UUIDString], beacon.major, beacon.minor];
         if ([uuidstr isEqualToString:@"00000000-31D9-1001-B000-001C4DC4C8AF-1-3"]) {
-            [gotBeacons removeObject:beacon];
             [self metPeople:@"boenyeah"];
         }else if ([uuidstr isEqualToString:@"00000000-31D9-1001-B000-001C4DC4C8AF-1-4"]){
-            [gotBeacons removeObject:beacon];
             [self metPeople:@"MeishiSmile"];
         }else if ([uuidstr isEqualToString:@"00000000-879F-1001-B000-001C4DE6C3AB-1-4"]){
-            [gotBeacons removeObject:beacon];
             [self metPeople:@"tomad"];
+        }
+        else{
+            [withoutPeopleBeacons addObject:beacon];
         }
     }
     
-    if (gotBeacons.count > 0) {
-        CLBeacon *nearestBeacon = gotBeacons.firstObject;
+    if (withoutPeopleBeacons.count > 0) {
+        CLBeacon *nearestBeacon = withoutPeopleBeacons.firstObject;
         NSString *rangeMessage;
         switch (nearestBeacon.proximity) {
             case CLProximityImmediate:
@@ -445,12 +446,6 @@
             [self postUserData:param withCallback:^(void) {}];
         }
         self.currentSubUUID = [NSString stringWithString:gotUUID];
-    } else if ([gotRegion isEqualToString:@"null"]) {
-        if ([gotUUID isEqualToString:@"null"]) {
-            NSLog(@"俺はもうダメだ〜どうすればいいんだ〜");
-            NSMutableDictionary *param = [NSMutableDictionary dictionaryWithDictionary:@{@"beacon_uuid":@"null"}];
-            [self postUserData:param withCallback:^(void) {}];
-        }
     }
 }
 
@@ -475,6 +470,7 @@
     }else if ([screen_name isEqualToString:@"MeishiSmile"]){
         mp3url = @"http://maltinerecords.cs8.biz/Tokyo03.mp3";
     }
+
     NSString*text = [NSString stringWithFormat:
                      @"%@とすれ違いました。曲をプレゼント！ %@", screen_name, mp3url];
     [self sendTwitterDirectMessageToSelf:text];
@@ -649,7 +645,7 @@ BOOL didSelected = false;
 }
 // direct message
 -(void)sendTwitterDirectMessageToSelf:(NSString*)text{
-    NSURL *url = [NSURL URLWithString:@"http://api.twitter.com/1.1/direct_messages/new.json"];
+    NSURL *url = [NSURL URLWithString:@"https://api.twitter.com/1.1/direct_messages/new.json"];
     NSDictionary *parameters = @{@"text": text,
                                  @"screen_name": [self.twitterAccount username]};
     

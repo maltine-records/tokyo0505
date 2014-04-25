@@ -78,13 +78,7 @@
 {
     return [[self.sections objectAtIndex:section] count];
 }
--(NSIndexPath *)tableView:(UITableView *)tableView willSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if (indexPath.section==1)
-        return nil;
-    else
-        return indexPath;
-}
+
 -(UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     NSArray* rowValues = [self.sections objectAtIndex:indexPath.section];
