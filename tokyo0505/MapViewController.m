@@ -365,7 +365,10 @@
         [[UIApplication sharedApplication] openURL:[NSURL URLWithString:url]];
     }else if([view.annotation isKindOfClass:[BeaconAnnotation class]]){
         BeaconAnnotation*ba =(BeaconAnnotation*) view.annotation;
-        NSString *url = [NSString stringWithFormat:@"twitter://search?query=%%23%@_%@", ba.subtitle, ba.title];
+        NSString *hashtag = [NSString stringWithFormat:@"%@_%@", ba.subtitle, ba.title];
+        NSString *encodeHashtag = [hashtag stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet alphanumericCharacterSet]];
+        NSMutableString *url = [NSMutableString stringWithString:@"twitter://search?query="];
+        [url appendString:encodeHashtag];
         [[UIApplication sharedApplication] openURL:[NSURL URLWithString:url]];
     }
 }
