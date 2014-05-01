@@ -202,11 +202,12 @@
                 [weakSelf.mapView addAnnotation:tmpAnnotation];
                 //drawing users
                 for(NSDictionary *userDict in [beaconDict objectForKey:@"users"]) {
-                    NSNumber *proximity = [userDict objectForKey:@"proximity"];
-                    NSLog(@"%@", proximity);
+                    //NSNumber *proximity = [userDict objectForKey:@"proximity"];
+                    //NSLog(@"%@", proximity);
+                    double const random = annotation_random;// * [proximity doubleValue];
                     CLLocationCoordinate2D tmpUserLocation;
-                    tmpUserLocation.latitude = [[beaconDict objectForKey:@"lat"] doubleValue] + ((double)arc4random() / 0x100000000) * annotation_random * 2 - annotation_random;
-                    tmpUserLocation.longitude = [[beaconDict objectForKey:@"lon"] doubleValue] + ((double)arc4random() / 0x100000000) * annotation_random * 2 - annotation_random;
+                    tmpUserLocation.latitude = [[beaconDict objectForKey:@"lat"] doubleValue] + ((double)arc4random() / 0x100000000) * random * 2 - random;
+                    tmpUserLocation.longitude = [[beaconDict objectForKey:@"lon"] doubleValue] + ((double)arc4random() / 0x100000000) * random * 2 - random;
                     UserAnnotation *tmpUserAnnotation = [[UserAnnotation alloc] init];
                     tmpUserAnnotation.coordinate = tmpUserLocation;
                     tmpUserAnnotation.title = [userDict objectForKey:@"screen_name"];
@@ -638,6 +639,9 @@ BOOL didSelected = false;
 -(void)tweetCompose{
     NSString* locName = [self.currentBeaconDict objectForKey:@"name"];
     NSString* roomName = [self.currentBeaconDict objectForKey:@"room"];
+    if ([locName length]==0) {
+        return;
+    }
     SLComposeViewController *twitterPostVC = [SLComposeViewController composeViewControllerForServiceType:SLServiceTypeTwitter];
     NSString *text = [NSString stringWithFormat:@"#tokyo0505 #%@_%@ なう！", roomName, locName];
     [twitterPostVC setInitialText:text];
