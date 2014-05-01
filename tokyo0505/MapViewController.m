@@ -422,49 +422,49 @@
     
     if (withoutPeopleBeacons.count > 0) {
         CLBeacon *nearestBeacon = withoutPeopleBeacons.firstObject;
-        NSString *rangeMessage;
         switch (nearestBeacon.proximity) {
             case CLProximityImmediate:
-                rangeMessage = @"Range Immediate: ";
-                proximity = @5;
+                proximity = @1;
                 break;
             case CLProximityNear:
-                rangeMessage = @"Range Near: ";
                 proximity = @10;
                 break;
             case CLProximityFar:
-                rangeMessage = @"Range Far: ";
                 proximity = @30;
                 break;
             default:
-                rangeMessage = @"Range Unknown: ";
                 break;
         }
-        message = [NSString stringWithFormat:@"UUID:%@, major:%@, minor:%@, accuracy:%f, rssi:%d",
-                             nearestBeacon.proximityUUID, nearestBeacon.major, nearestBeacon.minor, nearestBeacon.accuracy, nearestBeacon.rssi];
+        message = [NSString stringWithFormat:@"UUID:%@, major:%@, minor:%@, accuracy:%f, rssi:%ld",
+                             nearestBeacon.proximityUUID, nearestBeacon.major, nearestBeacon.minor, nearestBeacon.accuracy, (long)nearestBeacon.rssi];
         gotUUID = [NSString stringWithFormat:@"%@-%@-%@", [nearestBeacon.proximityUUID UUIDString], nearestBeacon.major, nearestBeacon.minor];
         gotRegion = [region identifier];
     } else {
         gotUUID = @"null";
         gotRegion = @"null";
     }
-    
+    NSMutableDictionary *param = [NSMutableDictionary
+                                  dictionaryWithDictionary:@{@"beacon_uuid":gotUUID, @"proximity":proximity}];
     if ([gotRegion isEqualToString:@"com.nubot.tokyo0505.mainregion"]) {
         if(![gotUUID isEqualToString:self.currentMainUUID]) {
             NSLog(@"俺は変わった %@ to %@", self.currentMainUUID, gotUUID);
-            NSMutableDictionary *param = [NSMutableDictionary
-                                          dictionaryWithDictionary:@{@"beacon_uuid":gotUUID, @"proximity":proximity}];
+            [self postUserData:param withCallback:^(void) {}];
+        }else if(![proximity isEqualToNumber:self.currentProximity]){
+            NSLog(@"俺は…変われるかな…");
             [self postUserData:param withCallback:^(void) {}];
         }
         self.currentMainUUID = [NSString stringWithString:gotUUID];
+        self.currentProximity = proximity;
     }else if ([gotRegion isEqualToString:@"com.nubot.tokyo0505.subregion"]){
         if(![gotUUID isEqualToString:self.currentSubUUID]) {
             NSLog(@"俺は変わった %@ to %@", self.currentSubUUID, gotUUID);
-            NSMutableDictionary *param = [NSMutableDictionary
-                                          dictionaryWithDictionary:@{@"beacon_uuid":gotUUID, @"proximity":proximity}];
+            [self postUserData:param withCallback:^(void) {}];
+        }else if(![proximity isEqualToNumber:self.currentProximity]){
+            NSLog(@"俺は…変われるかな…");
             [self postUserData:param withCallback:^(void) {}];
         }
         self.currentSubUUID = [NSString stringWithString:gotUUID];
+        self.currentProximity = proximity;
     }
 }
 

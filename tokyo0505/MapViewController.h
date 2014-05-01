@@ -29,6 +29,8 @@
 
 @property (strong, nonatomic) NSString *currentMainUUID;
 @property (strong, nonatomic) NSString *currentSubUUID;
+@property (strong, nonatomic) NSNumber *currentProximity;
+
 
 @property (strong, nonatomic) NSArray *twitterAccounts;
 @property (strong, nonatomic) ACAccount *twitterAccount;
