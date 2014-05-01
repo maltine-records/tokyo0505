@@ -116,6 +116,8 @@
         [self zoomInToSelf];
     }else if ([selector isEqualToString:@"zoomOutToSite"]){
         [self zoomOutToSite];
+    }else if ([selector isEqualToString:@"tweetCompose"]){
+        [self tweetCompose];
     }else if ([selector isEqualToString:@"changeTwitterAccount"]){
         [self requestTwitterAccount:nil];
     }
@@ -176,6 +178,8 @@
     __unsafe_unretained typeof(self) weakSelf = self;
     [userService setCallback:^(NSDictionary *users) {
         dispatch_async(dispatch_get_main_queue(), ^{
+            NSString *screen_name = [[NSUserDefaults standardUserDefaults] objectForKey:@"screen_name"];
+
             NSPredicate* isMatchClassBeaconA = [NSPredicate
                                                 predicateWithFormat:@"self isKindOfClass: %@", [BeaconAnnotation class]];
             NSArray* beaconA = [weakSelf.mapView.annotations filteredArrayUsingPredicate:isMatchClassBeaconA];
@@ -194,6 +198,7 @@
                 BeaconAnnotation *tmpAnnotation = [[BeaconAnnotation alloc] init];
                 tmpAnnotation.coordinate = tmpLocation;
                 tmpAnnotation.title = [beaconDict objectForKey:@"name"];
+                tmpAnnotation.subtitle = [beaconDict objectForKey:@"room"];
                 [weakSelf.mapView addAnnotation:tmpAnnotation];
                 //drawing users
                 for(NSDictionary *user in [beaconDict objectForKey:@"users"]) {
@@ -205,8 +210,15 @@
                     tmpUserAnnotation.title = [user objectForKey:@"screen_name"];
                     tmpUserAnnotation.imageUrl = [NSURL URLWithString:[user objectForKey:@"icon_url"]];
                     [weakSelf.mapView addAnnotation:tmpUserAnnotation];
+                    if ([screen_name length] != 0) {
+                        if ([[user objectForKey:@"screen_name"] isEqualToString:screen_name]) {
+                            weakSelf.currentBeaconDict = beaconDict;
+                        }
+                    }
                 }
             }
+            weakSelf.bigbrotherCache = users;
+
         });
     }];
 }
@@ -279,8 +291,6 @@
             [imageView setFrame:CGRectMake(0, 0, 22, 22)];
             av.canShowCallout = YES;
             UIButton *btn=[UIButton buttonWithType:UIButtonTypeDetailDisclosure];
-            //[btn setBackgroundImage:[UIImage imageNamed:@"twitter.png"] forState:UIControlStateNormal];
-            //[btn setImage:[UIImage imageNamed:@"twitter.png"] forState:UIControlStateNormal];
             av.rightCalloutAccessoryView = btn;
             [av addSubview:imageView];
             av.frame = imageView.frame;
@@ -297,6 +307,8 @@
             UIImage *image = [UIImage imageNamed:@"bacon-40.png"];
             av.image = image;
             av.canShowCallout = YES;
+            UIButton *btn=[UIButton buttonWithType:UIButtonTypeDetailDisclosure];
+            av.rightCalloutAccessoryView = btn;
         }
         return av;
     }
@@ -347,6 +359,10 @@
     }else if ([view.annotation isKindOfClass:[UserAnnotation class]]){
         UserAnnotation*ua =(UserAnnotation*) view.annotation;
         NSString *url = [NSString stringWithFormat:@"twitter://user?screen_name=%@", ua.title];
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:url]];
+    }else if([view.annotation isKindOfClass:[BeaconAnnotation class]]){
+        BeaconAnnotation*ba =(BeaconAnnotation*) view.annotation;
+        NSString *url = [NSString stringWithFormat:@"twitter://search?query=%%23%@_%@", ba.subtitle, ba.title];
         [[UIApplication sharedApplication] openURL:[NSURL URLWithString:url]];
     }
 }
@@ -551,9 +567,7 @@
     
 }
 
-- (void)showTwitterPickerView{
-    NSLog(@"showTwitterPickerView start");
-    
+- (void)showTwitterPickerView{    
     UIPickerView *pickerView = [[UIPickerView alloc] init];
     pickerView.delegate = self;
     pickerView.dataSource = self;
@@ -581,7 +595,6 @@
     [self.view addSubview:backView];
     [self.view bringSubviewToFront:backView];
     self.twitterPickerView = backView;
-    NSLog(@"showTwitterPickerView end");
 
 }
 
@@ -620,6 +633,14 @@ BOOL didSelected = false;
 }
 
 # pragma mark twitter api
+-(void)tweetCompose{
+    NSString* locName = [self.currentBeaconDict objectForKey:@"name"];
+    NSString* roomName = [self.currentBeaconDict objectForKey:@"room"];
+    SLComposeViewController *twitterPostVC = [SLComposeViewController composeViewControllerForServiceType:SLServiceTypeTwitter];
+    NSString *text = [NSString stringWithFormat:@"#tokyo0505 #%@_%@ なう！", roomName, locName];
+    [twitterPostVC setInitialText:text];
+    [self presentViewController:twitterPostVC animated:YES completion:nil];
+}
 // profile image
 -(void)getTwitterProfileImage:(void(^)(NSMutableDictionary*param))callback{
     if (!self.twitterAccount) {

@@ -19,7 +19,10 @@
                                                  UIPickerViewDelegate, UIPickerViewDataSource,
                                                  UIPopoverControllerDelegate, DismisPopoverDelegate>
 
-//@property (strong, nonatomic) TimetableAnnotaion *nogataAnnotation;
+@property (strong, nonatomic) NSDictionary *bigbrotherCache;
+@property (strong, nonatomic) NSDictionary *currentBeaconDict;
+
+
 @property (strong, nonatomic) CLLocationManager *locationManager;
 @property (strong, nonatomic) CLBeaconRegion *beaconRegion;
 @property (strong, nonatomic) NSUUID *proximityUUID;

@@ -36,7 +36,7 @@
     [self loadFishTableView:self.view];
     
     self.titles = @[@"何か御用ですか？", @"ん？", @"その他"];
-    self.section1 = @[@"自分の位置にズーム", @"会場全体にズームアウト"];
+    self.section1 = @[@"ツイート！", @"自分の位置にズーム", @"会場全体にズームアウト"];
     self.section2 = @[@"tomad", @"boenyeah", @"MeishiSmile"];
     self.section3 = @[@"Twitterアカウント再選択"];
     self.sections = @[self.section1, self.section2, self.section3];
@@ -109,9 +109,11 @@
 {
     NSLog(@"%d, %d", indexPath.section, indexPath.row);
     if (indexPath.section==0) {
-        if (indexPath.row==0) {
+        if (indexPath.row==0){
+            [self.delegate dismisPopover:@{@"selector": @"tweetCompose"}];
+        }else if (indexPath.row==1) {
             [self.delegate dismisPopover:@{@"selector": @"zoomInToSelf"}];
-        }else if (indexPath.row==1){
+        }else if (indexPath.row==2){
             [self.delegate dismisPopover:@{@"selector": @"zoomOutToSite"}];
         }
     }else if (indexPath.section==1){
