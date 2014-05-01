@@ -201,17 +201,19 @@
                 tmpAnnotation.subtitle = [beaconDict objectForKey:@"room"];
                 [weakSelf.mapView addAnnotation:tmpAnnotation];
                 //drawing users
-                for(NSDictionary *user in [beaconDict objectForKey:@"users"]) {
+                for(NSDictionary *userDict in [beaconDict objectForKey:@"users"]) {
+                    NSNumber *proximity = [userDict objectForKey:@"proximity"];
+                    NSLog(@"%@", proximity);
                     CLLocationCoordinate2D tmpUserLocation;
                     tmpUserLocation.latitude = [[beaconDict objectForKey:@"lat"] doubleValue] + ((double)arc4random() / 0x100000000) * annotation_random * 2 - annotation_random;
                     tmpUserLocation.longitude = [[beaconDict objectForKey:@"lon"] doubleValue] + ((double)arc4random() / 0x100000000) * annotation_random * 2 - annotation_random;
                     UserAnnotation *tmpUserAnnotation = [[UserAnnotation alloc] init];
                     tmpUserAnnotation.coordinate = tmpUserLocation;
-                    tmpUserAnnotation.title = [user objectForKey:@"screen_name"];
-                    tmpUserAnnotation.imageUrl = [NSURL URLWithString:[user objectForKey:@"icon_url"]];
+                    tmpUserAnnotation.title = [userDict objectForKey:@"screen_name"];
+                    tmpUserAnnotation.imageUrl = [NSURL URLWithString:[userDict objectForKey:@"icon_url"]];
                     [weakSelf.mapView addAnnotation:tmpUserAnnotation];
                     if ([screen_name length] != 0) {
-                        if ([[user objectForKey:@"screen_name"] isEqualToString:screen_name]) {
+                        if ([[userDict objectForKey:@"screen_name"] isEqualToString:screen_name]) {
                             weakSelf.currentBeaconDict = beaconDict;
                         }
                     }
@@ -424,13 +426,13 @@
         CLBeacon *nearestBeacon = withoutPeopleBeacons.firstObject;
         switch (nearestBeacon.proximity) {
             case CLProximityImmediate:
-                proximity = @1;
-                break;
-            case CLProximityNear:
                 proximity = @10;
                 break;
+            case CLProximityNear:
+                proximity = @50;
+                break;
             case CLProximityFar:
-                proximity = @30;
+                proximity = @100;
                 break;
             default:
                 break;
